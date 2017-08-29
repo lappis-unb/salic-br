@@ -277,10 +277,10 @@
 							<option value="0"> - Selecione - </option>
 							<?php } ?>
 
-							<?php foreach ($this->combotiposlogradouros as $key => $combotipologradouro): ?>
+							<?php foreach ($this->combotiposlogradouros as $key => $comboTipoLogradouro): ?>
 							<option value="<?php echo $key; ?>"
 								<?php if ($this->tipoLogradouro == $key) echo "selected=\"selected\""; ?>>
-								<?php echo $combotipologradouro; ?>
+								<?php echo $comboTipoLogradouro; ?>
 							</option>
 							<?php endforeach; ?>
 
@@ -355,7 +355,7 @@
 			</tr>
 			<tr>
 				<td colspan="2"><label>Tipo de Endere&ccedil;o:</label> <?php echo $end->TipoEndereco; ?></td>
-				<td><label>Tipo de Logradouro:</label> <?php echo $end->dstipologradouro; ?></td>
+				<td><label>Tipo de Logradouro:</label> <?php echo $end->dsTipoLogradouro; ?></td>
 			</tr>
 			<tr>
 				<td colspan="2"><label>Logradouro:</label> <?php echo $end->Logradouro; ?></td>

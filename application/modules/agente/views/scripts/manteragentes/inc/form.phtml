@@ -256,10 +256,10 @@ function filtroCNPJ()
 				<option value="0"> - Selecione - </option>
 				<?php } ?>
 
-				<?php foreach ($this->combotiposlogradouros as $key => $combotipologradouro): ?>
+				<?php foreach ($this->combotiposlogradouros as $key => $comboTipoLogradouro): ?>
 				<option value="<?php echo $key; ?>"
 					<?php if ($this->tipoLogradouro == $key) echo "selected=\"selected\""; ?>>
-					<?php echo $combotipologradouro; ?>
+					<?php echo $comboTipoLogradouro; ?>
 				</option>
 				<?php endforeach; ?>
 

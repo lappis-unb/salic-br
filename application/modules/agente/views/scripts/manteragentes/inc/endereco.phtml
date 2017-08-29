@@ -86,10 +86,10 @@
 				<option value="0"> - Selecione - </option>
 				<?php } ?>
 
-				<?php foreach ($this->combotiposlogradouros as $combotipologradouro): ?>
-				<option value="<?php echo $combotipologradouro->id; ?>"
-					<?php if ($this->tipoLogradouro == $combotipologradouro->id) echo "selected=\"selected\""; ?>>
-					<?php echo $combotipologradouro->descricao; ?>
+				<?php foreach ($this->combotiposlogradouros as $comboTipoLogradouro): ?>
+				<option value="<?php echo $comboTipoLogradouro->id; ?>"
+					<?php if ($this->tipoLogradouro == $comboTipoLogradouro->id) echo "selected=\"selected\""; ?>>
+					<?php echo $comboTipoLogradouro->descricao; ?>
 				</option>
 				<?php endforeach; ?>
 

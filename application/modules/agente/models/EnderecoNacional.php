@@ -19,7 +19,7 @@ class Agente_Model_EnderecoNacional extends MinC_Db_Model
     protected $_idendereco;
     protected $_idagente;
     protected $_tipoendereco;
-    protected $_tipologradouro;
+    protected $_TipoLogradouro;
     protected $_logradouro;
     protected $_numero;
     protected $_bairro;
@@ -86,15 +86,15 @@ class Agente_Model_EnderecoNacional extends MinC_Db_Model
      */
     public function getTipologradouro()
     {
-        return $this->_tipologradouro;
+        return $this->_TipoLogradouro;
     }
 
     /**
-     * @param mixed $tipologradouro
+     * @param mixed $TipoLogradouro
      */
-    public function setTipologradouro($tipologradouro)
+    public function setTipologradouro($TipoLogradouro)
     {
-        $this->_tipologradouro = $tipologradouro;
+        $this->_TipoLogradouro = $TipoLogradouro;
     }
 
     /**
