@@ -18,13 +18,11 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
     protected $_primary = 'idAgente';
 
     /**
-     * Metodo para buscar agentes
      * @access public
-     * @static
      * @param string $cnpjcpf
      * @param string $nome
      * @param integer $idAgente
-     * @return object
+     * @return array
      */
     public function buscarAgentes($cnpjcpf = null, $nome = null, $idAgente = null)
     {

@@ -63,7 +63,8 @@ class RastrearagenteController extends MinC_Controller_Action_Abstract {
             parent::message("Por favor informe o CPF ou CNPJ.", "/Rastrearagente", "ERROR");
         }
         $CpfCnpj = str_replace(array(".", "-", "/"), array("", "", ""), $CpfCnpj); //removendo mascara de CPF e CNPJ
-        $agente = Agente_Model_ManterAgentesDAO::buscarAgentes($CpfCnpj);
+        $objModelAgentes = new Agente_Model_DbTable_Agentes();
+        $agente = $objModelAgentes->buscarAgentes($CpfCnpj);
         if(count($agente)<1) {
             parent::message("Nenhum agente encontrado com o CPF/CNPJ {$get->CpfCnpj}", "/Rastrearagente", "ALERT");
         }

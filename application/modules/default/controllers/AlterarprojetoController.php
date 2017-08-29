@@ -120,7 +120,8 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract
             $qtdDirigentes = '';
             if (isset($idAgente)) {
 
-                $dados = Agente_Model_ManterAgentesDAO::buscarAgentes(null, null, $idAgente);
+                $objModelAgentes = new Agente_Model_DbTable_Agentes();
+                $dados = $objModelAgentes->buscarAgentes(null, null, $idAgente);
 
                 if (!$dados) {
                     parent::message("Agente n&atilde;o encontrado!", "agentes/buscaragente", "ALERT");
@@ -567,7 +568,8 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract
         if (isset($idAgente)) {
 
             $dadosDirigenteD = Agente_Model_ManterAgentesDAO::buscarVinculados(null, null, $idDirigente, null, $idAgente);
-            $dados = Agente_Model_ManterAgentesDAO::buscarAgentes(null, null, $idDirigente);
+            $objModelAgentes = new Agente_Model_DbTable_Agentes();
+            $dados = $objModelAgentes->buscarAgentes(null, null, $idDirigente);
             $this->view->dadosD = $dados;
 
             if (!$dados) {
@@ -807,7 +809,8 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract
 
         $novos_valores = array();
 
-        $dados = Agente_Model_ManterAgentesDAO::buscarAgentes($cpf);
+        $objModelAgentes = new Agente_Model_DbTable_Agentes();
+        $dados = $objModelAgentes->buscarAgentes($cpf);
 
         if ((strlen($cpf) == 11 && !Validacao::validarCPF($cpf)) || (strlen($cpf) == 14 && !Validacao::validarCNPJ($cpf))) {
             $novos_valores[0]['msgCPF'] = utf8_encode('invalido');

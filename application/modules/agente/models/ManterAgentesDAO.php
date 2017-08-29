@@ -22,67 +22,7 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
      */
     public static function buscarAgentes($cnpjcpf = null, $nome = null, $idAgente = null)
     {
-        $db= Zend_Db_Table::getDefaultAdapter();
-        $schemaAgentes = parent::getSchema('agentes');
-        $schemaSac = parent::getSchema('sac');
-
-        $a = array(
-            'a.idAgente'
-            ,'a.CNPJCPF'
-            ,'a.CNPJCPFSuperior'
-            ,'a.TipoPessoa'
-        );
-
-        $e = array(
-            'e.TipoLogradouro'
-            ,'e.Cidade'
-            ,'e.Cep as cep'
-            ,'e.UF'
-            ,'e.Status'
-            ,'e.TipoEndereco'
-            ,'e.idEndereco'
-            ,'e.Logradouro'
-            ,'e.Numero'
-            ,'e.Complemento'
-            ,'e.Bairro'
-            ,'e.Divulgar as divulgarendereco'
-            ,'e.Status as enderecocorrespondencia'
-        );
-
-        $t = array(
-            't.stTitular'
-            ,'t.cdArea'
-            ,'t.cdSegmento'
-        );
-
-        $sql = $db->select()->distinct()->from(array('a' => 'Agentes'), $a, $schemaAgentes)
-            ->joinLeft(array('n' => 'Nomes'), 'n.idAgente = a.idAgente', array('n.Descricao as nome'), $schemaAgentes)
-            ->joinLeft(array('e' => 'EnderecoNacional'), 'e.idAgente = a.idAgente', $e, $schemaAgentes)
-            ->joinLeft(array('m' => 'municipios'), 'm.idMunicipioIBGE = e.cidade', array('*', 'm.Descricao as dscidade'), $schemaAgentes)
-            ->joinLeft(array('u' => 'uf'), 'u.iduf = e.uf', 'u.sigla as dsuf', $schemaAgentes)
-            ->joinLeft(array('ve' => 'Verificacao'), 've.idverificacao = e.tipoendereco', 've.Descricao as dstipoendereco', $schemaAgentes)
-            ->joinLeft(array('vl' => 'Verificacao'), 'vl.idverificacao = e.TipoLogradouro', 'vl.Descricao as dsTipoLogradouro', $schemaAgentes)
-            ->joinLeft(array('t' => 'tbTitulacaoConselheiro'), 't.idAgente = a.idAgente', $t, $schemaAgentes)
-            ->joinLeft(array('v' => 'Visao'), 'v.idAgente = a.idAgente', '*', $schemaAgentes)
-            ->joinLeft(array('sa' => 'Area'), 'sa.codigo = t.cdarea', 'sa.Descricao as dsarea', $schemaSac)
-            ->joinLeft(array('ss' => 'segmento'), 'ss.codigo = t.cdsegmento', 'ss.Descricao as dssegmento', $schemaSac)
-            ->where('a.TipoPessoa = 0 or a.TipoPessoa = 1')
-            ;
-
-        if (!empty($cnpjcpf)) {
-            # busca pelo cpf/cnpj
-            $sql->where('a.CNPJCPF = ?', $cnpjcpf);
-        } if (!empty($nome)) {
-            # filtra pelo nome
-            $sql->where('n.Descricao LIKE ?', '%'.$nome.'%');
-        } if (!empty($idAgente)) {
-            # busca de acordo com o id do agente
-            $sql->where('a.idAgente = ?',$idAgente);
-        }
-
-        $sql->order(array('e.status Desc', 'n.Descricao Asc'));
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        return $db->fetchAll($sql);
+        throw new Exception("Método descontinuado. Favor utilizar o m&eacute;todo buscarAgentes da classe.");
     }
 
     /**

@@ -198,7 +198,8 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
         $nome = $get->nome;
 
         // realiza a busca por cpf e/ou nome
-        $buscar = Agente_Model_ManterAgentesDAO::buscarAgentes($cpf, $nome);
+        $objModelAgentes = new Agente_Model_DbTable_Agentes();
+        $buscar = $objModelAgentes->buscarAgentes($cpf, $nome);
 
         if (!$buscar) {
             // redireciona para a pagina de cadastro de agentes, e, exibe uma notificacao relativa ao cadastro
@@ -321,7 +322,8 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
         $this->view->visaoAgente = $visoes;
 
         // busca o agente pelo id
-        $this->view->agente = Agente_Model_ManterAgentesDAO::buscarAgentes(null, null, $idAgente);
+        $objModelAgentes = new Agente_Model_DbTable_Agentes();
+        $this->view->agente = $objModelAgentes->buscarAgentes(null, null, $idAgente);
 
         // caso o formulario seja enviado via post
         if ($this->getRequest()->isPost()) {
@@ -434,7 +436,8 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
                 $novos_valores[$i]['msgCPF'] = utf8_encode($v);
 
                 // busca os dados do dirigente
-                $dados = Agente_Model_ManterAgentesDAO::buscarAgentes($cpf);
+                $objModelAgentes = new Agente_Model_DbTable_Agentes();
+                $dados = $objModelAgentes->buscarAgentes($cpf);
 
                 // caso o dirigente nao esteja cadastrado, realizara o cadastro de um novo
                 if (!$dados) {
@@ -454,7 +457,8 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
                 }
 
                 // busca os dados do agente pelo cpf/cnpj
-                $novosdados = Agente_Model_ManterAgentesDAO::buscarAgentes($cpf);
+                $objModelAgentes = new Agente_Model_DbTable_Agentes();
+                $novosdados = $objModelAgentes->buscarAgentes($cpf);
 
                 foreach ($novosdados as $dado) :
                     $novos_valores[$i]['idAgente'] = utf8_encode($dado->idAgente);
