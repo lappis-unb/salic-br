@@ -42,7 +42,7 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
         }
 
         if ($this->databaseAdapter instanceof MinC_Db_Adapter_Pdo_Pgsql) {
-            $cond = $this->databaseAdapter->treatJoinConditionDoubleQuotes($cond);
+            $cond = $this->databaseAdapter->treatConditionDoubleQuotes($cond);
         }
 
         return parent::join($name, $cond, $cols, $schema);
@@ -62,7 +62,7 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
         }
 
         if ($this->databaseAdapter instanceof MinC_Db_Adapter_Pdo_Pgsql) {
-            $cond = $this->databaseAdapter->treatJoinConditionDoubleQuotes($cond);
+            $cond = $this->databaseAdapter->treatConditionDoubleQuotes($cond);
         }
 
         return parent::joinInner($name, $cond, $cols, $schema);
@@ -82,7 +82,7 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
         }
 
         if ($this->databaseAdapter instanceof MinC_Db_Adapter_Pdo_Pgsql) {
-            $cond = $this->databaseAdapter->treatJoinConditionDoubleQuotes($cond);
+            $cond = $this->databaseAdapter->treatConditionDoubleQuotes($cond);
             $cols = $this->databaseAdapter->treatColumnsDoubleQuotes($cols);
         }
 
@@ -111,7 +111,7 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
     public function where($cond, $value = null, $type = null)
     {
         if ($this->databaseAdapter instanceof MinC_Db_Adapter_Pdo_Pgsql) {
-            $cond = $this->databaseAdapter->treatWhereConditionsDoubleQuotes($cond);
+            $cond = $this->databaseAdapter->treatConditionDoubleQuotes($cond);
         }
 
         $this->_parts[self::WHERE][] = $this->_where($cond, $value, $type, true);

@@ -40,24 +40,24 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
 
         $e = array(
             'e.TipoLogradouro'
-            ,'e.cidade'
-            ,'e.cep as cep'
-            ,'e.uf'
-            ,'e.status'
-            ,'e.tipoendereco'
-            ,'e.idendereco'
-            ,'e.logradouro'
-            ,'e.numero'
-            ,'e.complemento'
-            ,'e.bairro'
-            ,'e.divulgar as divulgarendereco'
-            ,'e.status as enderecocorrespondencia'
+            ,'e.Cidade'
+            ,'e.Cep as cep'
+            ,'e.UfDescricao'
+            ,'e.Status'
+            ,'e.TipoEndereco'
+            ,'e.idEndereco'
+            ,'e.Logradouro'
+            ,'e.Numero'
+            ,'e.Complemento'
+            ,'e.Bairro'
+            ,'e.Divulgar as divulgarendereco'
+            ,'e.Status as enderecocorrespondencia'
         );
 
         $t = array(
-            't.sttitular'
-            ,'t.cdarea'
-            ,'t.cdsegmento'
+            't.stTitular'
+            ,'t.cdArea'
+            ,'t.cdSegmento'
         );
 
 //        $sql = $db->select()->distinct()->from(['a' => 'agentes'], $a, $schemaAgentes)
@@ -68,16 +68,15 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
             ->from(array('a' => 'Agentes'), $a, $schemaAgentes)
             ->joinLeft(array('n' => 'Nomes'), 'n.idAgente = a.idAgente', array('n.Descricao as nome'), $schemaAgentes)
             ->joinLeft(array('e' => 'EnderecoNacional'), 'e.idAgente = a.idAgente', $e, $schemaAgentes)
-            ->joinLeft(array('m' => 'municipios'), 'm.idMunicipioIBGE = e.cidade', '*', $schemaAgentes)
-            ->joinLeft(array('u' => 'uf'), 'u.iduf = e.uf', 'u.sigla as dsuf', $schemaAgentes)
-            ->joinLeft(array('ve' => 'Verificacao'), 've.idverificacao = e.tipoendereco', 've.Descricao as dstipoendereco', $schemaAgentes)
-            ->joinLeft(array('vl' => 'Verificacao'), 'vl.idverificacao = e.TipoLogradouro', 'vl.Descricao as dsTipoLogradouro', $schemaAgentes)
+            ->joinLeft(array('m' => 'Municipios'), 'm.idMunicipioIBGE = e.Cidade', '*', $schemaAgentes)
+            ->joinLeft(array('u' => 'UF'), 'u.idUF = e.UF', 'u.sigla as dsuf', $schemaAgentes)
+            ->joinLeft(array('ve' => 'Verificacao'), 've.idVerificacao = e.TipoEndereco', 've.Descricao as dstipoendereco', $schemaAgentes)
+            ->joinLeft(array('vl' => 'Verificacao'), 'vl.idVerificacao = e.TipoLogradouro', 'vl.Descricao as dsTipoLogradouro', $schemaAgentes)
             ->joinLeft(array('t' => 'tbTitulacaoConselheiro'), 't.idAgente = a.idAgente', $t, $schemaAgentes)
             ->joinLeft(array('v' => 'Visao'), 'v.idAgente = a.idAgente', '*', $schemaAgentes)
-            ->joinLeft(array('sa' => 'Area'), 'sa.codigo = t.cdarea', 'sa.Descricao as dsarea', $schemaSac)
-            ->joinLeft(array('ss' => 'segmento'), 'ss.codigo = t.cdsegmento', 'ss.Descricao as dssegmento', $schemaSac)
-            ->where('a.TipoPessoa = 0 or a.TipoPessoa = 1')
-        ;
+            ->joinLeft(array('sa' => 'Area'), 'sa.Codigo = t.cdArea', 'sa.Descricao as dsarea', $this->getSchema('sac'))
+            ->joinLeft(array('ss' => 'Segmento'), 'ss.Codigo = t.cdSegmento', 'ss.Descricao as dssegmento', $this->getSchema('sac'))
+            ->where('a.TipoPessoa = 0 or a.TipoPessoa = 1');
 
         if (!empty($cnpjcpf)) {
             # busca pelo cpf/cnpj
@@ -91,7 +90,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
             $select->where('a.idAgente = ?',$idAgente);
         }
 
-        $select->order(array('e.status Desc', 'n.Descricao Asc'));
+        $select->order(array('e.Status Desc', 'n.Descricao Asc'));
         $result = $this->fetchAll($select);
         $result = ($result)? $result->toArray() : array();
 
