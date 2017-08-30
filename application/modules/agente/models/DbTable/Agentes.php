@@ -90,7 +90,8 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
             $select->where('a.idAgente = ?',$idAgente);
         }
 
-        $select->order(array('e.Status Desc', 'n.Descricao Asc'));
+//        $select->order(array('e.Status Desc', 'n.Descricao Asc'));
+
         $result = $this->fetchAll($select);
         $result = ($result)? $result->toArray() : array();
 
