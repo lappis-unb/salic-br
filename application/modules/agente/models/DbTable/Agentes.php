@@ -965,4 +965,72 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
 //        echo $slct;
         return $this->fetchAll($slct);
     }
+
+    /**
+     * Migração da função fnNome do banco agentes
+     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+     * @return varchar(150)
+     * @todo Mover todas as chamadas da função 'fnNome' para o método 'obterNomeAgente'
+     */
+    public function obterNomeAgente($idAgente) {
+
+        $objQuery = $this->select();
+        $objQuery->setIntegrityCheck(false);
+        $objQuery->from(
+            array('Agentes' => $this->_name),
+            array('TipoPessoa'),
+            $this->_schema
+        );
+
+        $objQuery->joinInner(
+            array('Nomes' => 'Nomes'),
+            'Nomes.idAgente = Agentes.idAgente',
+            array('Descricao'),
+            $this->_schema
+        );
+
+        $objQuery->where('Agentes.idAgente = ?', $idAgente);
+        $objQuery->where('Agentes.Status = ?', 1);
+
+        $resultadoBuscaAgente = $this->fetchRow($objQuery);
+        $nome = '';
+        if($resultadoBuscaAgente) {
+            $resultadoBuscaAgente = $resultadoBuscaAgente->toArray();
+            if($resultadoBuscaAgente['TipoPessoa'] == 0) {
+                $objQueryPessoaFisica = $this->select();
+                $objQueryPessoaFisica->setIntegrityCheck(false);
+                $objQueryPessoaFisica->from(
+                    array('Nomes' => 'Nomes'),
+                    array('Descricao'),
+                    $this->_schema
+                );
+                $objQueryPessoaFisica->where('idAgente = ?', $idAgente);
+                $objQueryPessoaFisica->where('TipoNome = ?', 18);
+                $resultadoPessoaFisica = $this->fetchRow($objQueryPessoaFisica);
+                $nome = 'Nome de pesssoa f&iacute;sica n&atilde;o informado';
+                if($resultadoPessoaFisica) {
+                    $resultadoPessoaFisica = $resultadoPessoaFisica->toArray();
+                    $nome = $resultadoPessoaFisica['Descricao'];
+                }
+            } else {
+                $objQueryPessoaJuridica = $this->select();
+                $objQueryPessoaJuridica->setIntegrityCheck(false);
+                $objQueryPessoaJuridica->from(
+                    array('Nomes' => 'Nomes'),
+                    array('Descricao'),
+                    $this->_schema
+                );
+                $objQueryPessoaJuridica->where('idAgente = ?', $idAgente);
+                $objQueryPessoaJuridica->where('TipoNome = ?', 19);
+                $resultadoPessoaJuridica = $this->fetchRow($objQueryPessoaJuridica);
+                $nome = 'Nome de pesssoa jur&iacute;dica n&atilde;o informado';
+                if($resultadoPessoaJuridica) {
+                    $resultadoPessoaJuridica = $resultadoPessoaJuridica->toArray();
+                    $nome = $resultadoPessoaJuridica['Descricao'];
+                }
+            }
+        }
+
+        return $nome;
+    }
 }
