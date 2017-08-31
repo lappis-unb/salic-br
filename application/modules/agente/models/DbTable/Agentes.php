@@ -363,7 +363,6 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
                 $select->where($coluna, $valor);
             }
         }
-
         return $this->fetchAll($select);
     }
 

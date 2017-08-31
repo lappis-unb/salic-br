@@ -74,25 +74,31 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
     public function treatConditionDoubleQuotes($condition)
     {
         $arrayClauses = ['and', 'AND', 'or', 'OR'];
+        $newCondition = '';
         foreach ($arrayClauses as $clause) {
             $arrayConditions = explode($clause, $condition);
             if (count($arrayConditions) > 1) {
-                $condition = '';
+                $treatedCondition = '';
                 foreach ($arrayConditions as $explodedCondition) {
-                    if (!empty($condition)) {
-                        $condition .= " {$clause} ";
+                    if (!empty($treatedCondition)) {
+                        $treatedCondition .= ' ' . strtoupper($clause) . ' ';
                     }
-                    $condition .= $explodedCondition;
+                    $treatedCondition .= $this->treatColumnWithDoubleQuote($explodedCondition);
                 }
+                $newCondition .= $treatedCondition;
             }
         }
-VERIFICAR PORQUE PARA CLAUSULAS WHERE O `OR` E `AND` ESTÃO SENDO DESCONSIDERADOS.
-        $condition = $this->treatColumnWithDoubleQuote($condition);
+
+        if($newCondition) {
+            $condition = $newCondition;
+        } else {
+            $condition = $this->treatColumnWithDoubleQuote($condition);
+        }
 
         return $condition;
     }
 
-    protected function treatColumnWithDoubleQuote($condition)
+    public function treatColumnWithDoubleQuote($condition)
     {
         $cleanCondition = trim($condition);
         $separator = '=';

@@ -35,7 +35,12 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
      * @param null $schema
      * @return Zend_Db_Select
      */
-    public function join($name, $cond, $cols = self::SQL_WILDCARD, $schema = null)
+    public function join(
+        $name,
+        $cond,
+        $cols = self::SQL_WILDCARD,
+        $schema = null
+    )
     {
         if ($this->isUseSchema) {
             $schema = $this->getSchema($schema);
@@ -68,14 +73,19 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
         return parent::joinInner($name, $cond, $cols, $schema);
     }
 
-    /*
-    * @param  array|string|Zend_Db_Expr $name The table name.
-    * @param  string $cond Join on this condition.
-    * @param  array|string $cols The columns to select from the joined table.
-    * @param  string $schema The database name to specify, if any.
-    * @return Zend_Db_Select This Zend_Db_Select object.
-    */
-    public function joinLeft($name, $cond, $cols = self::SQL_WILDCARD, $schema = null)
+    /**
+     * @param  array|string|Zend_Db_Expr $name The table name.
+     * @param  string $cond Join on this condition.
+     * @param  array|string $cols The columns to select from the joined table.
+     * @param  string $schema The database name to specify, if any.
+     * @return Zend_Db_Select This Zend_Db_Select object.
+     */
+    public function joinLeft(
+        $name,
+        $cond,
+        $cols = self::SQL_WILDCARD,
+        $schema = null
+    )
     {
         if ($this->isUseSchema) {
             $schema = $this->getSchema($schema);
