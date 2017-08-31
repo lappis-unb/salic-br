@@ -86,12 +86,14 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
                 }
             }
         }
+VERIFICAR PORQUE PARA CLAUSULAS WHERE O `OR` E `AND` ESTÃO SENDO DESCONSIDERADOS.
         $condition = $this->treatColumnWithDoubleQuote($condition);
 
         return $condition;
     }
 
-    protected function treatColumnWithDoubleQuote($condition) {
+    protected function treatColumnWithDoubleQuote($condition)
+    {
         $cleanCondition = trim($condition);
         $separator = '=';
         if ($cleanCondition && strpos($cleanCondition, $separator) !== false) {
@@ -101,16 +103,16 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
 
             $arrayConditionPart2 = explode(' ', trim($arrayColunas[1]));
 
-            if(is_numeric($arrayConditionPart2[0])) {
+            if (is_numeric($arrayConditionPart2[0])) {
                 $coluna2 = $arrayConditionPart2[0] + 0;
             } elseif ($arrayConditionPart2[0] == '?') {
                 $coluna2 = $arrayConditionPart2[0];
             }
             $condition = "{$coluna1} {$separator} {$coluna2}";
-            if($arrayConditionPart2[1]) {
+            if ($arrayConditionPart2[1]) {
                 $condition += " {$arrayConditionPart2[1]}";
             }
-        }elseif ($cleanCondition && strpos($cleanCondition, 'in') !== false) {
+        } elseif ($cleanCondition && strpos($cleanCondition, 'in') !== false) {
             $separator = 'in';
             $arrayColumn = explode($separator, $condition);
             if (substr(trim($arrayColumn[1]), 0, 1) == '(' && strpos($arrayColumn[0], '"') === false) {
