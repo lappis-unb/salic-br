@@ -89,7 +89,7 @@ class Proposta_Model_AnalisarPropostaDAO extends MinC_Db_Model
                     versac.Descricao as ExecucaoImediata
                 FROM sac.dbo.PreProjeto p
                     left JOIN agentes.dbo.Agentes a			on p.idAgente = a.idAgente
-                    left join agentes.dbo.endereconacional en		on p.idAgente = en.idAgente
+                    left join agentes.dbo.EnderecoNacional en		on p.idAgente = en.idAgente
                     left join agentes.dbo.Verificacao ve		on en.TipoEndereco = ve.idVerificacao
                     left join agentes.dbo.Verificacao ver		on en.TipoLogradouro = ver.idVerificacao
                     left join sac.dbo.vCadastrarInternet vci		on p.idAgente = vci.idAgente

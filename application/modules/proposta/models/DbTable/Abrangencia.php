@@ -67,7 +67,7 @@ class Proposta_Model_DbTable_Abrangencia extends MinC_Db_Table_Abstract
             ->from(array('a' => 'abrangencia'), $this->_getCols(), $this->_schema)
             ->join(array('p' => 'pais'), 'a.idpais = p.idpais and a.stabrangencia = 1', 'p.Descricao as pais', $this->getSchema('agentes'))
             ->joinLeft(array('u' => 'uf'), '(a.iduf = u.iduf)', 'u.Descricao as uf', $this->getSchema('agentes'))
-            ->joinLeft(array('m' => 'municipios'), '(a.idmunicipioibge = m.idmunicipioibge)', 'm.Descricao as cidade', $this->getSchema('agentes'));
+            ->joinLeft(array('m' => 'municipios'), '(a.idMunicipioIBGE = m.idMunicipioIBGE)', 'm.Descricao as cidade', $this->getSchema('agentes'));
         foreach ($where as $coluna => $valor) {
             $sql->where($coluna . '= ?', $valor);
         }
@@ -124,7 +124,7 @@ class Proposta_Model_DbTable_Abrangencia extends MinC_Db_Table_Abstract
             $rsAbrangencia->idPais = $dados['idPais'];
         }
         $rsAbrangencia->idUF = $dados['idUF']; //if(!empty($dados['idUF'])) { $rsAbrangencia->idUF = $dados['idUF']; }
-        $rsAbrangencia->idMunicipioIBGE = $dados['idMunicipioIBGE'];//if(!empty($dados['idmunicipioibge'])) { $rsAbrangencia->idmunicipioibge = $dados['idmunicipioibge']; }
+        $rsAbrangencia->idMunicipioIBGE = $dados['idMunicipioIBGE'];//if(!empty($dados['idMunicipioIBGE'])) { $rsAbrangencia->idMunicipioIBGE = $dados['idMunicipioIBGE']; }
         if (!empty($dados['Usuario'])) {
             $rsAbrangencia->Usuario = $dados['Usuario'];
         }

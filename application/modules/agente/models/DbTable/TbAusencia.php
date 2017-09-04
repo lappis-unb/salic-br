@@ -51,7 +51,7 @@ class Agente_Model_DbTable_TbAusencia extends MinC_Db_Table_Abstract
         			  );
 
         $select->joinInner(
-                array('n'=>'nomes'),'n.idAgente = a.idAgente',
+                array('n'=>'Nomes'),'n.idAgente = a.idAgente',
                 array('n.Descricao as nome'),
             $this->_schema
         );

@@ -180,69 +180,72 @@ class tbDistribuirParecer extends MinC_Db_Table_Abstract
     }// fecha m�todo buscarHistorico()
 
 
-    /**
-	 * M�todo que lista os projetos na tela inicial do UC 103 ( Gerenciar Parecerer )
-	 * @param Int
-	 * @return List
-	 */
-    public function listarProjetos($org_codigo) {
-            $select = $this->select();
-            $select->setIntegrityCheck(false);
-            $select->from(
-                    array('t' => $this->_name), array(
-                "DATEDIFF(DAY, t.DtDistribuicao, {$this->getDate()}) AS DIAS",
-                "t.idDistribuirParecer",
-                "t.idOrgao",
-                "t.idAgenteParecerista",
-                "t.DtDistribuicao",
-                "t.idProduto",
-                "t.DtDevolucao",
-                "t.TipoAnalise",
-                "t.FecharAnalise",
-                "t.DtEnvio",
-                "t.stPrincipal",
-                "tempoFimParecer" => new Zend_Db_Expr("CASE WHEN t.stPrincipal = 1 THEN 20 ELSE 10 END"),
-                "CONVERT(CHAR(10),t.DtDistribuicao,103) AS DtDistribuicaoPT",
-                "CONVERT(CHAR(10),t.DtEnvio,103) AS DtEnvioPT",
-//                "agentes.dbo.fnNome(t.idAgenteParecerista) AS nomeParecerista",
-                "DescricaoAnalise" => new Zend_Db_Expr("CASE WHEN TipoAnalise = 0 THEN 'Cont�udo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' ELSE 'Custo Administrativo' END"),
-                "sac.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise) AS Obs"
-            ));
-
-            $select->joinInner(
-                    array('p' => 'Projetos'), 't.idPRONAC = p.IdPRONAC', array('p.IdPRONAC', '(p.AnoProjeto + p.Sequencial) AS NrProjeto', 'p.NomeProjeto',
-                "DtSolicitacao" => new Zend_Db_Expr('(select top 1 DtSolicitacao from tbDiligencia dili1 where dili1.idPronac = p.idPronac and dili1.idProduto = t.idProduto order by dili1.DtSolicitacao desc)'),
-                "DtResposta" => new Zend_Db_Expr('(select top 1 DtResposta from tbDiligencia dili2 where dili2.idPronac = p.idPronac and dili2.idProduto = t.idProduto order by dili2.DtSolicitacao desc)'),
-                "stEnviado" => new Zend_Db_Expr('(select top 1 stEnviado from tbDiligencia dili3 where dili3.idPronac = p.idPronac and dili3.idProduto = t.idProduto order by dili3.DtSolicitacao desc)'),
-                "tempoFimDiligencia" => new Zend_Db_Expr("(select top 1 CASE WHEN stProrrogacao = 'N' THEN 20 ELSE 40 END AS tempoFimDiligencia from tbDiligencia dili4 where dili4.idPronac = p.idPronac and dili4.idProduto = t.idProduto order by dili4.DtSolicitacao desc)")
-                    )
-            );
-            $select->joinInner(
-                    array('r' => 'Produto'), 't.idProduto = r.Codigo', array('r.Descricao AS Produto')
-            );
-
-            $select->joinInner(
-                    array('a' => 'Area'), 'p.Area = a.Codigo', array('a.Descricao AS Area')
-            );
-
-            $select->joinInner(
-                    array('s' => 'Segmento'), 'p.Segmento = s.Codigo', array('s.Descricao AS Segmento')
-            );
-
-            $dadosWhere = array('t.stEstado = ?' => 0,
-                                't.FecharAnalise not in(1)' => '?',
-                                't.tipoanalise in (3,1)' => '?', //solucao para mostrar projetos novo e projeto do legado
-                                't.tipoanalise = (SELECT TOP 1 max(tipoanalise) FROM sac..tbDistribuirParecer WHERE idPRONAC = p.IdPRONAC and stEstado=0 and TipoAnalise in (1,3) )' => '?',  //solucao para mostrar projetos novo e projeto do legado
-                                'p.Situacao in (\'B11\', \'B14\')' => '',
-                                't.idOrgao = ?' => $org_codigo);
-
-            foreach ($dadosWhere as $coluna => $valor) {
-                $select->where($coluna, $valor);
-            }
-            $select->order(array('(p.AnoProjeto + p.Sequencial)', 't.stPrincipal desc', 't.DtDevolucao', 't.DtEnvio', 'r.Descricao'));
-
-            return $this->fetchAll($select);
-	} // fecha m�todo listarProjetos()
+//    /**
+//	 * M�todo que lista os projetos na tela inicial do UC 103 ( Gerenciar Parecerer )
+//	 * @param Int
+//	 * @return List
+//	 */
+//    public function listarProjetos($org_codigo) {
+//            $select = $this->select();
+//            $select->setIntegrityCheck(false);
+//
+//            $objDbTableAgente = new Agente_Model_DbTable_Agentes();
+//            $objDbTableAgente->obterNomeAgente()
+//            $select->from(
+//                    array('t' => $this->_name), array(
+//                "DATEDIFF(DAY, t.DtDistribuicao, {$this->getDate()}) AS DIAS",
+//                "t.idDistribuirParecer",
+//                "t.idOrgao",
+//                "t.idAgenteParecerista",
+//                "t.DtDistribuicao",
+//                "t.idProduto",
+//                "t.DtDevolucao",
+//                "t.TipoAnalise",
+//                "t.FecharAnalise",
+//                "t.DtEnvio",
+//                "t.stPrincipal",
+//                "tempoFimParecer" => new Zend_Db_Expr("CASE WHEN t.stPrincipal = 1 THEN 20 ELSE 10 END"),
+//                "CONVERT(CHAR(10),t.DtDistribuicao,103) AS DtDistribuicaoPT",
+//                "CONVERT(CHAR(10),t.DtEnvio,103) AS DtEnvioPT",
+////                "agentes.dbo.fnNome(t.idAgenteParecerista) AS nomeParecerista",
+//                "DescricaoAnalise" => new Zend_Db_Expr("CASE WHEN TipoAnalise = 0 THEN 'Cont�udo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' ELSE 'Custo Administrativo' END"),
+//                "sac.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise) AS Obs"
+//            ));
+//
+//            $select->joinInner(
+//                    array('p' => 'Projetos'), 't.idPRONAC = p.IdPRONAC', array('p.IdPRONAC', '(p.AnoProjeto + p.Sequencial) AS NrProjeto', 'p.NomeProjeto',
+//                "DtSolicitacao" => new Zend_Db_Expr('(select top 1 DtSolicitacao from tbDiligencia dili1 where dili1.idPronac = p.idPronac and dili1.idProduto = t.idProduto order by dili1.DtSolicitacao desc)'),
+//                "DtResposta" => new Zend_Db_Expr('(select top 1 DtResposta from tbDiligencia dili2 where dili2.idPronac = p.idPronac and dili2.idProduto = t.idProduto order by dili2.DtSolicitacao desc)'),
+//                "stEnviado" => new Zend_Db_Expr('(select top 1 stEnviado from tbDiligencia dili3 where dili3.idPronac = p.idPronac and dili3.idProduto = t.idProduto order by dili3.DtSolicitacao desc)'),
+//                "tempoFimDiligencia" => new Zend_Db_Expr("(select top 1 CASE WHEN stProrrogacao = 'N' THEN 20 ELSE 40 END AS tempoFimDiligencia from tbDiligencia dili4 where dili4.idPronac = p.idPronac and dili4.idProduto = t.idProduto order by dili4.DtSolicitacao desc)")
+//                    )
+//            );
+//            $select->joinInner(
+//                    array('r' => 'Produto'), 't.idProduto = r.Codigo', array('r.Descricao AS Produto')
+//            );
+//
+//            $select->joinInner(
+//                    array('a' => 'Area'), 'p.Area = a.Codigo', array('a.Descricao AS Area')
+//            );
+//
+//            $select->joinInner(
+//                    array('s' => 'Segmento'), 'p.Segmento = s.Codigo', array('s.Descricao AS Segmento')
+//            );
+//
+//            $dadosWhere = array('t.stEstado = ?' => 0,
+//                                't.FecharAnalise not in(1)' => '?',
+//                                't.tipoanalise in (3,1)' => '?', //solucao para mostrar projetos novo e projeto do legado
+//                                't.tipoanalise = (SELECT TOP 1 max(tipoanalise) FROM sac..tbDistribuirParecer WHERE idPRONAC = p.IdPRONAC and stEstado=0 and TipoAnalise in (1,3) )' => '?',  //solucao para mostrar projetos novo e projeto do legado
+//                                'p.Situacao in (\'B11\', \'B14\')' => '',
+//                                't.idOrgao = ?' => $org_codigo);
+//
+//            foreach ($dadosWhere as $coluna => $valor) {
+//                $select->where($coluna, $valor);
+//            }
+//            $select->order(array('(p.AnoProjeto + p.Sequencial)', 't.stPrincipal desc', 't.DtDevolucao', 't.DtEnvio', 'r.Descricao'));
+//
+//            return $this->fetchAll($select);
+//	} // fecha m�todo listarProjetos()
 
 
         public function verificarProdutosSecundarios($idPronac, $codOrgao) {

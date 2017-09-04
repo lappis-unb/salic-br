@@ -35,14 +35,19 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
      * @param null $schema
      * @return Zend_Db_Select
      */
-    public function join($name, $cond, $cols = self::SQL_WILDCARD, $schema = null)
+    public function join(
+        $name,
+        $cond,
+        $cols = self::SQL_WILDCARD,
+        $schema = null
+    )
     {
         if ($this->isUseSchema) {
             $schema = $this->getSchema($schema);
         }
 
         if ($this->databaseAdapter instanceof MinC_Db_Adapter_Pdo_Pgsql) {
-            $cond = $this->databaseAdapter->treatJoinConditionDoubleQuotes($cond);
+            $cond = $this->databaseAdapter->treatConditionDoubleQuotes($cond);
         }
 
         return parent::join($name, $cond, $cols, $schema);
@@ -62,27 +67,32 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
         }
 
         if ($this->databaseAdapter instanceof MinC_Db_Adapter_Pdo_Pgsql) {
-            $cond = $this->databaseAdapter->treatJoinConditionDoubleQuotes($cond);
+            $cond = $this->databaseAdapter->treatConditionDoubleQuotes($cond);
         }
 
         return parent::joinInner($name, $cond, $cols, $schema);
     }
 
-    /*
-    * @param  array|string|Zend_Db_Expr $name The table name.
-    * @param  string $cond Join on this condition.
-    * @param  array|string $cols The columns to select from the joined table.
-    * @param  string $schema The database name to specify, if any.
-    * @return Zend_Db_Select This Zend_Db_Select object.
-    */
-    public function joinLeft($name, $cond, $cols = self::SQL_WILDCARD, $schema = null)
+    /**
+     * @param  array|string|Zend_Db_Expr $name The table name.
+     * @param  string $cond Join on this condition.
+     * @param  array|string $cols The columns to select from the joined table.
+     * @param  string $schema The database name to specify, if any.
+     * @return Zend_Db_Select This Zend_Db_Select object.
+     */
+    public function joinLeft(
+        $name,
+        $cond,
+        $cols = self::SQL_WILDCARD,
+        $schema = null
+    )
     {
         if ($this->isUseSchema) {
             $schema = $this->getSchema($schema);
         }
 
         if ($this->databaseAdapter instanceof MinC_Db_Adapter_Pdo_Pgsql) {
-            $cond = $this->databaseAdapter->treatJoinConditionDoubleQuotes($cond);
+            $cond = $this->databaseAdapter->treatConditionDoubleQuotes($cond);
             $cols = $this->databaseAdapter->treatColumnsDoubleQuotes($cols);
         }
 
@@ -111,7 +121,7 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
     public function where($cond, $value = null, $type = null)
     {
         if ($this->databaseAdapter instanceof MinC_Db_Adapter_Pdo_Pgsql) {
-            $cond = $this->databaseAdapter->treatWhereConditionsDoubleQuotes($cond);
+            $cond = $this->databaseAdapter->treatConditionDoubleQuotes($cond);
         }
 
         $this->_parts[self::WHERE][] = $this->_where($cond, $value, $type, true);

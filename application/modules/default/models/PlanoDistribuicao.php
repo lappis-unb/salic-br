@@ -261,7 +261,7 @@ class PlanoDistribuicao extends MinC_Db_Table_Abstract
 
         $slct->joinInner(array('uf' => 'uf'), 'uf.CodUfIbge = d.idUF', 'uf.Descricao AS DescricaoUf', $this->_schema);
 
-        $slct->joinInner(array('mun' => 'municipios'), 'mun.idmunicipioibge = d.idMunicipio','mun.Descricao as DescricaoMunicipio', $this->getSchema('agentes'));
+        $slct->joinInner(array('mun' => 'municipios'), 'mun.idMunicipioIBGE = d.idMunicipio','mun.Descricao as DescricaoMunicipio', $this->getSchema('agentes'));
 
         $slct->joinInner(array("b"=>"produto"),
             "p.idproduto = b.codigo",

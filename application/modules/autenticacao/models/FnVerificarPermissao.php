@@ -101,7 +101,7 @@ class Autenticacao_Model_FnVerificarPermissao extends MinC_Db_Table_Abstract {
         case 1:
             $sql = $db->select()
                 ->from(array('a' => 'PreProjeto'), array('a.idAgente', 'a.idusuario'), $this->getSchema('sac'))
-                ->join(array('b' => 'Agentes'), '(a.idAgente = b.idAgente)', array('b.CNPJCPF', 'b.tipopessoa'), $this->getSchema('agentes'))
+                ->join(array('b' => 'Agentes'), '(a.idAgente = b.idAgente)', array('b.CNPJCPF', 'b.TipoPessoa'), $this->getSchema('agentes'))
                 ->where('idpreprojeto = ?', $idPreProjeto)
                 ;
 

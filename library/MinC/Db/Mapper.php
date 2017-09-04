@@ -1,19 +1,5 @@
 <?php
 
-/**
- * Class MinC_Db_Mapper
- *
- * @name MinC_Db_Mapper
- * @package default
- * @subpackage controllers
- * @version $Id$
- *
- * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
- * @since ${DATE}
- *
- * @copyright © 2012 - Ministerio da Cultura - Todos os direitos reservados.
- * @link http://salic.cultura.gov.br
- */
 class MinC_Db_Mapper
 {
     protected $_isBeginTransaction = false;
@@ -61,26 +47,15 @@ class MinC_Db_Mapper
     }
 
     /**
-     *
-     * @name getDbTable
      * @return MinC_Db_Table_Abstract
-     *
-     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
-     * @since  ${DATE}
      */
     public function getDbTable()
     {
-//        if (null === $this->_dbTable) {
-//            $this->setDbTable('Agente_Model_DbTable_Agentes');
-//        }
         return $this->_dbTable;
     }
 
     /**
      * @see Zend_Db_Adapter_Abstract::beginTransaction
-     *
-     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
-     * @since  06/09/2016
      */
     public function beginTransaction()
     {
@@ -91,9 +66,6 @@ class MinC_Db_Mapper
 
     /**
      * @see Zend_Db_Adapter_Abstract::rollBack
-     *
-     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
-     * @since  06/09/2016
      */
     public function rollBack()
     {
@@ -103,9 +75,6 @@ class MinC_Db_Mapper
 
     /**
      * @see Zend_Db_Adapter_Abstract::commit
-     *
-     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
-     * @since  06/09/2016
      */
     public function commit()
     {
@@ -142,13 +111,6 @@ class MinC_Db_Mapper
     }
 
     /**
-     *
-     * @name save
-     * @param $model
-     *
-     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
-     * @since  01/09/2016
-     *
      * @todo deixar a pk podendo ser array, atualmente so pode sendo string utilizando o reset.
      */
     public function save($model)
@@ -182,19 +144,6 @@ class MinC_Db_Mapper
         }
     }
 
-    /**
-     * Retorna o resultado com chave e valor apenas.
-     *
-     * @name fetchPairs
-     * @param string $key
-     * @param string $value
-     * @param array $where
-     * @param string $order
-     * @return array
-     *
-     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
-     * @since  01/09/2016
-     */
     public function fetchPairs($key, $value , array $where = [], $order = '')
     {
         return $this->getDbTable()->fetchPairs($key, $value, $where, $order);

@@ -30,7 +30,7 @@ class Agente_Model_DbTable_EnderecoNacional extends MinC_Db_Table_Abstract
      * @var bool
      * @access protected
      */
-    protected $_name = 'endereconacional';
+    protected $_name = 'EnderecoNacional';
 
     /**
      * _primary
@@ -57,7 +57,7 @@ class Agente_Model_DbTable_EnderecoNacional extends MinC_Db_Table_Abstract
 
         $m = array(
             'm.Descricao as municipio',
-            'm.idmunicipioibge as codmun',
+            'm.idMunicipioIBGE as codmun',
         );
 
         $u = array(
@@ -67,11 +67,11 @@ class Agente_Model_DbTable_EnderecoNacional extends MinC_Db_Table_Abstract
 
         $sql = $this->select()
             ->setIntegrityCheck(false)
-            ->from(array('e' => 'endereconacional'), $this->_getCols(), $this->_schema)
+            ->from(array('e' => 'EnderecoNacional'), $this->_getCols(), $this->_schema)
             ->joinLeft(array('ve' => 'Verificacao'), 've.idverificacao = e.tipoendereco', $ve, $this->_schema)
-            ->joinLeft(array('m' => 'municipios'), 'm.idmunicipioibge = e.cidade', $m, $this->_schema)
+            ->joinLeft(array('m' => 'municipios'), 'm.idMunicipioIBGE = e.cidade', $m, $this->_schema)
             ->joinLeft(array('u' => 'uf'), 'U.iduf = e.uf', $u, $this->_schema)
-            ->joinLeft(array('vl' => 'Verificacao'), 'vl.idverificacao = e.tipologradouro', array('vl.Descricao as dstipologradouro'), $this->_schema)
+            ->joinLeft(array('vl' => 'Verificacao'), 'vl.idverificacao = e.TipoLogradouro', array('vl.Descricao as dsTipoLogradouro'), $this->_schema)
             ->where('e.idAgente = ?', $idAgente)
             ->order(array('status DESC'))
         ;

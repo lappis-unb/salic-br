@@ -10,11 +10,11 @@
  */
 class Agente_Model_EnderecoNacionalDAO extends MinC_Db_Table_Abstract
 {
-	protected $_name = 'endereconacional';
+	protected $_name = 'EnderecoNacional';
 	protected $_schema = 'agentes';
 
     /**
-     * buscarendereconacional
+     * buscarEnderecoNacional
      *
      * @param mixed $idagente
      * @static

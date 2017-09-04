@@ -18,13 +18,11 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
     protected $_primary = 'idAgente';
 
     /**
-     * Metodo para buscar agentes
      * @access public
-     * @static
      * @param string $cnpjcpf
      * @param string $nome
      * @param integer $idAgente
-     * @return object
+     * @return array
      */
     public function buscarAgentes($cnpjcpf = null, $nome = null, $idAgente = null)
     {
@@ -37,29 +35,29 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
             'a.idAgente'
             ,'a.CNPJCPF'
             ,'a.CNPJCPFSuperior'
-            ,'a.tipopessoa'
+            ,'a.TipoPessoa'
         );
 
         $e = array(
-            'e.tipologradouro'
-            ,'e.cidade'
-            ,'e.cep as cep'
-            ,'e.uf'
-            ,'e.status'
-            ,'e.tipoendereco'
-            ,'e.idendereco'
-            ,'e.logradouro'
-            ,'e.numero'
-            ,'e.complemento'
-            ,'e.bairro'
-            ,'e.divulgar as divulgarendereco'
-            ,'e.status as enderecocorrespondencia'
+            'e.TipoLogradouro'
+            ,'e.Cidade'
+            ,'e.Cep as cep'
+            ,'e.UfDescricao'
+            ,'e.Status'
+            ,'e.TipoEndereco'
+            ,'e.idEndereco'
+            ,'e.Logradouro'
+            ,'e.Numero'
+            ,'e.Complemento'
+            ,'e.Bairro'
+            ,'e.Divulgar as divulgarendereco'
+            ,'e.Status as enderecocorrespondencia'
         );
 
         $t = array(
-            't.sttitular'
-            ,'t.cdarea'
-            ,'t.cdsegmento'
+            't.stTitular'
+            ,'t.cdArea'
+            ,'t.cdSegmento'
         );
 
 //        $sql = $db->select()->distinct()->from(['a' => 'agentes'], $a, $schemaAgentes)
@@ -68,18 +66,17 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
             ->setIntegrityCheck(false)
             ->distinct()
             ->from(array('a' => 'Agentes'), $a, $schemaAgentes)
-            ->joinLeft(array('n' => 'nomes'), 'n.idAgente = a.idAgente', array('n.Descricao as nome'), $schemaAgentes)
-            ->joinLeft(array('e' => 'endereconacional'), 'e.idAgente = a.idAgente', $e, $schemaAgentes)
-            ->joinLeft(array('m' => 'municipios'), 'm.idmunicipioibge = e.cidade', '*', $schemaAgentes)
-            ->joinLeft(array('u' => 'uf'), 'u.iduf = e.uf', 'u.sigla as dsuf', $schemaAgentes)
-            ->joinLeft(array('ve' => 'Verificacao'), 've.idverificacao = e.tipoendereco', 've.Descricao as dstipoendereco', $schemaAgentes)
-            ->joinLeft(array('vl' => 'Verificacao'), 'vl.idverificacao = e.tipologradouro', 'vl.Descricao as dstipologradouro', $schemaAgentes)
+            ->joinLeft(array('n' => 'Nomes'), 'n.idAgente = a.idAgente', array('n.Descricao as nome'), $schemaAgentes)
+            ->joinLeft(array('e' => 'EnderecoNacional'), 'e.idAgente = a.idAgente', $e, $schemaAgentes)
+            ->joinLeft(array('m' => 'Municipios'), 'm.idMunicipioIBGE = e.Cidade', '*', $schemaAgentes)
+            ->joinLeft(array('u' => 'UF'), 'u.idUF = e.UF', 'u.sigla as dsuf', $schemaAgentes)
+            ->joinLeft(array('ve' => 'Verificacao'), 've.idVerificacao = e.TipoEndereco', 've.Descricao as dstipoendereco', $schemaAgentes)
+            ->joinLeft(array('vl' => 'Verificacao'), 'vl.idVerificacao = e.TipoLogradouro', 'vl.Descricao as dsTipoLogradouro', $schemaAgentes)
             ->joinLeft(array('t' => 'tbTitulacaoConselheiro'), 't.idAgente = a.idAgente', $t, $schemaAgentes)
             ->joinLeft(array('v' => 'Visao'), 'v.idAgente = a.idAgente', '*', $schemaAgentes)
-            ->joinLeft(array('sa' => 'Area'), 'sa.codigo = t.cdarea', 'sa.Descricao as dsarea', $schemaSac)
-            ->joinLeft(array('ss' => 'segmento'), 'ss.codigo = t.cdsegmento', 'ss.Descricao as dssegmento', $schemaSac)
-            ->where('a.tipopessoa = 0 or a.tipopessoa = 1')
-        ;
+            ->joinLeft(array('sa' => 'Area'), 'sa.Codigo = t.cdArea', 'sa.Descricao as dsarea', $this->getSchema('sac'))
+            ->joinLeft(array('ss' => 'Segmento'), 'ss.Codigo = t.cdSegmento', 'ss.Descricao as dssegmento', $this->getSchema('sac'))
+            ->where('a.TipoPessoa = 0 or a.TipoPessoa = 1');
 
         if (!empty($cnpjcpf)) {
             # busca pelo cpf/cnpj
@@ -93,7 +90,8 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
             $select->where('a.idAgente = ?',$idAgente);
         }
 
-        $select->order(array('e.status Desc', 'n.Descricao Asc'));
+//        $select->order(array('e.Status Desc', 'n.Descricao Asc'));
+
         $result = $this->fetchAll($select);
         $result = ($result)? $result->toArray() : array();
 
@@ -171,7 +169,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
         $slct->from(array('a' => $this->_name), '*', $this->_schema);
-        $slct->joinInner(array('m' => 'nomes'), 'a.idAgente=m.idAgente', array('*'), $this->_schema);
+        $slct->joinInner(array('m' => 'Nomes'), 'a.idAgente=m.idAgente', array('*'), $this->_schema);
 
         foreach ($where as $coluna => $valor) {
             $slct->where($coluna, $valor);
@@ -286,7 +284,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
             $this->_schema
         );
         $slct->joinInner(
-            array('nm' => 'nomes'), "nm.idAgente = ag.idAgente",
+            array('nm' => 'Nomes'), "nm.idAgente = ag.idAgente",
             array('nm.Descricao as nomeagente'),
             $this->_schema
 
@@ -365,7 +363,6 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
                 $select->where($coluna, $valor);
             }
         }
-
         return $this->fetchAll($select);
     }
 
@@ -697,7 +694,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
             array('v' => 'tbVinculo'), "v.idAgenteProponente = ag.idAgente ", array('v.siVinculo')
         );
         $sl->joinInner(
-            array('nm' => 'nomes'), "nm.idAgente = ag.idAgente", array('nm.Descricao')
+            array('nm' => 'Nomes'), "nm.idAgente = ag.idAgente", array('nm.Descricao')
         );
 
         foreach ($where as $key => $valor) {
@@ -967,5 +964,71 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         $slct->where(new Zend_Db_Expr('a.CNPJCPF = c.Cpf'));
 //        echo $slct;
         return $this->fetchAll($slct);
+    }
+
+    /**
+     * Migração da função fnNome do banco agentes
+     * @return varchar(150)
+     */
+    public function obterNomeAgente($idAgente) {
+
+        $objQuery = $this->select();
+        $objQuery->setIntegrityCheck(false);
+        $objQuery->from(
+            array('Agentes' => $this->_name),
+            array('TipoPessoa'),
+            $this->_schema
+        );
+
+        $objQuery->joinInner(
+            array('Nomes' => 'Nomes'),
+            'Nomes.idAgente = Agentes.idAgente',
+            array('Descricao'),
+            $this->_schema
+        );
+
+        $objQuery->where('Agentes.idAgente = ?', $idAgente);
+        $objQuery->where('Agentes.Status = ?', 1);
+
+        $resultadoBuscaAgente = $this->fetchRow($objQuery);
+        $nome = '';
+        if($resultadoBuscaAgente) {
+            $resultadoBuscaAgente = $resultadoBuscaAgente->toArray();
+            if($resultadoBuscaAgente['TipoPessoa'] == 0) {
+                $objQueryPessoaFisica = $this->select();
+                $objQueryPessoaFisica->setIntegrityCheck(false);
+                $objQueryPessoaFisica->from(
+                    array('Nomes' => 'Nomes'),
+                    array('Descricao'),
+                    $this->_schema
+                );
+                $objQueryPessoaFisica->where('idAgente = ?', $idAgente);
+                $objQueryPessoaFisica->where('TipoNome = ?', 18);
+                $resultadoPessoaFisica = $this->fetchRow($objQueryPessoaFisica);
+                $nome = 'Nome de pesssoa f&iacute;sica n&atilde;o informado';
+                if($resultadoPessoaFisica) {
+                    $resultadoPessoaFisica = $resultadoPessoaFisica->toArray();
+                    $nome = $resultadoPessoaFisica['Descricao'];
+                }
+            } else {
+                $objQueryPessoaJuridica = $this->select();
+                $objQueryPessoaJuridica->setIntegrityCheck(false);
+                $objQueryPessoaJuridica->from(
+                    array('Nomes' => 'Nomes'),
+                    array('Descricao'),
+                    $this->_schema
+                );
+                $objQueryPessoaJuridica->where('idAgente = ?', $idAgente);
+                $objQueryPessoaJuridica->where('TipoNome = ?', 19);
+                $resultadoPessoaJuridica = $this->fetchRow($objQueryPessoaJuridica);
+                $nome = 'Nome de pesssoa jur&iacute;dica n&atilde;o informado';
+                if($resultadoPessoaJuridica) {
+                    $resultadoPessoaJuridica = $resultadoPessoaJuridica->toArray();
+                    $nome = $resultadoPessoaJuridica['Descricao'];
+                }
+            }
+        }
+
+        return $nome;
     }
 }

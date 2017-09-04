@@ -157,7 +157,7 @@ class DistribuicaoProjetoComissao extends MinC_Db_Table_Abstract {
         $select->from(array('dpc' => $this->_name), array('dpc.IdPRONAC')
         );
         $select->joinInner(
-                array('nm' => 'nomes'), 'dpc.idAgente = nm.idAgente', array('nm.Descricao as nome'), 'agentes'
+                array('nm' => 'Nomes'), 'dpc.idAgente = nm.idAgente', array('nm.Descricao as nome'), 'agentes'
         );
         $select->where('dpc.idPronac = ?', $idpronac);
 

@@ -26,7 +26,7 @@ class Agente_Model_DbTable_TbVinculo extends MinC_Db_Table_Abstract{
         );
 
         $slct->joinInner(
-                array('nm' => 'nomes'), "nm.idAgente = ag.idAgente",
+                array('nm' => 'Nomes'), "nm.idAgente = ag.idAgente",
                 array('nm.Descricao as nomeproponente'),
                 $this->_schema
         );

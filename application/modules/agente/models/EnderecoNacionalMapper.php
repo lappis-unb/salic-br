@@ -41,7 +41,7 @@ class Agente_Model_EnderecoNacionalMapper extends MinC_Db_Mapper
                 'cidade' => $arrData['cidades'][$i],
                 'logradouro' => $arrData['logradouros'][$i],
                 'divulgar' => $arrData['divulgarEnderecos'][$i],
-                'tipologradouro' => $arrData['tipologradouros'][$i],
+                'TipoLogradouro' => $arrData['TipoLogradouros'][$i],
                 'numero' => $arrData['numeros'][$i],
                 'complemento' => $arrData['complementos'][$i],
                 'bairro' => $arrData['bairros'][$i],
