@@ -29,7 +29,10 @@ fi
 
 # X-Debug
 
-if ! [ -v $XDEBUG_REMOTE_ENABLE ] && [ "$XDEBUG_INSTALL" = "true" ] ; then
+echo '$XDEBUG_INSTALL >>>>'
+echo "$XDEBUG_INSTALL"
+
+if ! [ -v $XDEBUG_INSTALL ] ; then
 	pecl shell-test xdebug && echo "Package xdebug Installed" || (
 	    echo "[ ****************** ] Starting install of XDebug and dependencies."
 	    yes | pecl install xdebug
