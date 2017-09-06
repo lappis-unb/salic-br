@@ -998,9 +998,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
 
     /**
      * Migração da função fnNome do banco agentes
-     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
      * @return varchar(150)
-     * @todo Mover todas as chamadas da função 'fnNome' para o método 'obterNomeAgente'
      */
     public function obterNomeAgente($idAgente)
     {
