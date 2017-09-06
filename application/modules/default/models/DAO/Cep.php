@@ -3,8 +3,9 @@
 class Cep extends MinC_Db_Table_Abstract
 {
 
-    protected $_schema = 'bddne.scDNE';
-    protected $_name = 'VW_ENDERECO';
+    protected $_schema = 'bddne';
+    protected $_name = 'scDNE.VW_ENDERECO';
+    protected $_primary = 'cep';
 
     public function __construct()
     {
@@ -27,7 +28,8 @@ class Cep extends MinC_Db_Table_Abstract
     {
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_ASSOC);
-
+        $objQuery = $this->select();
+        
         $cols = array(
             'cep',
             'logradouro',
@@ -41,9 +43,15 @@ class Cep extends MinC_Db_Table_Abstract
             'dscidademunicipios as dscidadeuf'
         );
 
-        $sql = $db->select()
-            ->from($this->_name, $cols, $this->_schema)
-            ->where('cep = ?', $cep);
+        $objQuery->from(
+            $this->_name,
+            $cols,
+            $this->_schema
+        );
+        $objQuery->where('cep = ?', $cep);
+
+        xd($objQuery->assemble(), $this->_name);
+
         return $db->fetchRow($sql);
     }
 }
