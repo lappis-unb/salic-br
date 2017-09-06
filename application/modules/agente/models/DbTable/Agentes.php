@@ -396,13 +396,18 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
     {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
-        $slct->from(array('a' => $this->_name), array('*'));
-
-        $slct->joinInner(array('n' => 'Nomes'), 'a.idAgente = n.idAgente', array('n.idAgente AS idParecerista', 'n.Descricao AS Nome')
+        $slct->from(
+            array('a' => $this->_name),
+            array('*')
         );
 
-        $slct->joinInner(array('v' => 'Visao'), 'n.idAgente = v.idAgente', array()
+        $slct->joinInner(
+            array('n' => 'Nomes'),
+            'a.idAgente = n.idAgente',
+            array('n.idAgente AS idParecerista', 'n.Descricao AS Nome')
         );
+
+        $slct->joinInner(array('v' => 'Visao'), 'n.idAgente = v.idAgente', array());
 
         $slct->where('v.Visao = ?', 209);
         $slct->where('n.TipoNome = ?', 18);
