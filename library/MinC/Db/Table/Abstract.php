@@ -11,7 +11,9 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
     public function init()
     {
         $this->setName($this->getName($this->_name));
-        $this->setDatabase($this->getBanco($this->_banco));
+        if(isset($this->_banco)) {
+            $this->setDatabase($this->getBanco($this->_banco));
+        }
         $this->setSchema($this->getSchema($this->_schema));
     }
 
@@ -78,6 +80,13 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
     {
         $this->createConnection();
         parent::__construct();
+    }
+
+    protected function _setupTableName()
+    {
+        if (! $this->_name) {
+            $this->_name = get_class($this);
+        }
     }
 
     private function createConnection()
