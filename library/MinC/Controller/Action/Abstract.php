@@ -62,7 +62,10 @@ abstract class MinC_Controller_Action_Abstract extends Zend_Controller_Action
             $this->view->idAgente = $idAgente;
         }
 //        @$cpf = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_identificacao : $auth->getIdentity()->Cpf;
-        $cpf = isset($arrAuth['usu_codigo']) ? $arrAuth['usu_identificacao'] : $arrAuth['cpf'];
+        $cpf = "";
+        if($arrAuth) {
+            $cpf = isset($arrAuth['usu_codigo']) ? $arrAuth['usu_identificacao'] : $arrAuth['cpf'];
+        }
 
         if ($cpf) {
 

@@ -40,8 +40,8 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
         $cond,
         $cols = self::SQL_WILDCARD,
         $schema = null
-    )
-    {
+    ) {
+    
         if ($this->isUseSchema) {
             $schema = $this->getSchema($schema);
         }
@@ -85,8 +85,8 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
         $cond,
         $cols = self::SQL_WILDCARD,
         $schema = null
-    )
-    {
+    ) {
+    
         if ($this->isUseSchema) {
             $schema = $this->getSchema($schema);
         }
@@ -131,7 +131,6 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
     public function assemble()
     {
         if ($this->databaseAdapter instanceof MinC_Db_Adapter_Pdo_Pgsql) {
-
             $sql = self::SQL_SELECT;
             foreach (array_keys(self::$_partsInit) as $part) {
                 $method = '_render' . ucfirst($part);
@@ -161,6 +160,135 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
             return $sql;
         } else {
             return parent::assemble();
+        }
+    }
+
+    protected function _join(
+        $type,
+        $name,
+        $cond,
+        $cols,
+        $schema = null
+    ) {
+        if ($this->databaseAdapter instanceof MinC_Db_Adapter_Pdo_Pgsql) {
+            if (!in_array($type, self::$_joinTypes) && $type != self::FROM) {
+                /**
+                 * @see Zend_Db_Select_Exception
+                 */
+                require_once 'Zend/Db/Select/Exception.php';
+                throw new Zend_Db_Select_Exception("Invalid join type '$type'");
+            }
+    
+            if (count($this->_parts[self::UNION])) {
+                require_once 'Zend/Db/Select/Exception.php';
+                throw new Zend_Db_Select_Exception("Invalid use of table with " . self::SQL_UNION);
+            }
+    
+            if (empty($name)) {
+                $correlationName = $tableName = '';
+            } elseif (is_array($name)) {
+                // Must be array($correlationName => $tableName) or array($ident, ...)
+                foreach ($name as $_correlationName => $_tableName) {
+                    if (is_string($_correlationName)) {
+                        // We assume the key is the correlation name and value is the table name
+                        $tableName = $_tableName;
+                        $correlationName = $_correlationName;
+                    } else {
+                        // We assume just an array of identifiers, with no correlation name
+                        $tableName = $_tableName;
+                        $correlationName = $this->_uniqueCorrelation($tableName);
+                    }
+                    break;
+                }
+            } elseif ($name instanceof Zend_Db_Expr|| $name instanceof Zend_Db_Select) {
+                $tableName = $name;
+                $correlationName = $this->_uniqueCorrelation('t');
+            } elseif (preg_match('/^(.+)\s+AS\s+(.+)$/i', $name, $m)) {
+                $tableName = $m[1];
+                $correlationName = $m[2];
+            } else {
+                $tableName = $name;
+                $correlationName = $this->_uniqueCorrelation($tableName);
+            }
+    
+            // Schema from table name overrides schema argument
+            // if (!is_object($tableName) && false !== strpos($tableName, '.')) {
+            //     list($schema, $tableName) = explode('.', $tableName);
+            // }
+    
+            $lastFromCorrelationName = null;
+            if (!empty($correlationName)) {
+                if (array_key_exists($correlationName, $this->_parts[self::FROM])) {
+                    /**
+                     * @see Zend_Db_Select_Exception
+                     */
+                    require_once 'Zend/Db/Select/Exception.php';
+                    throw new Zend_Db_Select_Exception("You cannot define a correlation name '$correlationName' more than once");
+                }
+    
+                if ($type == self::FROM) {
+                    // append this from after the last from joinType
+                    $tmpFromParts = $this->_parts[self::FROM];
+                    $this->_parts[self::FROM] = array();
+                    // move all the froms onto the stack
+                    while ($tmpFromParts) {
+                        $currentCorrelationName = key($tmpFromParts);
+                        if ($tmpFromParts[$currentCorrelationName]['joinType'] != self::FROM) {
+                            break;
+                        }
+                        $lastFromCorrelationName = $currentCorrelationName;
+                        $this->_parts[self::FROM][$currentCorrelationName] = array_shift($tmpFromParts);
+                    }
+                } else {
+                    $tmpFromParts = array();
+                }
+                $this->_parts[self::FROM][$correlationName] = array(
+                    'joinType'      => $type,
+                    'schema'        => $schema,
+                    'tableName'     => $tableName,
+                    'joinCondition' => $cond
+                    );
+                while ($tmpFromParts) {
+                    $currentCorrelationName = key($tmpFromParts);
+                    $this->_parts[self::FROM][$currentCorrelationName] = array_shift($tmpFromParts);
+                }
+            }
+    
+            // add to the columns from this joined table
+            if ($type == self::FROM && $lastFromCorrelationName == null) {
+                $lastFromCorrelationName = true;
+            }
+            $this->_tableCols(
+                $correlationName, 
+                $cols, 
+                $lastFromCorrelationName
+            );
+    
+            return $this;
+        } else {
+            return parent::_join(
+                $type,
+                $name,
+                $cond,
+                $cols,
+                $schema
+            );
+        }
+    }
+
+    private function _uniqueCorrelation($name)
+    {
+        if ($this->databaseAdapter instanceof MinC_Db_Adapter_Pdo_Pgsql) {
+            $c = $name;
+            if (is_array($name)) {
+                $c = end($name);
+            }
+            for ($i = 2; array_key_exists($c, $this->_parts[self::FROM]); ++$i) {
+                $c = $name . '_' . (string) $i;
+            }
+            return $c;
+        } else {
+            return parent::_uniqueCorrelation($name);
         }
     }
 }

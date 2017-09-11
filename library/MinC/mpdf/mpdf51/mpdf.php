@@ -47,7 +47,7 @@ $errorlevel=error_reporting($errorlevel & ~E_NOTICE);
 //error_reporting(E_ALL);
 
 if(function_exists("date_default_timezone_set") and function_exists("date_default_timezone_get"))
-@date_default_timezone_set(@date_default_timezone_get());
+date_default_timezone_set('America/Araguaina');
 if (!function_exists("mb_strlen")) { die("Error - mPDF requires mb_string functions. Ensure that PHP is compiled with php_mbstring.dll enabled."); }
 
 // mPDF 5.0
