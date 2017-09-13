@@ -163,54 +163,6 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
         return $this->_adapter->quoteTableAs($tableName, $correlationName, true);
     }
 
-    /**
-     * Render FROM clause
-     *
-     * @param string   $sql SQL query
-     * @return string
-     */
-    protected function _renderFrom($sql)
-    {
-        /*
-         * If no table specified, use RDBMS-dependent solution
-         * for table-less query.  e.g. DUAL in Oracle.
-         */
-        if (empty($this->_parts[self::FROM])) {
-            $this->_parts[self::FROM] = $this->_getDummyTable();
-        }
-
-        $from = array();
-
-        foreach ($this->_parts[self::FROM] as $correlationName => $table) {
-            $tmp = '';
-
-            $joinType = ($table['joinType'] == self::FROM) ? self::INNER_JOIN : $table['joinType'];
-
-            // Add join clause (if applicable)
-            if (! empty($from)) {
-                $tmp .= ' ' . strtoupper($joinType) . ' ';
-            }
-
-            $tmp .= $this->_getQuotedSchema($table['schema']);
-            $tmp .= $this->_getQuotedTable($table['tableName'], $correlationName);
-
-            // Add join conditions (if applicable)
-            if (!empty($from) && ! empty($table['joinCondition'])) {
-                $tmp .= ' ' . self::SQL_ON . ' ' . $table['joinCondition'];
-            }
-
-            // Add the table name and condition add to the list
-            $from[] = $tmp;
-        }
-
-        // Add the list of all joins
-        if (!empty($from)) {
-            $sql .= ' ' . self::SQL_FROM . ' ' . implode("\n", $from);
-        }
-
-        return $sql;
-    }
-
     public function assemble()
     {
         if ($this->databaseAdapter instanceof MinC_Db_Adapter_Pdo_Pgsql) {
