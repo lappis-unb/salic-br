@@ -80,7 +80,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
             ->joinLeft(array('v' => 'Visao'), 'v.idAgente = a.idAgente', '*', $schemaAgentes)
             ->joinLeft(array('sa' => 'Area'), 'sa.Codigo = t.cdArea', 'sa.Descricao as dsarea', $this->getSchema('sac'))
             ->joinLeft(array('ss' => 'Segmento'), 'ss.Codigo = t.cdSegmento', 'ss.Descricao as dssegmento', $this->getSchema('sac'))
-            ->where('a.TipoPessoa = 0 or a.TipoPessoa = 1');
+            ->where('a.TipoPessoa = false or a.TipoPessoa = true');
 
         if (!empty($cnpjcpf)) {
             # busca pelo cpf/cnpj
