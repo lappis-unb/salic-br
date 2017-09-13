@@ -199,8 +199,8 @@
             <div class="card-panel hoverable">
                 <label>Novo Endere&ccedil;o</label>
                 <div class="row">
-                    <div class="input-field col s3">
-                        <input class="input_simples" type="text" name="cep" id="cep" maxlength="10"
+                    <div class="input-field col s2">
+                        <input class="input_simples" type="text" name="cep" id="cep"
                                onkeyup="mascara(this, format_cep);" onblur="buscarcep(this.value);"
                                onclick="limpar_campo(this, '');" onkeypress="limpar_campo(this, '');"
                                onblur="restaurar_campo(this, '');" onmouseout="restaurar_campo(this, '');" value=""/>
@@ -225,9 +225,8 @@
                         <label for="uf">UF *</label> <br/>
                         <span id="erroUf" class="spanError"></span>
                     </div>
-                    <div class="input-field col s2">
-                        <select name="cidade" id="cidade" disabled="disabled" class="input_simples"
-                                style="width: 250px;">
+                    <div class="input-field col s3">
+                        <select name="cidade" id="cidade" disabled="disabled" class="input_simples">
                             <option value="0"> - Selecione -</option>
 
                             <?php if ($this->combocidades): ?>
@@ -274,9 +273,10 @@
                         <label for="tipoLogradouro">Tipo de Logradouro *</label> <br/>
                         <span id="erroTipoLogradouro" class="spanError"></span>
                     </div>
-                    <div class="input-field col s2">
-                        <input class="input_simples" type="text" disabled="disabled" name="logradouro" id="logradouro"
-                               maxlength="50" size="30"/>
+                </div>
+                <div class="row">
+                    <div class="input-field col s5">
+                        <input class="input_simples" type="text" disabled name="logradouro" id="logradouro" value=" "/>
                         <label for="logradouro">Logradouro *</label> <br/>
                         <span id="erroLogradouro" class="spanError"></span>
                     </div>
@@ -291,12 +291,15 @@
                         <label for="complemento">Complemento</label> <br/>
                         <span id="erroComplemento" class="spanError"></span>
                     </div>
-                    <div class="input-field col s2">
-                        <input class="input_simples" type="text" disabled="disabled" name="bairro" id="bairro"
-                               maxlength="70" size="40"/>
+                </div>
+                <div class="row">
+                    <div class="input-field col s5">
+                        <input class="input_simples" type="text" disabled name="bairro" id="bairro" value=" "/>
                         <label for="bairro">Bairro *</label> <br/>
                         <span id="erroBairro" class="spanError"></span>
                     </div>
+                </div>
+                <div class="row">
                     <div class="input-field col s3">
                         <p>Autorizo divulgar o endere&ccedil;o?</p>
                         <p>
