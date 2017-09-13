@@ -145,7 +145,11 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
                     $field .= $this->addDoubleQuote($fieldPiece);
                 }
             } else {
-                if (!is_numeric($field) && strpos($field, "'") === false) {
+                if (
+                    !is_numeric($field) && strpos($field, "'") === false
+                    && $field != "false"
+                    && $field != "true"
+                ) {
                     $field = '"' . $field . '"';
                 }
             }
