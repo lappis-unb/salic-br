@@ -128,6 +128,89 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
         return $this;
     }
 
+    protected function _renderColumns($sql)
+    {
+        if (!count($this->_parts[self::COLUMNS])) {
+            return null;
+        }
+
+        $columns = array();
+        foreach ($this->_parts[self::COLUMNS] as $columnEntry) {
+            list($correlationName, $column, $alias) = $columnEntry;
+            if ($column instanceof Zend_Db_Expr) {
+                $columns[] = $this->_adapter->quoteColumnAs($column, $alias, true);
+            } else {
+                if ($column == self::SQL_WILDCARD) {
+                    $column = new Zend_Db_Expr(self::SQL_WILDCARD);
+                    $alias = null;
+                }
+                if (empty($correlationName)) {
+                    $columns[] = $this->_adapter->quoteColumnAs($column, $alias, true);
+                } else {
+                    $columns[] = $this->_adapter->quoteColumnAs(array($correlationName, $column), $alias, true);
+                }
+            }
+        }
+
+        return $sql .= ' ' . implode(', ', $columns);
+    }
+
+    protected function _getQuotedTable($tableName, $correlationName = null)
+    {
+        if ($this->databaseAdapter instanceof MinC_Db_Adapter_Pdo_Pgsql) {
+            return $this->databaseAdapter->quoteTableAs($tableName, $correlationName, true);
+        }
+        return $this->_adapter->quoteTableAs($tableName, $correlationName, true);
+    }
+
+    /**
+     * Render FROM clause
+     *
+     * @param string   $sql SQL query
+     * @return string
+     */
+    protected function _renderFrom($sql)
+    {
+        /*
+         * If no table specified, use RDBMS-dependent solution
+         * for table-less query.  e.g. DUAL in Oracle.
+         */
+        if (empty($this->_parts[self::FROM])) {
+            $this->_parts[self::FROM] = $this->_getDummyTable();
+        }
+
+        $from = array();
+
+        foreach ($this->_parts[self::FROM] as $correlationName => $table) {
+            $tmp = '';
+
+            $joinType = ($table['joinType'] == self::FROM) ? self::INNER_JOIN : $table['joinType'];
+
+            // Add join clause (if applicable)
+            if (! empty($from)) {
+                $tmp .= ' ' . strtoupper($joinType) . ' ';
+            }
+
+            $tmp .= $this->_getQuotedSchema($table['schema']);
+            $tmp .= $this->_getQuotedTable($table['tableName'], $correlationName);
+
+            // Add join conditions (if applicable)
+            if (!empty($from) && ! empty($table['joinCondition'])) {
+                $tmp .= ' ' . self::SQL_ON . ' ' . $table['joinCondition'];
+            }
+
+            // Add the table name and condition add to the list
+            $from[] = $tmp;
+        }
+
+        // Add the list of all joins
+        if (!empty($from)) {
+            $sql .= ' ' . self::SQL_FROM . ' ' . implode("\n", $from);
+        }
+
+        return $sql;
+    }
+
     public function assemble()
     {
         if ($this->databaseAdapter instanceof MinC_Db_Adapter_Pdo_Pgsql) {
