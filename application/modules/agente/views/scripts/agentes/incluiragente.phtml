@@ -2,11 +2,11 @@
     <?php if ($this->modulo != "movimentacaobancaria") : ?>
         <?php $ponto = ''; ?>
         <?php
-            if (empty($_GET['acao'])) {
-                $acao = "";
-            } else {
-                $acao = $_GET['acao'];
-            }
+        if (empty($_GET['acao'])) {
+            $acao = "";
+        } else {
+            $acao = $_GET['acao'];
+        }
         ?>
         <?php $ponto = '*'; ?>
         <?php echo $this->partial("agentes/inc/menu.inc.php", $this); ?>
@@ -31,18 +31,23 @@
         <h4 id="novo">Novo cadastro</h4>
         <form name="formCadAgentes" id="formCadAgentes" method="post"
               action="<?php echo $this->url(array('module' => 'agente', 'controller' => 'agentes', 'action' => 'salvaagentegeral'), null, true); ?>">
-            <input type="hidden" name="grupologado" id="grupologado" class="input_simples" value="<?php echo $this->grupoativo; ?>"/>
+            <input type="hidden" name="grupologado" id="grupologado" class="input_simples"
+                   value="<?php echo $this->grupoativo; ?>"/>
             <input type="hidden" name="acao" id="acao" value="<?php echo $acao; ?>"/>
             <input type="hidden" name="idResponsavel" id="idResponsavel"
                    value="<?php echo $this->idResponsavelKeyLog; ?>"/>
             <?php if ($this->modulo != "movimentacaobancaria") : ?>
-                <input type="hidden" name="movimentacaobancaria" id="movimentacaobancaria" class="input_simples" value=""/>
+                <input type="hidden" name="movimentacaobancaria" id="movimentacaobancaria" class="input_simples"
+                       value=""/>
             <?php else : ?>
-                <input type="hidden" name="movimentacaobancaria" id="movimentacaobancaria" class="input_simples" value="true"/>
-                <input type="hidden" name="caminho" id="caminho" class="input_simples" value="<?php echo $this->caminho; ?>"/>
+                <input type="hidden" name="movimentacaobancaria" id="movimentacaobancaria" class="input_simples"
+                       value="true"/>
+                <input type="hidden" name="caminho" id="caminho" class="input_simples"
+                       value="<?php echo $this->caminho; ?>"/>
                 <input type="hidden" name="modal" id="modal" class="input_simples" value="<?php echo $this->modal; ?>"/>
             <?php endif; ?>
-            <input type="hidden" name="idpronac" id="idpronac" class="input_simples" value="<?php echo $this->idpronac; ?>"/>
+            <input type="hidden" name="idpronac" id="idpronac" class="input_simples"
+                   value="<?php echo $this->idpronac; ?>"/>
 
             <center>
                 <div id="cadDirigente" class="msgALERT sumir" style="width: 96%;">
@@ -51,12 +56,15 @@
                     </div>
                 </div>
             </center>
-            <fieldset>
-                <legend>DADOS PRINCIPAIS</legend>
+            <div class="card-panel hoverable">
+                <label>
+                    DADOS PRINCIPAIS
+                </label>
                 <div class="row">
                     <div class="input-field col s2">
                         <input type="radio" name="Tipo" id="0" value="0" class="with-gap"
-                               checked="checked" onclick="filtroCPF();" onkeypress="filtroCPF();"/>  <label for="0">CPF</label>
+                               checked="checked" onclick="filtroCPF();" onkeypress="filtroCPF();"/> <label
+                            for="0">CPF</label>
                         <input type="radio" name="Tipo" id="1" value="1" class="with-gap"
                                onclick="filtroCNPJ();" onkeypress="filtroCNPJ();"/>
                         <label for="1">CNPJ</label>
@@ -84,8 +92,9 @@
                     </div>
                     <div class="input-field col s3">
                         <?php if (!$this->ehProponente) : ?>
-                            <select name="Visao" id="Visao" onchange="verificarVisao(this.value, <?php echo $this->grupoAtivo; ?>);"
-                                    class="" >
+                            <select name="Visao" id="Visao"
+                                    onchange="verificarVisao(this.value, <?php echo $this->grupoAtivo; ?>);"
+                                    class="">
                                 <?php if ($this->modulo != "movimentacaobancaria"): ?>
                                     <option value="0" selected="selected"> - Selecione -</option>
                                 <?php endif; ?>
@@ -102,14 +111,15 @@
                         <?php else : ?>
                             <select name="Visao" id="Visao"
                                     onchange="verificarVisao(this.value, <?php echo $this->grupoAtivo; ?>);"
-                                    class="" >
-                                        <option value="<?php echo $this->combovisoes[0]['idVerificacao']; ?>"> <?php echo $this->combovisoes[0]['Descricao']; ?> </option>
+                                    class="">
+                                <option
+                                    value="<?php echo $this->combovisoes[0]['idVerificacao']; ?>"> <?php echo $this->combovisoes[0]['Descricao']; ?> </option>
                             </select>
                             <label for="Visao"> Informe a vis&atilde;o do Agente: </label>
                         <?php endif; ?>
+                    </div>
                 </div>
             </div>
-            </fieldset>
             <!-- ========== INICIO LISTA DE AREA ABERTA DE ACORDO COM A VISAO ========== -->
             <div id="visaocomponente" class="sumir">
                 <table id="tbvisaocomponente" class="tabela sumir">
@@ -186,9 +196,9 @@
             </div>
             <!-- ========== FIM LISTA DE AREA ABERTA DE ACORDO COM A VISAO ========== -->
             <!-- ========== INICIO FORMULARIO ENDERECO ========== -->
-            <div class="row">
-                <fieldset>
-                    <legend>Novo Endere&ccedil;o</legend>
+            <div class="card-panel hoverable">
+                <label>Novo Endere&ccedil;o</label>
+                <div class="row">
                     <div class="input-field col s3">
                         <input class="input_simples" type="text" name="cep" id="cep" maxlength="10"
                                onkeyup="mascara(this, format_cep);" onblur="buscarcep(this.value);"
@@ -216,7 +226,8 @@
                         <span id="erroUf" class="spanError"></span>
                     </div>
                     <div class="input-field col s2">
-                        <select name="cidade" id="cidade" disabled="disabled" class="input_simples" style="width: 250px;">
+                        <select name="cidade" id="cidade" disabled="disabled" class="input_simples"
+                                style="width: 250px;">
                             <option value="0"> - Selecione -</option>
 
                             <?php if ($this->combocidades): ?>
@@ -247,7 +258,7 @@
                         <span id="erroTipoEndereco" class="spanError"></span>
                     </div>
                     <div class="input-field col s2">
-                        <select name="tipoLogradouro" id="tipoLogradouro" class="input_simples" >
+                        <select name="tipoLogradouro" id="tipoLogradouro" class="input_simples">
 
                             <?php if (!isset($this->tipoLogradouro) || empty($this->tipoLogradouro)) { ?>
                                 <option value="0"> - Selecione -</option>
@@ -264,7 +275,8 @@
                         <span id="erroTipoLogradouro" class="spanError"></span>
                     </div>
                     <div class="input-field col s2">
-                        <input class="input_simples" type="text" disabled="disabled" name="logradouro" id="logradouro" maxlength="50" size="30"/>
+                        <input class="input_simples" type="text" disabled="disabled" name="logradouro" id="logradouro"
+                               maxlength="50" size="30"/>
                         <label for="logradouro">Logradouro *</label> <br/>
                         <span id="erroLogradouro" class="spanError"></span>
                     </div>
@@ -274,12 +286,14 @@
                         <span id="erroNumero" class="spanError"></span>
                     </div>
                     <div class="input-field col s2">
-                        <input class="input_simples" type="text" name="complemento" id="complemento" maxlength="70" size="50"/>
+                        <input class="input_simples" type="text" name="complemento" id="complemento" maxlength="70"
+                               size="50"/>
                         <label for="complemento">Complemento</label> <br/>
                         <span id="erroComplemento" class="spanError"></span>
                     </div>
                     <div class="input-field col s2">
-                        <input class="input_simples" type="text" disabled="disabled" name="bairro" id="bairro" maxlength="70" size="40"/>
+                        <input class="input_simples" type="text" disabled="disabled" name="bairro" id="bairro"
+                               maxlength="70" size="40"/>
                         <label for="bairro">Bairro *</label> <br/>
                         <span id="erroBairro" class="spanError"></span>
                     </div>
@@ -297,14 +311,14 @@
                             <label for="divulgarEnderecoN">N&atilde;o</label>
                         </p>
                     </div>
-                </fieldset>
+                </div>
             </div>
             <!-- ========== FIM FORMULARIO ENDERECO ========== -->
             <?php if ($this->modulo != "movimentacaobancaria") { ?>
                 <!-- ========== INICIO FORMULARIO FONE ========== -->
-                <div class="row">
-                    <fieldset>
-                        <legend>TELEFONE</legend>
+                <div class="card-panel hoverable">
+                    <label>TELEFONE</label>
+                    <div class="row">
                         <div class="input-field col s2">
                             <select name="tipoFone" id="tipoFone" class="input_simples">
                                 <option value=""> - Selecione -</option>
@@ -346,14 +360,19 @@
                         <div class="input-field col s3">
                             <p>Divulgar? *</p>
                             <p>
-                            <input type="radio" name="divulgarFone" id="divulgarFoneS" value="1" class="checkradio with-gap" />
-                            <label for="divulgarFoneS" >Sim</label>
-                            <input type="radio" name="divulgarFone" id="divulgarFoneN" value="0" class="checkradio with-gap" checked="checked" />
-                            <label for="divulgarFoneN" >N&atilde;o</label>
+                                <input type="radio" name="divulgarFone" id="divulgarFoneS" value="1"
+                                       class="checkradio with-gap"/>
+                                <label for="divulgarFoneS">Sim</label>
+                                <input type="radio" name="divulgarFone" id="divulgarFoneN" value="0"
+                                       class="checkradio with-gap" checked="checked"/>
+                                <label for="divulgarFoneN">N&atilde;o</label>
                             </p>
-                    </fieldset>
-                    <fieldset>
-                        <legend>E-MAIL</legend>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-panel hoverable">
+                    <label>E-MAIL</label>
+                    <div class="row">
                         <div class="input-field col s3">
                             <select name="tipoEmail" id="tipoEmail" class="input_simples">
                                 <option value="0">- Selecione -</option>
@@ -392,334 +411,336 @@
                             </p>
                         </div>
                     </div>
-                </fieldset>
+                </div>
                 <!-- ========== FIM FORMULARIO E-MAIL ========== -->
             <?php } ?>
-            <button type="button" class="btn" value=" " onclick="validaAgenteNovo();"/>salvar</button>
+            <button type="button" class="btn" value=" " onclick="validaAgenteNovo();"/>
+            salvar</button>
+
         </form>
-</div>
+    </div>
 
-<script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/agentes.js"></script>
-<!-- Alysson - Adicionando Chamada ao WebService do Corporativo -->
-<script type="text/javascript">
-    $(document).ready(function () {
-        // Vamos buscar os dados do CPF Agora!
-        $('#cpf').focusout(function () {
-            //alert( 'cxdcdcd' );
-            $('#nome').val('');
-            $('#cep').val('');
-            $('#msgAjax').hide();
-            $('#imgPF').show();
-            //$('#erroCpf').html("<img src='/public/img/ajax.gif' alt='' /> Aguarde...");
-            $('#erroCpf').html("<img src='<?php echo $this->baseUrl(); ?>/public/img/ajax.gif' alt='' /> Aguarde...");
+    <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/agentes.js"></script>
+    <!-- Alysson - Adicionando Chamada ao WebService do Corporativo -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // Vamos buscar os dados do CPF Agora!
+            $('#cpf').focusout(function () {
+                //alert( 'cxdcdcd' );
+                $('#nome').val('');
+                $('#cep').val('');
+                $('#msgAjax').hide();
+                $('#imgPF').show();
+                //$('#erroCpf').html("<img src='/public/img/ajax.gif' alt='' /> Aguarde...");
+                $('#erroCpf').html("<img src='<?php echo $this->baseUrl(); ?>/public/img/ajax.gif' alt='' /> Aguarde...");
 
-            /*
-             $('#RESPONSAVEL_NOME').val('');
+                /*
+                 $('#RESPONSAVEL_NOME').val('');
 
 
-             var txt = $(this).val();
+                 var txt = $(this).val();
 
-             if(txt == '___.___.___-__'){
-             $('#imgPF').hide();
-             }else{*/
+                 if(txt == '___.___.___-__'){
+                 $('#imgPF').hide();
+                 }else{*/
 
-            $.ajax({
-                type: "POST",
-                url: '<?php echo $this->url(array('module' => 'agente', 'controller' => 'agentes', 'action' => 'busca-pessoa')); ?>',
-                data: {cpf: $(this).val(), teste: 'xxxx', tipoPessoa: 'fisica'},
-                dataType: 'json',
-                success: function (data) {
-                    if (data != null && data.error != '') {
+                $.ajax({
+                    type: "POST",
+                    url: '<?php echo $this->url(array('module' => 'agente', 'controller' => 'agentes', 'action' => 'busca-pessoa')); ?>',
+                    data: {cpf: $(this).val(), teste: 'xxxx', tipoPessoa: 'fisica'},
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data != null && data.error != '') {
+                            $('#msgAjax').html(data.error);
+                            $('#msgAjax').show();
+                            $('#imgPF').hide();
+                            $('#erroCpf').html("Pessoa n&atilde;o encontrada...");
+                        } else {
+                            // Preenche os dados
+                            $('#idPessoa').val(data.dados.idPessoa);
+                            $('#nome').val(data.dados.nome);
+                            $('#cep').val(format_cep(data.dados.cep));
+                            $('#erroCpf').html("");
+                            //$('#RESPONSAVEL_CARGO').focus();
+                            $('#imgPF').hide();
+                            $('#cep').blur();
+                        }
+
+                    }, error: function (data) {
                         $('#msgAjax').html(data.error);
                         $('#msgAjax').show();
+                        $('#erroCpf').html(data.error);
                         $('#imgPF').hide();
-                        $('#erroCpf').html("Pessoa n&atilde;o encontrada...");
-                    } else {
-                        // Preenche os dados
-                        $('#idPessoa').val(data.dados.idPessoa);
-                        $('#nome').val(data.dados.nome);
-                        $('#cep').val(format_cep(data.dados.cep));
-                        $('#erroCpf').html("");
-                        //$('#RESPONSAVEL_CARGO').focus();
-                        $('#imgPF').hide();
-                        $('#cep').blur();
                     }
+                });
+                //}
 
-                }, error: function (data) {
-                    $('#msgAjax').html(data.error);
-                    $('#msgAjax').show();
-                    $('#erroCpf').html(data.error);
-                    $('#imgPF').hide();
-                }
             });
-            //}
 
         });
 
-    });
+    </script>
 
-</script>
+    <script type="text/javascript">
 
-<script type="text/javascript">
+        function filtroCPF() {
+            document.getElementById('0').checked = true;
+            document.getElementById('1').checked = false;
 
-    function filtroCPF() {
-        document.getElementById('0').checked = true;
-        document.getElementById('1').checked = false;
+            document.getElementById('cpf').value = "";
+            document.getElementById('cpf').maxLength = "14";
+            document.getElementById('cpf').onkeyup = function () {
+                mascara(document.formCadAgentes.cpf, format_cpf);
+            };
+            document.getElementById('cpf').focus();
+            $('#cadDirigente').hide(); // oculta a aba com os dirigentes
 
-        document.getElementById('cpf').value = "";
-        document.getElementById('cpf').maxLength = "14";
-        document.getElementById('cpf').onkeyup = function () {
-            mascara(document.formCadAgentes.cpf, format_cpf);
-        };
-        document.getElementById('cpf').focus();
-        $('#cadDirigente').hide(); // oculta a aba com os dirigentes
-
-    }
-
-    function filtroCNPJ() {
-        document.getElementById('0').checked = false;
-        document.getElementById('1').checked = true;
-
-        document.getElementById('cpf').value = "";
-        document.getElementById('cpf').maxLength = "18";
-        document.getElementById('cpf').onkeyup = function () {
-            mascara(document.formCadAgentes.cpf, format_cnpj);
-        };
-        document.getElementById('cpf').focus();
-        <?php if($this->modulo != "movimentacaobancaria"): ?>
-        $('#cadDirigente').show(); // mostra a aba com os dirigentes
-        <?php endif; ?>
-    }
-
-    function buscaragente(cpf) {
-        $('#erroCpf').html('Aguarde!');
-
-        Tipo = "";
-        for (i = 0; i < document.formCadAgentes.Tipo.length; i++) {
-            if (document.formCadAgentes.Tipo[i].checked) {
-                Tipo = document.formCadAgentes.Tipo[i].value;
-            }
         }
 
-        value = $("#cpf").val();
+        function filtroCNPJ() {
+            document.getElementById('0').checked = false;
+            document.getElementById('1').checked = true;
 
-        if (value == '') {
-            $('#erroCpf').html('Informe o CPF/CNPJ!');
+            document.getElementById('cpf').value = "";
+            document.getElementById('cpf').maxLength = "18";
+            document.getElementById('cpf').onkeyup = function () {
+                mascara(document.formCadAgentes.cpf, format_cnpj);
+            };
+            document.getElementById('cpf').focus();
+            <?php if($this->modulo != "movimentacaobancaria"): ?>
+            $('#cadDirigente').show(); // mostra a aba com os dirigentes
+            <?php endif; ?>
         }
-        else if (Tipo == 0 && value.length != 14) {
-            $('#erroCpf').html('CPF Incompleto!');
-        }
-        else if (Tipo == 1 && value.length != 18) {
-            $('#erroCpf').html('CNPJ Incompleto!');
-        }
-        else if (Tipo == 0 && value.length != 14) {
-            $('#erroCpf').html('CPF inv&aacute;lido!');
-        }
-        else if (Tipo == 1 && value.length != 18) {
-            $('#erroCpf').html('CNPJ inv&aacute;lido!');
-        }
-        else {
-            $('#erroCpf').html('');
-            // retira as mascaras do cpf/cnpj
-            value = value.replace(".", "");
-            value = value.replace(".", "");
-            value = value.replace("/", "");
-            cpf = value.replace("-", "");
 
-            // faz a verificacao do agente via post
-            $.ajax({
-                type: "POST",
-                dataType: 'json',
-                data: {
-                    cpf: cpf
-                },
-                url: '<?php echo $this->url(array('module' => 'agente', "controller" => "agentes", "action" => "agentecadastrado")); ?>',
+        function buscaragente(cpf) {
+            $('#erroCpf').html('Aguarde!');
 
-                success: function (data) {
-                    if (data.length > 0) {
-                        if (data[0].msgCPF == 'cadastrado') {
-                            $('#novocadastro').hide();
-                            $('#carregando').show();
-                            var event = new CustomEvent("agenteJaCadastrado", {"detail": data[0].agente});
-                            document.dispatchEvent(event);
-                        <?php if ($this->modulo != "movimentacaobancaria") : ?>
-                        window.location = '<?php echo $this->url(array('module' => 'agente', "controller" => "agentes", "action" => "agentes")); ?>/id/' + data[0].idAgente;
-                        <?php endif; ?>
-                        }
-                        else if (data[0].msgCPF == 'invalido') {
-                            $('#erroCpf').html('CPF/CNPJ Inv&aacute;lido');
-                        }
-                        else if (data[0].msgCPF == 'novo') {
-                            $('#novo').html('Preencha os dados abaixo!');
-                            $('.novo').show();
-                        }
-                    }
-                },
-                error: function (data) {
-                    alert("Falha na recupera\xE7\xE3o dos dados.\nN\xE3o foi poss\xEDvel carregar agente!");
+            Tipo = "";
+            for (i = 0; i < document.formCadAgentes.Tipo.length; i++) {
+                if (document.formCadAgentes.Tipo[i].checked) {
+                    Tipo = document.formCadAgentes.Tipo[i].value;
                 }
-            });
+            }
 
-        }
-    }
+            value = $("#cpf").val();
 
-    function buscarcep(cep) {
-        // pega os dados a serem populados
-        logradouro = document.getElementById("logradouro");
-        tipoLogradouro = document.getElementById("tipoLogradouro");
-        bairro = document.getElementById("bairro");
-        cidade = document.getElementById("cidade");
-        uf = document.getElementById("uf");
-
-        ajax = xmlhttp(); // instancia ajax
-        ajax.open("GET", "<?php echo $this->url(array('module' => 'default', 'controller' => 'cep', 'action' => 'cep')); ?>?cep=" + cep, true);
-        ajax.onreadystatechange = function () {
-            if (cep.length != 10) {
-                $('#erroCep').html("O CEP informado &eacute; inv&aacute;lido!");
+            if (value == '') {
+                $('#erroCpf').html('Informe o CPF/CNPJ!');
+            }
+            else if (Tipo == 0 && value.length != 14) {
+                $('#erroCpf').html('CPF Incompleto!');
+            }
+            else if (Tipo == 1 && value.length != 18) {
+                $('#erroCpf').html('CNPJ Incompleto!');
+            }
+            else if (Tipo == 0 && value.length != 14) {
+                $('#erroCpf').html('CPF inv&aacute;lido!');
+            }
+            else if (Tipo == 1 && value.length != 18) {
+                $('#erroCpf').html('CNPJ inv&aacute;lido!');
             }
             else {
-                $('#erroCep').html("");
+                $('#erroCpf').html('');
+                // retira as mascaras do cpf/cnpj
+                value = value.replace(".", "");
+                value = value.replace(".", "");
+                value = value.replace("/", "");
+                cpf = value.replace("-", "");
+
+                // faz a verificacao do agente via post
+                $.ajax({
+                    type: "POST",
+                    dataType: 'json',
+                    data: {
+                        cpf: cpf
+                    },
+                    url: '<?php echo $this->url(array('module' => 'agente', "controller" => "agentes", "action" => "agentecadastrado")); ?>',
+
+                    success: function (data) {
+                        if (data.length > 0) {
+                            if (data[0].msgCPF == 'cadastrado') {
+                                $('#novocadastro').hide();
+                                $('#carregando').show();
+                                var event = new CustomEvent("agenteJaCadastrado", {"detail": data[0].agente});
+                                document.dispatchEvent(event);
+                                <?php if ($this->modulo != "movimentacaobancaria") : ?>
+                                window.location = '<?php echo $this->url(array('module' => 'agente', "controller" => "agentes", "action" => "agentes")); ?>/id/' + data[0].idAgente;
+                                <?php endif; ?>
+                            }
+                            else if (data[0].msgCPF == 'invalido') {
+                                $('#erroCpf').html('CPF/CNPJ Inv&aacute;lido');
+                            }
+                            else if (data[0].msgCPF == 'novo') {
+                                $('#novo').html('Preencha os dados abaixo!');
+                                $('.novo').show();
+                            }
+                        }
+                    },
+                    error: function (data) {
+                        alert("Falha na recupera\xE7\xE3o dos dados.\nN\xE3o foi poss\xEDvel carregar agente!");
+                    }
+                });
+
             }
+        }
 
-            // enquanto estiver processando bloqueia os campos
-            if (ajax.readyState > 0 && ajax.readyState <= 3 && cep.length == 10) {
+        function buscarcep(cep) {
+            // pega os dados a serem populados
+            logradouro = document.getElementById("logradouro");
+            tipoLogradouro = document.getElementById("tipoLogradouro");
+            bairro = document.getElementById("bairro");
+            cidade = document.getElementById("cidade");
+            uf = document.getElementById("uf");
 
-                $("#logradouro").attr("disabled", "disabled");
-                $("#tipoLogradouro").attr("disabled", "disabled");
-                $("#bairro").attr("disabled", "disabled");
-                $("#cidade").attr("disabled", "disabled");
-                $("#uf").attr("disabled", "disabled");
-
-                logradouro.value = "carregando...";
-                tipoLogradouro.options[0].text = "carregando...";
-                bairro.value = "carregando...";
-                cidade.options[0].text = "carregando...";
-                uf.options[0].text = "...";
-
-                $('#erroCep').html("<img src='/public/img/ajax.gif' alt='' /> Aguarde...");
-            }
-            if (ajax.readyState == 4 && ajax.status == 200 && cep.length == 10) {
-                // divide a string para colocar cada uma em seu campo
-                var s = ajax.responseText;
-
-                if (s == "") // caso os dados retornem vazios ou o cep nao exista
-                {
-                    logradouro.value = " ";
-                    tipoLogradouro.options[0].text = " - Selecione - ";
-                    bairro.value = " ";
-                    cidade.options[0].text = " - Selecione - ";
-                    uf.options[0].text = " -- ";
+            ajax = xmlhttp(); // instancia ajax
+            ajax.open("GET", "<?php echo $this->url(array('module' => 'default', 'controller' => 'cep', 'action' => 'cep')); ?>?cep=" + cep, true);
+            ajax.onreadystatechange = function () {
+                if (cep.length != 10) {
                     $('#erroCep').html("O CEP informado &eacute; inv&aacute;lido!");
                 }
-                else // caso o cep exista
-                {
+                else {
                     $('#erroCep').html("");
-                    txtLogradouro = s.substring(0, (i = s.indexOf(':')));
-                    s = s.substring(++i);
-                    txtTipoLogradouro = s.substring(0, (i = s.indexOf(':')));
-                    s = s.substring(++i);
-                    txtBairro = s.substring(0, (i = s.indexOf(':')));
-                    s = s.substring(++i);
-                    txtCodCidade = s.substring(0, (i = s.indexOf(':')));
-                    s = s.substring(++i);
-                    txtCidade = s.substring(0, (i = s.indexOf(':')));
-                    s = s.substring(++i);
-                    txtUF = s.substring(0, (i = s.indexOf(';')));
+                }
 
-                    // volta os textos dos combos
-                    tipoLogradouro.options[0].text = " - Selecione - ";
-                    cidade.options[0].text = " - Selecione - ";
-                    uf.options[0].text = " -- ";
-                    if (txtUF == "" && txtCidade == "") {
-                        cidade.options[0].text = " - Selecione primeiro o UF - ";
+                // enquanto estiver processando bloqueia os campos
+                if (ajax.readyState > 0 && ajax.readyState <= 3 && cep.length == 10) {
+
+                    $("#logradouro").attr("disabled", "disabled");
+                    $("#tipoLogradouro").attr("disabled", "disabled");
+                    $("#bairro").attr("disabled", "disabled");
+                    $("#cidade").attr("disabled", "disabled");
+                    $("#uf").attr("disabled", "disabled");
+
+                    logradouro.value = "carregando...";
+                    tipoLogradouro.options[0].text = "carregando...";
+                    bairro.value = "carregando...";
+                    cidade.options[0].text = "carregando...";
+                    uf.options[0].text = "...";
+
+                    $('#erroCep').html("<img src='/public/img/ajax.gif' alt='' /> Aguarde...");
+                }
+                if (ajax.readyState == 4 && ajax.status == 200 && cep.length == 10) {
+                    // divide a string para colocar cada uma em seu campo
+                    var s = ajax.responseText;
+
+                    if (s == "") // caso os dados retornem vazios ou o cep nao exista
+                    {
+                        logradouro.value = " ";
+                        tipoLogradouro.options[0].text = " - Selecione - ";
+                        bairro.value = " ";
+                        cidade.options[0].text = " - Selecione - ";
+                        uf.options[0].text = " -- ";
+                        $('#erroCep').html("O CEP informado &eacute; inv&aacute;lido!");
                     }
+                    else // caso o cep exista
+                    {
+                        $('#erroCep').html("");
+                        txtLogradouro = s.substring(0, (i = s.indexOf(':')));
+                        s = s.substring(++i);
+                        txtTipoLogradouro = s.substring(0, (i = s.indexOf(':')));
+                        s = s.substring(++i);
+                        txtBairro = s.substring(0, (i = s.indexOf(':')));
+                        s = s.substring(++i);
+                        txtCodCidade = s.substring(0, (i = s.indexOf(':')));
+                        s = s.substring(++i);
+                        txtCidade = s.substring(0, (i = s.indexOf(':')));
+                        s = s.substring(++i);
+                        txtUF = s.substring(0, (i = s.indexOf(';')));
 
-
-                    // logradouro
-                    logradouro.value = txtLogradouro;
-                    if (txtLogradouro == "") {
-                        logradouro.disabled = false; // habilita para preenchimento
-                    }
-
-
-                    // tipoLogradouro
-                    // seleciona o combo de acordo com a lista existente no formulario
-                    for (i = 0; i < tipoLogradouro.options.length; i++) {
-                        if (txtTipoLogradouro == tipoLogradouro.options[i].text) {
-                            // seleciona o item igual
-                            tipoLogradouro.options[i].selected = true;
+                        // volta os textos dos combos
+                        tipoLogradouro.options[0].text = " - Selecione - ";
+                        cidade.options[0].text = " - Selecione - ";
+                        uf.options[0].text = " -- ";
+                        if (txtUF == "" && txtCidade == "") {
+                            cidade.options[0].text = " - Selecione primeiro o UF - ";
                         }
-                    }
-                    if (tipoLogradouro.options[tipoLogradouro.selectedIndex].value == "" ||
-                        tipoLogradouro.options[tipoLogradouro.selectedIndex].text != txtTipoLogradouro) {
-                        tipoLogradouro.options[0].selected = true; // seleciona o primeiro option
-                        tipoLogradouro.disabled = false; // habilita para preenchimento
-                    }
 
 
-                    // bairro
-                    bairro.value = txtBairro;
-
-                    if (txtBairro == "") {
-                        bairro.disabled = false; // habilita para preenchimento
-                    }
-
-
-                    // uf
-                    // seleciona o combo de acordo com a lista existente no formulario
-                    for (i = 0; i < uf.options.length; i++) {
-                        if (txtUF == uf.options[i].text) {
-                            // seleciona o item igual
-                            uf.options[i].selected = true;
+                        // logradouro
+                        logradouro.value = txtLogradouro;
+                        if (txtLogradouro == "") {
+                            logradouro.disabled = false; // habilita para preenchimento
                         }
-                    }
-                    if (uf.options[uf.selectedIndex].value == "" ||
-                        uf.options[uf.selectedIndex].text != txtUF) {
-                        uf.options[0].selected = true; // seleciona o primeiro option
-                        uf.disabled = false; // habilita para preenchimento
-                    }
 
 
-                    // cidade
-                    // verifica se a cidade veio vazia
-                    if (txtCidade == "") {
-                        cidade.disabled = false; // habilita para preenchimento
-                        carregar_combo($("#uf").val(), 'cidade', '/cidade/combo', ' - Selecione - ');
-                    }
-                    // preenche o combo com a cidade
-                    else {
-                        // deixa apenas um elemento no combo, os outros sao excluidos
-                        document.getElementById("cidade").options.length = 0;
+                        // tipoLogradouro
+                        // seleciona o combo de acordo com a lista existente no formulario
+                        for (i = 0; i < tipoLogradouro.options.length; i++) {
+                            if (txtTipoLogradouro == tipoLogradouro.options[i].text) {
+                                // seleciona o item igual
+                                tipoLogradouro.options[i].selected = true;
+                            }
+                        }
+                        if (tipoLogradouro.options[tipoLogradouro.selectedIndex].value == "" ||
+                            tipoLogradouro.options[tipoLogradouro.selectedIndex].text != txtTipoLogradouro) {
+                            tipoLogradouro.options[0].selected = true; // seleciona o primeiro option
+                            tipoLogradouro.disabled = false; // habilita para preenchimento
+                        }
 
-                        // cria um novo option
-                        var novo = document.createElement("option");
-                        novo.value = txtCodCidade; // atribui um valor ao option
-                        novo.text = txtCidade; // atribui um texto ao option
-                        document.getElementById("cidade").options.add(novo);
+
+                        // bairro
+                        bairro.value = txtBairro;
+
+                        if (txtBairro == "") {
+                            bairro.disabled = false; // habilita para preenchimento
+                        }
+
+
+                        // uf
+                        // seleciona o combo de acordo com a lista existente no formulario
+                        for (i = 0; i < uf.options.length; i++) {
+                            if (txtUF == uf.options[i].text) {
+                                // seleciona o item igual
+                                uf.options[i].selected = true;
+                            }
+                        }
+                        if (uf.options[uf.selectedIndex].value == "" ||
+                            uf.options[uf.selectedIndex].text != txtUF) {
+                            uf.options[0].selected = true; // seleciona o primeiro option
+                            uf.disabled = false; // habilita para preenchimento
+                        }
+
+
+                        // cidade
+                        // verifica se a cidade veio vazia
+                        if (txtCidade == "") {
+                            cidade.disabled = false; // habilita para preenchimento
+                            carregar_combo($("#uf").val(), 'cidade', '/cidade/combo', ' - Selecione - ');
+                        }
+                        // preenche o combo com a cidade
+                        else {
+                            // deixa apenas um elemento no combo, os outros sao excluidos
+                            document.getElementById("cidade").options.length = 0;
+
+                            // cria um novo option
+                            var novo = document.createElement("option");
+                            novo.value = txtCodCidade; // atribui um valor ao option
+                            novo.text = txtCidade; // atribui um texto ao option
+                            document.getElementById("cidade").options.add(novo);
+                        }
                     }
                 }
             }
-        }
 
-        ajax.send(null);
+            ajax.send(null);
 
-    } // fecha funcao buscar_cep()
+        } // fecha funcao buscar_cep()
 
-    $(document).ready(function () {
-        $3('select').material_select();
+        $(document).ready(function () {
+            $3('select').material_select();
 
-        var tipocpf = '<?php echo $this->tipocpf; ?>';
-        var cpf = '<?php echo $this->cpf; ?>';
+            var tipocpf = '<?php echo $this->tipocpf; ?>';
+            var cpf = '<?php echo $this->cpf; ?>';
 
-        if (tipocpf == 'cnpj') {
-            filtroCNPJ();
-        }
-        if (tipocpf == 'cpf') {
-            filtroCPF();
-        }
+            if (tipocpf == 'cnpj') {
+                filtroCNPJ();
+            }
+            if (tipocpf == 'cpf') {
+                filtroCPF();
+            }
 
-        $("#cpf").val(cpf);
+            $("#cpf").val(cpf);
 
-        buscaragente($("#cpf").val());
-    });
-</script>
+            buscaragente($("#cpf").val());
+        });
+    </script>
