@@ -115,7 +115,7 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
                 $coluna2 = $arrayConditionPart2[0];
             }
             $condition = "{$coluna1} {$separator} {$coluna2}";
-            if ($arrayConditionPart2[1]) {
+            if (isset($arrayConditionPart2[1])) {
                 $condition += " {$arrayConditionPart2[1]}";
             }
         } elseif ($cleanCondition && strpos($cleanCondition, 'in') !== false) {
