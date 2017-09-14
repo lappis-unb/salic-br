@@ -24,7 +24,13 @@ echo "[******] Enable Apache Mod Headers";
 a2enmod headers
 
 echo "[******] Restarting Apache 2 Service";
-service apache2 reload
+
+#ps auxw | grep apache2 | grep -v grep > /dev/null
+#
+#if [ $? != 0 ]
+#then
+#        /etc/init.d/apache2 start > /dev/null
+#fi
 
 echo "[******] Starts Apache using Foreground Mode";
 apache2ctl -D FOREGROUND
