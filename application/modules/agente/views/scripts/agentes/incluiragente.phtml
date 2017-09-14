@@ -98,11 +98,11 @@
                                 <select name="Visao" id="Visao"
                                         onchange="verificarVisao(this.value, <?php echo $this->grupoAtivo; ?>);"
                                         class="">
-                                    <?php if ($this->modulo != "movimentacaobancaria"): ?>
+                                    <?php if ($this->modulo != "movimentacaobancaria") : ?>
                                         <option value="0" selected="selected"> - Selecione -</option>
                                     <?php endif; ?>
-                                    <?php if ($this->combovisoes): ?>
-                                        <?php foreach ($this->combovisoes as $combovisoes): ?>
+                                    <?php if ($this->combovisoes) : ?>
+                                        <?php foreach ($this->combovisoes as $combovisoes) : ?>
                                             <option
                                                 value="<?php echo $combovisoes['idVerificacao']; ?>"> <?php echo $combovisoes['Descricao']; ?> </option>
                                         <?php endforeach; ?>
@@ -152,9 +152,11 @@
                                         <option value="0"> - Selecione -</option>
                                     <?php } ?>
 
-                                    <?php foreach ($this->comboareasculturais as $key => $value): ?>
+                                    <?php foreach ($this->comboareasculturais as $key => $value) : ?>
                                         <option
-                                            value="<?php echo $key; ?>" <?php if ($this->areaCultural == $key) echo "selected=\"selected\""; ?>>
+                                            value="<?php echo $key; ?>" <?php if ($this->areaCultural == $key) {
+                                            echo "selected=\"selected\"";
+                                        } ?>>
                                             <?php echo $value; ?>
                                         </option>
                                     <?php endforeach; ?>
@@ -181,9 +183,11 @@
                                             <option value=""> - Selecione -</option>
                                         <?php } ?>
 
-                                        <?php foreach ($this->combosegmentosculturais as $key => $combosegmentocultural): ?>
+                                        <?php foreach ($this->combosegmentosculturais as $key => $combosegmentocultural) : ?>
                                             <option
-                                                value="<?php echo $key; ?>" <?php if ($this->segmentoCultural == $key) echo "selected=\"selected\""; ?>>
+                                                value="<?php echo $key; ?>" <?php if ($this->segmentoCultural == $key) {
+                                                echo "selected=\"selected\"";
+                                            } ?>>
                                                 <?php echo $combosegmentocultural; ?>
                                             </option>
                                         <?php endforeach; ?>
@@ -220,9 +224,11 @@
                                     <option value="0"> --</option>
                                 <?php } ?>
 
-                                <?php foreach ($this->comboestados as $key => $comboestado): ?>
+                                <?php foreach ($this->comboestados as $key => $comboestado) : ?>
                                     <option value="<?php echo $key; ?>"
-                                        <?php if ($this->uf == $key) echo "selected=\"selected\""; ?> >
+                                        <?php if ($this->uf == $key) {
+                                            echo "selected=\"selected\"";
+                                        } ?> >
                                         <?php echo $comboestado; ?>
                                     </option>
                                 <?php endforeach; ?>
@@ -234,10 +240,12 @@
                             <select name="cidade" id="cidade" disabled="disabled" class="input_simples">
                                 <option value="0"> - Selecione -</option>
 
-                                <?php if ($this->combocidades): ?>
-                                    <?php foreach ($this->combocidades as $key => $combocidade): ?>
+                                <?php if ($this->combocidades) : ?>
+                                    <?php foreach ($this->combocidades as $key => $combocidade) : ?>
                                         <option value="<?php echo $key; ?>" id="<?php echo $combocidade->idUF; ?>"
-                                            <?php if ($this->cidade == $key) echo "selected=\"selected\""; ?>>
+                                            <?php if ($this->cidade == $key) {
+                                                echo "selected=\"selected\"";
+                                            } ?>>
                                             <?php echo $combocidade; ?>
                                         </option>
                                     <?php endforeach; ?>
@@ -251,9 +259,11 @@
                                 <?php if (!isset($this->tipoEndereco) || empty($this->tipoEndereco)) { ?>
                                     <option value="0"> - Selecione -</option>
                                 <?php } ?>
-                                <?php foreach ($this->combotiposenderecos as $key => $combotipoendereco): ?>
+                                <?php foreach ($this->combotiposenderecos as $key => $combotipoendereco) : ?>
                                     <option value="<?php echo $key; ?>"
-                                        <?php if ($this->tipoEndereco == $key) echo "selected=\"selected\""; ?>>
+                                        <?php if ($this->tipoEndereco == $key) {
+                                            echo "selected=\"selected\"";
+                                        } ?>>
                                         <?php echo $combotipoendereco; ?>
                                     </option>
                                 <?php endforeach; ?>
@@ -268,9 +278,11 @@
                                     <option value="0"> - Selecione -</option>
                                 <?php } ?>
 
-                                <?php foreach ($this->combotiposlogradouros as $key => $comboTipoLogradouro): ?>
+                                <?php foreach ($this->combotiposlogradouros as $key => $comboTipoLogradouro) : ?>
                                     <option value="<?php echo $key; ?>"
-                                        <?php if ($this->tipoLogradouro == $key) echo "selected=\"selected\""; ?>>
+                                        <?php if ($this->tipoLogradouro == $key) {
+                                            echo "selected=\"selected\"";
+                                        } ?>>
                                         <?php echo($comboTipoLogradouro); ?>
                                     </option>
                                 <?php endforeach; ?>
@@ -499,7 +511,14 @@
     </script>
 
     <script type="text/javascript">
-
+        // Pegando eventos ajax e exibindo informacao de carregamento.
+        $(document).ajaxStart(function () {
+            $('#container-progress').fadeIn('slow');
+        });
+        $(document).ajaxComplete(function () {
+//            $('.container').fadeIn(1500);
+            $('#container-progress').fadeOut('slow');
+        });
         function filtroCPF() {
             document.getElementById('0').checked = true;
             document.getElementById('1').checked = false;
@@ -524,7 +543,7 @@
                 mascara(document.formCadAgentes.cpf, format_cnpj);
             };
             document.getElementById('cpf').focus();
-            <?php if($this->modulo != "movimentacaobancaria"): ?>
+            <?php if ($this->modulo != "movimentacaobancaria") : ?>
             $('#cadDirigente').show(); // mostra a aba com os dirigentes
             <?php endif; ?>
         }
@@ -613,47 +632,47 @@
             $('#erroCep').html("");
             if (cep.length != 10) {
                 $('#erroCep').html("O CEP informado &eacute; inv&aacute;lido!");
+                logradouro.value = " ";
+                tipoLogradouro.options[0].text = " - Selecione - ";
+                bairro.value = " ";
+                cidade.options[0].text = " - Selecione - ";
+                uf.options[0].text = " -- ";
                 return false;
             }
             if (cep.length == 10) {
 
-            }
-            $.ajax({
-                url: url,
+
+                $.ajax({
+                    url: url,
 //                    dataType: "json",
-                beforeSend: function () {
+                    beforeSend: function () {
 //                        $('.loading').show();
-                    $("#logradouro").attr("disabled", "disabled");
-                    $("#tipoLogradouro").attr("disabled", "disabled");
-                    $("#bairro").attr("disabled", "disabled");
-                    $("#cidade").attr("disabled", "disabled");
-                    $("#uf").attr("disabled", "disabled");
 
-                    logradouro.value = "carregando...";
-                    tipoLogradouro.options[0].text = "carregando...";
-                    bairro.value = "carregando...";
-                    cidade.options[0].text = "carregando...";
-                    uf.options[0].text = "...";
 
-                    $('#erroCep').html("<img src='/public/img/ajax.gif' alt='' /> Aguarde...");
-                },
-                success: function (data) {
+                        $("#logradouro").attr("disabled", 'disabled');
+                        $("#tipoLogradouro").attr("disabled", 'disabled');
+                        $("#bairro").attr("disabled", 'disabled');
+//                        $("#cidade").attr("disabled", 'disabled');
+//                        $("#uf").attr("disabled", 'disabled');
+
+                        logradouro.value = "carregando...";
+                        tipoLogradouro.options[0].text = "carregando...";
+                        bairro.value = "carregando...";
+                        cidade.options[0].text = "carregando...";
+                        uf.options[0].text = "...";
+
+                        $3('select').material_select('destroy');
+                        $3('select').material_select();
+
+                        $('#erroCep').html("<img src='/public/img/ajax.gif' alt='' /> Aguarde...");
+                    },
+                    success: function (data) {
 console.log(data);
 return false;
-                    // divide a string para colocar cada uma em seu campo
-                    var s = ajax.responseText;
+                        // divide a string para colocar cada uma em seu campo
+                        var s = ajax.responseText;
 
-                    if (s == "") // caso os dados retornem vazios ou o cep nao exista
-                    {
-                        logradouro.value = " ";
-                        tipoLogradouro.options[0].text = " - Selecione - ";
-                        bairro.value = " ";
-                        cidade.options[0].text = " - Selecione - ";
-                        uf.options[0].text = " -- ";
-                        $('#erroCep').html("O CEP informado &eacute; inv&aacute;lido!");
-                    }
-                    else // caso o cep exista
-                    {
+
                         $('#erroCep').html("");
                         txtLogradouro = s.substring(0, (i = s.indexOf(':')));
                         s = s.substring(++i);
@@ -738,9 +757,10 @@ return false;
                             novo.text = txtCidade; // atribui um texto ao option
                             document.getElementById("cidade").options.add(novo);
                         }
+
                     }
-                }
-            });
+                });
+            }
         }
 
         $(document).ready(function () {
