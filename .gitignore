@@ -1,4 +1,7 @@
 /Dockerfile
 /log
 /app
-docker-compose.yml
+docker-compose.ym
+.idea/
+.vscode/
+npm-debug.log
