@@ -115,7 +115,7 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
                 $coluna2 = $arrayConditionPart2[0];
             }
             $condition = "{$coluna1} {$separator} {$coluna2}";
-            if ($arrayConditionPart2[1]) {
+            if (isset($arrayConditionPart2[1])) {
                 $condition += " {$arrayConditionPart2[1]}";
             }
         } elseif ($cleanCondition && strpos($cleanCondition, 'in') !== false) {
@@ -145,7 +145,11 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
                     $field .= $this->addDoubleQuote($fieldPiece);
                 }
             } else {
-                if (!is_numeric($field) && strpos($field, "'") === false) {
+                if (
+                    !is_numeric($field) && strpos($field, "'") === false
+                    && $field != "false"
+                    && $field != "true"
+                ) {
                     $field = '"' . $field . '"';
                 }
             }
@@ -185,5 +189,25 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
             }
 
         }
+    }
+
+    protected function _quoteIdentifierTable($ident, $alias = null, $auto = false, $as = ' AS ')
+    {
+        if ($ident instanceof Zend_Db_Expr) {
+            $quoted = $ident->__toString();
+        } elseif ($ident instanceof Zend_Db_Select) {
+            $quoted = '(' . $ident->assemble() . ')';
+        } else {
+            $quoted = $this->_quoteIdentifier($ident, $auto);
+        }
+        if ($alias !== null) {
+            $quoted .= $as . $this->_quoteIdentifier($alias, $auto);
+        }
+        return $quoted;
+    }
+
+    public function quoteTableAs($ident, $alias = null, $auto = false)
+    {
+        return $this->_quoteIdentifierTable($ident, $alias, $auto);
     }
 }

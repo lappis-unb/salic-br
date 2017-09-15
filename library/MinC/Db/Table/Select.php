@@ -128,6 +128,41 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
         return $this;
     }
 
+    protected function _renderColumns($sql)
+    {
+        if (!count($this->_parts[self::COLUMNS])) {
+            return null;
+        }
+
+        $columns = array();
+        foreach ($this->_parts[self::COLUMNS] as $columnEntry) {
+            list($correlationName, $column, $alias) = $columnEntry;
+            if ($column instanceof Zend_Db_Expr) {
+                $columns[] = $this->_adapter->quoteColumnAs($column, $alias, true);
+            } else {
+                if ($column == self::SQL_WILDCARD) {
+                    $column = new Zend_Db_Expr(self::SQL_WILDCARD);
+                    $alias = null;
+                }
+                if (empty($correlationName)) {
+                    $columns[] = $this->_adapter->quoteColumnAs($column, $alias, true);
+                } else {
+                    $columns[] = $this->_adapter->quoteColumnAs(array($correlationName, $column), $alias, true);
+                }
+            }
+        }
+
+        return $sql .= ' ' . implode(', ', $columns);
+    }
+
+    protected function _getQuotedTable($tableName, $correlationName = null)
+    {
+        if ($this->databaseAdapter instanceof MinC_Db_Adapter_Pdo_Pgsql) {
+            return $this->databaseAdapter->quoteTableAs($tableName, $correlationName, true);
+        }
+        return $this->_adapter->quoteTableAs($tableName, $correlationName, true);
+    }
+
     public function assemble()
     {
         if ($this->databaseAdapter instanceof MinC_Db_Adapter_Pdo_Pgsql) {

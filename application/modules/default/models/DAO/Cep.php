@@ -50,8 +50,6 @@ class Cep extends MinC_Db_Table_Abstract
         );
         $objQuery->where('cep = ?', $cep);
 
-        xd($objQuery->assemble(), $this->_name);
-
-        return $db->fetchRow($sql);
+        return $db->fetchRow($objQuery);
     }
 }

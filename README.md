@@ -24,9 +24,3 @@ Para parar o container basta digitar:
 ```
   docker-compose stop
 ```
-
-## Autores
-
-Várias pessoas colaboraram com o desenvimento do projeto SALIC e decidimos centralizar em um único local todos os que participaram com o desenvolvimento do projeto.
-  
-Clique [aqui](doc/Autores.md) para visualizar.
