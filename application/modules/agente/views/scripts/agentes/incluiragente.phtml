@@ -511,14 +511,6 @@
     </script>
 
     <script type="text/javascript">
-        // Pegando eventos ajax e exibindo informacao de carregamento.
-        $(document).ajaxStart(function () {
-            $('#container-progress').fadeIn('slow');
-        });
-        $(document).ajaxComplete(function () {
-//            $('.container').fadeIn(1500);
-            $('#container-progress').fadeOut('slow');
-        });
         function filtroCPF() {
             document.getElementById('0').checked = true;
             document.getElementById('1').checked = false;
@@ -632,34 +624,33 @@
             $('#erroCep').html("");
             if (cep.length != 10) {
                 $('#erroCep').html("O CEP informado &eacute; inv&aacute;lido!");
-                logradouro.value = " ";
-                tipoLogradouro.options[0].text = " - Selecione - ";
-                bairro.value = " ";
-                cidade.options[0].text = " - Selecione - ";
-                uf.options[0].text = " -- ";
+                $("#logradouro, #bairro").val(' ');
+                $("#cidade option[value=0]").html(" - Selecione - ");
+                $("#uf option[value=0]").html(" - Selecione - ");
+                $("#tipoLogradouro option[value=0]").html(" - Selecione - ");
                 return false;
             }
             if (cep.length == 10) {
 
-
                 $.ajax({
                     url: url,
-//                    dataType: "json",
+                    dataType: "json",
                     beforeSend: function () {
-//                        $('.loading').show();
 
+                        $(document).ajaxStart(function () {
+                            $('#container-progress').fadeIn('slow');
+                        });
+                        $(document).ajaxComplete(function () {
+                            $('#container-progress').fadeOut('slow');
+                        });
 
                         $("#logradouro").attr("disabled", 'disabled');
-                        $("#tipoLogradouro").attr("disabled", 'disabled');
                         $("#bairro").attr("disabled", 'disabled');
-//                        $("#cidade").attr("disabled", 'disabled');
-//                        $("#uf").attr("disabled", 'disabled');
 
-                        logradouro.value = "carregando...";
-                        tipoLogradouro.options[0].text = "carregando...";
-                        bairro.value = "carregando...";
-                        cidade.options[0].text = "carregando...";
-                        uf.options[0].text = "...";
+                        $("#logradouro").val("carregando...");
+                        $("#bairro").val("carregando...");
+                        $("#cidade option[value=0]").html("Carregando...");
+                        $("#uf option[value=0]").html("Carregando...");
 
                         $3('select').material_select('destroy');
                         $3('select').material_select();
@@ -667,97 +658,20 @@
                         $('#erroCep').html("<img src='/public/img/ajax.gif' alt='' /> Aguarde...");
                     },
                     success: function (data) {
-console.log(data);
-return false;
-                        // divide a string para colocar cada uma em seu campo
-                        var s = ajax.responseText;
-
-
                         $('#erroCep').html("");
-                        txtLogradouro = s.substring(0, (i = s.indexOf(':')));
-                        s = s.substring(++i);
-                        txtTipoLogradouro = s.substring(0, (i = s.indexOf(':')));
-                        s = s.substring(++i);
-                        txtBairro = s.substring(0, (i = s.indexOf(':')));
-                        s = s.substring(++i);
-                        txtCodCidade = s.substring(0, (i = s.indexOf(':')));
-                        s = s.substring(++i);
-                        txtCidade = s.substring(0, (i = s.indexOf(':')));
-                        s = s.substring(++i);
-                        txtUF = s.substring(0, (i = s.indexOf(';')));
+                        $('#logradouro').val(data.logradouro);
+                        $('#complemento').val(data.complemento);
+                        $('#bairro').val(data.bairro);
+//                        $('#cidade > select > option[value="' + data.cidade + '"]').attr("selected", "selected");
+                        $("#cidade option[value=0]").html(data.cidade).val(data.cod_cidade);
+                        $("#uf option[value=0]").html(data.uf);
 
-                        // volta os textos dos combos
-                        tipoLogradouro.options[0].text = " - Selecione - ";
-                        cidade.options[0].text = " - Selecione - ";
-                        uf.options[0].text = " -- ";
-                        if (txtUF == "" && txtCidade == "") {
-                            cidade.options[0].text = " - Selecione primeiro o UF - ";
-                        }
+                        $3('select').material_select('destroy');
+                        $3('select').material_select();
 
-
-                        // logradouro
-                        logradouro.value = txtLogradouro;
-                        if (txtLogradouro == "") {
-                            logradouro.disabled = false; // habilita para preenchimento
-                        }
-
-
-                        // tipoLogradouro
-                        // seleciona o combo de acordo com a lista existente no formulario
-                        for (i = 0; i < tipoLogradouro.options.length; i++) {
-                            if (txtTipoLogradouro == tipoLogradouro.options[i].text) {
-                                // seleciona o item igual
-                                tipoLogradouro.options[i].selected = true;
-                            }
-                        }
-                        if (tipoLogradouro.options[tipoLogradouro.selectedIndex].value == "" ||
-                            tipoLogradouro.options[tipoLogradouro.selectedIndex].text != txtTipoLogradouro) {
-                            tipoLogradouro.options[0].selected = true; // seleciona o primeiro option
-                            tipoLogradouro.disabled = false; // habilita para preenchimento
-                        }
-
-
-                        // bairro
-                        bairro.value = txtBairro;
-
-                        if (txtBairro == "") {
-                            bairro.disabled = false; // habilita para preenchimento
-                        }
-
-
-                        // uf
-                        // seleciona o combo de acordo com a lista existente no formulario
-                        for (i = 0; i < uf.options.length; i++) {
-                            if (txtUF == uf.options[i].text) {
-                                // seleciona o item igual
-                                uf.options[i].selected = true;
-                            }
-                        }
-                        if (uf.options[uf.selectedIndex].value == "" ||
-                            uf.options[uf.selectedIndex].text != txtUF) {
-                            uf.options[0].selected = true; // seleciona o primeiro option
-                            uf.disabled = false; // habilita para preenchimento
-                        }
-
-
-                        // cidade
-                        // verifica se a cidade veio vazia
-                        if (txtCidade == "") {
-                            cidade.disabled = false; // habilita para preenchimento
+                        if (data.cidade == "") {
                             carregar_combo($("#uf").val(), 'cidade', '/cidade/combo', ' - Selecione - ');
                         }
-                        // preenche o combo com a cidade
-                        else {
-                            // deixa apenas um elemento no combo, os outros sao excluidos
-                            document.getElementById("cidade").options.length = 0;
-
-                            // cria um novo option
-                            var novo = document.createElement("option");
-                            novo.value = txtCodCidade; // atribui um valor ao option
-                            novo.text = txtCidade; // atribui um texto ao option
-                            document.getElementById("cidade").options.add(novo);
-                        }
-
                     }
                 });
             }

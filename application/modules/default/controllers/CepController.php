@@ -20,7 +20,7 @@ class CepController extends MinC_Controller_Action_Abstract
 
         $resultado = [];
         if ($resultadoBuscaCep) {
-            $resultado['endereco'] = $resultadoBuscaCep['logradouro'];
+            $resultado['logradouro'] = $resultadoBuscaCep['logradouro'];
             $resultado['complemento'] = $resultadoBuscaCep['tipo_logradouro'];
             $resultado['bairro'] = $resultadoBuscaCep['bairro'];
             $resultado['uf'] = $resultadoBuscaCep['uf'];
