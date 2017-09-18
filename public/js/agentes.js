@@ -437,7 +437,233 @@ function validaEndereco() {
     }
 }
 
+function filtroCPF() {
+    document.getElementById('0').checked = true;
+    document.getElementById('1').checked = false;
+
+    document.getElementById('cpf').value = "";
+    document.getElementById('cpf').maxLength = "14";
+    document.getElementById('cpf').onkeyup = function () {
+        mascara(document.formCadAgentes.cpf, format_cpf);
+    };
+    document.getElementById('cpf').focus();
+    $('#cadDirigente').hide(); // oculta a aba com os dirigentes
+
+}
 
 
+function filtroCNPJ() {
+    document.getElementById('0').checked = false;
+    document.getElementById('1').checked = true;
 
+    document.getElementById('cpf').value = "";
+    document.getElementById('cpf').maxLength = "18";
+    document.getElementById('cpf').onkeyup = function () {
+        mascara(document.formCadAgentes.cpf, format_cnpj);
+    };
+    document.getElementById('cpf').focus();
+    if ($("#modulo").val() != "movimentacaobancaria") {
+        $('#cadDirigente').show();
+    }
+}
 
+function buscaragente(cpf) {
+    $('#erroCpf').html('Aguarde!');
+
+    Tipo = "";
+    for (i = 0; i < document.formCadAgentes.Tipo.length; i++) {
+        if (document.formCadAgentes.Tipo[i].checked) {
+            Tipo = document.formCadAgentes.Tipo[i].value;
+        }
+    }
+
+    value = $("#cpf").val();
+
+    if (value == '') {
+        $('#erroCpf').html('Informe o CPF/CNPJ!');
+    }
+    else if (Tipo == 0 && value.length != 14) {
+        $('#erroCpf').html('CPF Incompleto!');
+    }
+    else if (Tipo == 1 && value.length != 18) {
+        $('#erroCpf').html('CNPJ Incompleto!');
+    }
+    else if (Tipo == 0 && value.length != 14) {
+        $('#erroCpf').html('CPF inv&aacute;lido!');
+    }
+    else if (Tipo == 1 && value.length != 18) {
+        $('#erroCpf').html('CNPJ inv&aacute;lido!');
+    }
+    else {
+        $('#erroCpf').html('');
+        // retira as mascaras do cpf/cnpj
+        value = value.replace(".", "");
+        value = value.replace(".", "");
+        value = value.replace("/", "");
+        cpf = value.replace("-", "");
+
+        // faz a verificacao do agente via post
+        $.ajax({
+            type: "POST",
+            dataType: 'json',
+            data: {
+                cpf: cpf
+            },
+            url: $("#url_agentes_agentecadastrado").val(),
+
+            success: function (data) {
+                if (data.length > 0) {
+                    if (data[0].msgCPF == 'cadastrado') {
+                        $('#novocadastro').hide();
+                        $('#carregando').show();
+                        var event = new CustomEvent("agenteJaCadastrado", {"detail": data[0].agente});
+                        document.dispatchEvent(event);
+                        if ($("#modulo").val() != "movimentacaobancaria") {
+                            window.location = $("#url_agentes_agentes").val() + '/id/' + data[0].idAgente;
+                        }
+                    }
+                    else if (data[0].msgCPF == 'invalido') {
+                        $('#erroCpf').html('CPF/CNPJ Inv&aacute;lido');
+                    }
+                    else if (data[0].msgCPF == 'novo') {
+                        $('#novo').html('Preencha os dados abaixo!');
+                        $('.novo').show();
+                    }
+                }
+            },
+            error: function (data) {
+                alert("Falha na recupera\xE7\xE3o dos dados.\nN\xE3o foi poss\xEDvel carregar agente!");
+            }
+        });
+
+    }
+}
+
+function buscarcep(cep) {
+    // pega os dados a serem populados
+    var logradouro = document.getElementById("logradouro");
+    var tipoLogradouro = document.getElementById("tipoLogradouro");
+    var bairro = document.getElementById("bairro");
+    var cidade = document.getElementById("cidade");
+    var uf = document.getElementById("uf");
+    var url = $("#url_cep_cep").val() + "?cep=" + cep;
+
+    $('#erroCep').html("");
+    if (cep.length != 10) {
+        $('#erroCep').html("O CEP informado &eacute; inv&aacute;lido!");
+        $("#logradouro, #bairro").val(' ');
+        $("#cidade option[value=0]").html(" - Selecione - ");
+        $("#uf option[value=0]").html(" - Selecione - ");
+        $("#tipoLogradouro option[value=0]").html(" - Selecione - ");
+        return false;
+    }
+    if (cep.length == 10) {
+
+        $.ajax({
+            url: url,
+            dataType: "json",
+            beforeSend: function () {
+
+                $(document).ajaxStart(function () {
+                    $('#container-progress').fadeIn('slow');
+                });
+                $(document).ajaxComplete(function () {
+                    $('#container-progress').fadeOut('slow');
+                    $3('select').material_select('destroy');
+                    $3('select').material_select();
+                    alert(123);
+                });
+
+                $("#logradouro").attr("disabled", 'disabled');
+                $("#bairro").attr("disabled", 'disabled');
+
+                $("#logradouro").val("carregando...");
+                $("#bairro").val("carregando...");
+                $("#cidade option[value=0]").html("Carregando...");
+                $("#uf option[value=0]").html("Carregando...");
+
+                $3('select').material_select('destroy');
+                $3('select').material_select();
+
+                $('#erroCep').html("<img src='/public/img/ajax.gif' alt='' /> Aguarde...");
+            },
+            success: function (data) {
+                $('#erroCep').html("");
+                $('#logradouro').val(data.logradouro);
+                $('#complemento').val(data.complemento);
+                $('#bairro').val(data.bairro);
+//                        $('#cidade > select > option[value="' + data.cidade + '"]').attr("selected", "selected");
+                $("#cidade option[value=0]").html(data.cidade).val(data.cod_cidade);
+                $("#uf option[value=0]").html(data.uf);
+
+                $3('select').material_select('destroy');
+                $3('select').material_select();
+
+                if (data.cidade == "") {
+                    carregar_combo($("#uf").val(), 'cidade', '/cidade/combo', ' - Selecione - ');
+                }
+            }
+        });
+    }
+}
+
+$(document).ready(function () {
+
+    $('#cpf').focusout(function () {
+        //alert( 'cxdcdcd' );
+        $('#nome').val('');
+        $('#cep').val('');
+        $('#msgAjax').hide();
+        $('#imgPF').show();
+        //$('#erroCpf').html("<img src='/public/img/ajax.gif' alt='' /> Aguarde...");
+        $('#erroCpf').html("<img src='" + $("#url_baseurl").val() + "/public/img/ajax.gif' alt='' /> Aguarde...");
+
+        $.ajax({
+            type: "POST",
+            url: $("#url_agentes_busca_pessoa").val(),
+            data: {cpf: $(this).val(), teste: 'xxxx', tipoPessoa: 'fisica'},
+            dataType: 'json',
+            success: function (data) {
+                if (data != null && data.error != '') {
+                    $('#msgAjax').html(data.error);
+                    $('#msgAjax').show();
+                    $('#imgPF').hide();
+                    $('#erroCpf').html("Pessoa n&atilde;o encontrada...");
+                } else {
+                    // Preenche os dados
+                    $('#idPessoa').val(data.dados.idPessoa);
+                    $('#nome').val(data.dados.nome);
+                    $('#cep').val(format_cep(data.dados.cep));
+                    $('#erroCpf').html("");
+                    //$('#RESPONSAVEL_CARGO').focus();
+                    $('#imgPF').hide();
+                    $('#cep').blur();
+                }
+
+            },
+            error: function (data) {
+                $('#msgAjax').html(data.error);
+                $('#msgAjax').show();
+                $('#erroCpf').html(data.error);
+                $('#imgPF').hide();
+            }
+        });
+
+    });
+
+    $3('select').material_select();
+
+    var tipocpf = $("#tipocpf").val();
+    var cpf = $("#cpf").val();
+
+    if (tipocpf == 'cnpj') {
+        filtroCNPJ();
+    }
+    if (tipocpf == 'cpf') {
+        filtroCPF();
+    }
+
+    $("#cpf").val(cpf);
+
+    buscaragente($("#cpf").val());
+});
