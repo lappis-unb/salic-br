@@ -569,9 +569,6 @@ function buscarcep(cep) {
                 });
                 $(document).ajaxComplete(function () {
                     $('#container-progress').fadeOut('slow');
-                    $3('select').material_select('destroy');
-                    $3('select').material_select();
-                    alert(123);
                 });
 
                 $("#logradouro").attr("disabled", 'disabled');
@@ -600,7 +597,7 @@ function buscarcep(cep) {
                 $3('select').material_select();
 
                 if (data.cidade == "") {
-                    carregar_combo($("#uf").val(), 'cidade', '/cidade/combo', ' - Selecione - ');
+                    carregar_combo($("#uf").val(), 'cidade', '/cidade/combo', ' - Selecione - ', null, true);
                 }
             }
         });

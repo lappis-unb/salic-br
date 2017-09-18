@@ -155,7 +155,7 @@
                             <td colspan="2" valign="top">
                                 <label for="areaCultural">&Aacute;rea Cultural *</label>
                                 <select name="areaCultural" id="areaCultural"
-                                        onchange="carregar_combo(this.value, 'segmentoCultural', '<?php echo $this->url(array('controller' => 'segmentocultural', 'action' => 'combo')); ?>', ' - Selecione uma &Aacute;rea Cultural - '), buscarareasegmento();"
+                                        onchange="carregar_combo(this.value, 'segmentoCultural', '<?php echo $this->url(array('controller' => 'segmentocultural', 'action' => 'combo')); ?>', ' - Selecione uma &Aacute;rea Cultural - ', null, true), buscarareasegmento();"
                                         class="input_simples" style="width: 200px;">
 
                                     <?php if (!isset($this->areaCultural) || empty($this->areaCultural)) { ?>
@@ -228,7 +228,7 @@
                         </div>
                         <div class="input-field col s2">
                             <select name="uf" id="uf" class="input_simples" disabled="disabled"
-                                    onchange="carregar_combo(this.value,'cidade','<?php echo $this->url(array('module' => 'default', 'controller' => 'cidade', 'action' => 'combo')); ?>',' - Selecione primeiro o UF - ');">
+                                    onchange="carregar_combo(this.value,'cidade','<?php echo $this->url(array('module' => 'default', 'controller' => 'cidade', 'action' => 'combo')); ?>',' - Selecione primeiro o UF - ', null, true);">
 
                                 <?php if (!isset($this->uf) || empty($this->uf)) { ?>
                                     <option value="0"> --</option>
@@ -368,7 +368,7 @@
                             </div>
                             <div class="input-field col s1">
                                 <select name="ufFone" id="ufFone" class="input_simples"
-                                        onchange="carregar_combo(this.value,'dddFone','<?php echo $this->url(array('controller' => 'ddd', 'action' => 'combo')); ?>');">
+                                        onchange="carregar_combo(this.value,'dddFone','<?php echo $this->url(array('controller' => 'ddd', 'action' => 'combo')); ?>', null, null, true);">
                                     <option value="0"> --</option>
 
                                     <?php foreach ($this->comboestados as $key => $combouffone) { ?>
