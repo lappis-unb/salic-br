@@ -1909,11 +1909,11 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         $mdlAgente = new Agente_Model_Agentes($arrayAgente);
         $mprAgentes->save($mdlAgente);
 
-        $agente = $mprAgentes->findBy(array('CNPJCPF' => $mdlAgente->getCnpjcpf()));
+        $agente = $mprAgentes->findBy(array('CNPJCPF' => $mdlAgente->getCNPJCPF()));
         $cpf = preg_replace('/\.|-|\//', '', $_REQUEST['cpf']);
         $idAgente = $agente['idAgente'];
         $nome = $this->_request->getParam("nome");
-        $TipoNome = (strlen($mdlAgente->getCnpjcpf()) == 11 ? 18 : 19); // 18 = pessoa fisica e 19 = pessoa juridica
+        $TipoNome = (strlen($mdlAgente->getCNPJCPF()) == 11 ? 18 : 19); // 18 = pessoa fisica e 19 = pessoa juridica
         if ($this->modal == "s") {
             $nome = Seguranca::tratarVarAjaxUFT8($nome);
         }

@@ -1,152 +1,140 @@
 <?php
 
-/**
- * Class Agente_Model_Agentes
- *
- * @name Agente_Model_Agentes
- * @package Modules/Agente
- * @subpackage Models
- *
- * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
- * @since 01/09/2016
- *
- * @link http://salic.cultura.gov.br
- */
 class Agente_Model_Agentes extends MinC_Db_Model
 {
-    protected $_idagente;
-    protected $_cnpjcpf;
-    protected $_cnpjcpfsuperior;
-    protected $_tipopessoa;
-    protected $_dtcadastro;
-    protected $_dtatualizacao;
-    protected $_dtvalidade;
-    protected $_status;
-    protected $_usuario;
+    protected $_idAgente;
+    protected $_CNPJCPF;
+    protected $_CNPJCPFSuperior;
+    protected $_TipoPessoa;
+    protected $_DtCadastro;
+    protected $_DtAtualizacao;
+    protected $_DtValidade;
+    protected $_Status;
+    protected $_Usuario;
 
     /**
      * @return mixed
      */
-    public function getIdagente()
+    public function getIdAgente()
     {
-        return $this->_idagente;
+        return $this->_idAgente;
     }
 
     /**
      * @param mixed $idagente
      * @return Agente_Model_Agentes
      */
-    public function setIdagente($idagente)
+    public function setIdAgente($idagente)
     {
-        $this->_idagente = $idagente;
+        $this->_idAgente = $idagente;
         return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getCnpjcpf()
+    public function getCNPJCPF()
     {
-        return $this->_cnpjcpf;
+        return $this->_CNPJCPF;
     }
 
     /**
      * @param mixed $cnpjcpf
      * @return Agente_Model_Agentes
      */
-    public function setCnpjcpf($cnpjcpf)
+    public function setCNPJCPF($cnpjcpf)
     {
-        $this->_cnpjcpf = Mascara::delMaskCNPJ(trim($cnpjcpf));
+        $this->_CNPJCPF = Mascara::delMaskCNPJ(trim($cnpjcpf));
         return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getCnpjcpfsuperior()
+    public function getCNPJCPFSuperior()
     {
-        return $this->_cnpjcpfsuperior;
+        return $this->_CNPJCPFSuperior;
     }
 
     /**
      * @param mixed $cnpjcpfsuperior
      * @return Agente_Model_Agentes
      */
-    public function setCnpjcpfsuperior($cnpjcpfsuperior)
+    public function setCNPJCPFSuperior($cnpjcpfsuperior)
     {
-        $this->_cnpjcpfsuperior = $cnpjcpfsuperior;
+        $this->_CNPJCPFSuperior = $cnpjcpfsuperior;
         return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getTipopessoa()
+    public function getTipoPessoa()
     {
-        return $this->_tipopessoa;
+        return $this->_TipoPessoa;
     }
 
     /**
      * @param mixed $tipopessoa
      * @return Agente_Model_Agentes
      */
-    public function setTipopessoa($tipopessoa)
+    public function setTipoPessoa($tipopessoa)
     {
-        $this->_tipopessoa = $tipopessoa;
+        $this->_TipoPessoa = $tipopessoa;
         return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getDtcadastro()
+    public function getDtCadastro()
     {
-        return $this->_dtcadastro;
+        return $this->_DtCadastro;
     }
 
     /**
      * @param mixed $dtcadastro
      * @return Agente_Model_Agentes
      */
-    public function setDtcadastro($dtcadastro)
+    public function setDtCadastro($dtcadastro)
     {
-        $this->_dtcadastro = $dtcadastro;
+        $this->_DtCadastro = $dtcadastro;
         return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getDtatualizacao()
+    public function getDtAtualizacao()
     {
-        return $this->_dtatualizacao;
+        return $this->_DtAtualizacao;
     }
 
     /**
      * @param mixed $dtatualizacao
      * @return Agente_Model_Agentes
      */
-    public function setDtatualizacao($dtatualizacao)
+    public function setDtAtualizacao($dtatualizacao)
     {
-        $this->_dtatualizacao = $dtatualizacao;
+        $this->_DtAtualizacao = $dtatualizacao;
         return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getDtvalidade()
+    public function getDtValidade()
     {
-        return $this->_dtvalidade;
+        return $this->_DtValidade;
     }
 
     /**
      * @param mixed $dtvalidade
      * @return Agente_Model_Agentes
      */
-    public function setDtvalidade($dtvalidade)
+    public function setDtValidade($dtvalidade)
     {
-        $this->_dtvalidade = $dtvalidade;
+        $this->_DtValidade = $dtvalidade;
         return $this;
     }
 
@@ -155,7 +143,7 @@ class Agente_Model_Agentes extends MinC_Db_Model
      */
     public function getStatus()
     {
-        return $this->_status;
+        return $this->_Status;
     }
 
     /**
@@ -164,7 +152,7 @@ class Agente_Model_Agentes extends MinC_Db_Model
      */
     public function setStatus($status)
     {
-        $this->_status = $status;
+        $this->_Status = $status;
         return $this;
     }
 
@@ -173,7 +161,7 @@ class Agente_Model_Agentes extends MinC_Db_Model
      */
     public function getUsuario()
     {
-        return $this->_usuario;
+        return $this->_Usuario;
     }
 
     /**
@@ -182,7 +170,7 @@ class Agente_Model_Agentes extends MinC_Db_Model
      */
     public function setUsuario($usuario)
     {
-        $this->_usuario = $usuario;
+        $this->_Usuario = $usuario;
         return $this;
     }
 }
