@@ -2069,11 +2069,11 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
             try {
                 $arrayEmail = array(
                     'idAgente' => $idAgente,
-                    'tipointernet' => $tipoEmail,
+                    'TipoInternet' => $tipoEmail,
                     'Descricao' => $Email,
-                    'status' => $enviarEmail,
-                    'divulgar' => $divulgarEmail,
-                    'usuario' => $usuario
+                    'Status' => $enviarEmail,
+                    'Divulgar' => $divulgarEmail,
+                    'Usuario' => $usuario
                 );
 
                 $insere = new Agente_Model_Email();
