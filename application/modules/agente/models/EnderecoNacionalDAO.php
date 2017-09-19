@@ -6,11 +6,6 @@ class Agente_Model_EnderecoNacionalDAO extends MinC_Db_Table_Abstract
     protected $_schema = 'agentes';
 
     /**
-     * buscarEnderecoNacional
-     *
-     * @param mixed $idagente
-     * @static
-     * @access public
      * @deprecated Utilizar m&eacute;todo da DbTable
      */
     public static function buscarEnderecoNacional($idAgente)
@@ -47,12 +42,6 @@ class Agente_Model_EnderecoNacionalDAO extends MinC_Db_Table_Abstract
     }
 
     /**
-     * gravarEnderecoNacional
-     *
-     * @param mixed $dados
-     * @static
-     * @access public
-     * @return void
      * @deprecated Utilizar m&eacute;todo da DbTable
      */
     public static function gravarEnderecoNacional($dados)
@@ -71,13 +60,6 @@ class Agente_Model_EnderecoNacionalDAO extends MinC_Db_Table_Abstract
     }
 
     /**
-     * atualizaEnderecoNacional
-     *
-     * @param mixed $idAgente
-     * @param mixed $dados
-     * @static
-     * @access public
-     * @return void
      * @deprecated Utilizar m&eacute;todo da DbTable
      */
     public static function atualizaEnderecoNacional($idAgente, $dados)
@@ -91,12 +73,6 @@ class Agente_Model_EnderecoNacionalDAO extends MinC_Db_Table_Abstract
     }
 
     /**
-     * deletarEnderecoNacional
-     *
-     * @param mixed $idEndereco
-     * @static
-     * @access public
-     * @return void
      * @deprecated Utilizar m&eacute;todo da DbTable
      *
      */
@@ -112,12 +88,6 @@ class Agente_Model_EnderecoNacionalDAO extends MinC_Db_Table_Abstract
     }
 
     /**
-     * mudaCorrespondencia
-     *
-     * @param mixed $idAgente
-     * @static
-     * @access public
-     * @return void
      * @deprecated Utilizar m&eacute;todo da DbTable
      */
     public static function mudaCorrespondencia($idAgente)
@@ -132,12 +102,6 @@ class Agente_Model_EnderecoNacionalDAO extends MinC_Db_Table_Abstract
     }
 
     /**
-     * novaCorrespondencia
-     *
-     * @param mixed $idAgente
-     * @static
-     * @access public
-     * @return void
      * @deprecated Utilizar m&eacute;todo da DbTable
      */
     public static function novaCorrespondencia($idAgente)
