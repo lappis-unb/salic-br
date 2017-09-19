@@ -2011,18 +2011,18 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         try {
             $arrayEnderecos = array(
                 'idAgente' => $idAgente,
-                'cep' => str_replace(".", "", str_replace("-", "", $cepEndereco)),
-                'tipoendereco' => $tipoEndereco,
-                'uf' => $ufEndereco,
-                'cidade' => $CidadeEndereco,
-                'logradouro' => $Endereco,
-                'divulgar' => $divulgarEndereco,
+                'Cep' => str_replace(".", "", str_replace("-", "", $cepEndereco)),
+                'TipoEndereco' => $tipoEndereco,
+                'UF' => $ufEndereco,
+                'Cidade' => $CidadeEndereco,
+                'Logradouro' => $Endereco,
+                'Divulgar' => $divulgarEndereco,
                 'TipoLogradouro' => $tipoLogradouro,
-                'numero' => $numero,
-                'complemento' => $complemento,
-                'bairro' => $bairro,
-                'status' => $enderecoCorrespodencia,
-                'usuario' => $usuario
+                'Numero' => $numero,
+                'Complemento' => $complemento,
+                'Bairro' => $bairro,
+                'Status' => $enderecoCorrespodencia,
+                'Usuario' => $usuario
             );
 
             $enderecoDAO = new Agente_Model_EnderecoNacionalDAO();
