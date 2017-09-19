@@ -1922,10 +1922,10 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         try {
             $arrNome = array(
                 'idAgente' => $idAgente,
-                'tiponome' => $TipoNome,
+                'TipoNome' => $TipoNome,
                 'Descricao' => $nome,
-                'status' => 0,
-                'usuario' => $usuario
+                'Status' => 0,
+                'Usuario' => $usuario
             );
 
             $mprNomes->save(new Agente_Model_Nomes($arrNome));
