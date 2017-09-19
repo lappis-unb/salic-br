@@ -1945,8 +1945,8 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
             $GravarVisao = array(// insert
                 'idAgente' => $idAgente,
                 'Visao' => $Visao,
-                'usuario' => $usuario,
-                'stativo' => 'A');
+                'Usuario' => $usuario,
+                'stAtivo' => 'A');
             try {
                 $visaoTable = new Agente_Model_DbTable_Visao();
                 $busca = $visaoTable->buscarVisao($idAgente, $Visao);

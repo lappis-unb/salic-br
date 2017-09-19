@@ -1,31 +1,17 @@
 <?php
 
-/**
- * Class Agente_Model_Visao
- *
- * @name Agente_Model_Visao
- * @package Modules/Agente
- * @subpackage Models
- * @version $Id$
- *
- * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
- * @since 01/09/2016
- *
- * @copyright © 2012 - Ministerio da Cultura - Todos os direitos reservados.
- * @link http://salic.cultura.gov.br
- */
 class Agente_Model_Visao extends MinC_Db_Model
 {
     protected $_idVisao;
-    protected $_idagente;
-    protected $_visao;
-    protected $_usuario;
-    protected $_stativo;
+    protected $_idAgente;
+    protected $_Visao;
+    protected $_Usuario;
+    protected $_stAtivo;
 
     /**
      * @return mixed
      */
-    public function getIdvisao()
+    public function getIdVisao()
     {
         return $this->_idVisao;
     }
@@ -33,7 +19,7 @@ class Agente_Model_Visao extends MinC_Db_Model
     /**
      * @param mixed $idVisao
      */
-    public function setIdvisao($idVisao)
+    public function setIdVisao($idVisao)
     {
         $this->_idVisao = $idVisao;
     }
@@ -41,17 +27,17 @@ class Agente_Model_Visao extends MinC_Db_Model
     /**
      * @return mixed
      */
-    public function getIdagente()
+    public function getIdAgente()
     {
-        return $this->_idagente;
+        return $this->_idAgente;
     }
 
     /**
      * @param mixed $idagente
      */
-    public function setIdagente($idagente)
+    public function setIdAgente($idagente)
     {
-        $this->_idagente = $idagente;
+        $this->_idAgente = $idagente;
     }
 
     /**
@@ -59,7 +45,7 @@ class Agente_Model_Visao extends MinC_Db_Model
      */
     public function getVisao()
     {
-        return $this->_visao;
+        return $this->_Visao;
     }
 
     /**
@@ -67,7 +53,7 @@ class Agente_Model_Visao extends MinC_Db_Model
      */
     public function setVisao($visao)
     {
-        $this->_visao = $visao;
+        $this->_Visao = $visao;
     }
 
     /**
@@ -75,7 +61,7 @@ class Agente_Model_Visao extends MinC_Db_Model
      */
     public function getUsuario()
     {
-        return $this->_usuario;
+        return $this->_Usuario;
     }
 
     /**
@@ -83,22 +69,22 @@ class Agente_Model_Visao extends MinC_Db_Model
      */
     public function setUsuario($usuario)
     {
-        $this->_usuario = $usuario;
+        $this->_Usuario = $usuario;
     }
 
     /**
      * @return mixed
      */
-    public function getStativo()
+    public function getStAtivo()
     {
-        return $this->_stativo;
+        return $this->_stAtivo;
     }
 
     /**
      * @param mixed $stativo
      */
-    public function setStativo($stativo)
+    public function setStAtivo($stativo)
     {
-        $this->_stativo = $stativo;
+        $this->_stAtivo = $stativo;
     }
 }
