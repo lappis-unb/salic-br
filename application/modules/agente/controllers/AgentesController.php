@@ -1899,9 +1899,9 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         $usuario = isset($arrAuth['IdUsuario']) ? $arrAuth['IdUsuario'] : $arrAuth['usu_codigo'];
         $arrayAgente = array(
             'CNPJCPF' => $this->_request->getParam("cpf"),
-            'tipopessoa' => $this->_request->getParam("Tipo"),
-            'status' => 0,
-            'usuario' => $usuario
+            'TipoPessoa' => $this->_request->getParam("Tipo"),
+            'Status' => 0,
+            'Usuario' => $usuario
         );
 
         $mprAgentes = new Agente_Model_AgentesMapper();
@@ -1925,10 +1925,12 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
                 'TipoNome' => $TipoNome,
                 'Descricao' => $nome,
                 'Status' => 0,
-                'Usuario' => $usuario
+                'Usuario' => $usuario,
+                'CPF' => $this->_request->getParam("cpf"),
             );
 
-            $mprNomes->save(new Agente_Model_Nomes($arrNome));
+            $modelNome = new Agente_Model_Nomes($arrNome);
+            $mprNomes->save($modelNome);
 
         } catch (Exception $e) {
             parent::message("Erro ao salvar o nome: " . $e->getMessage(), "agente/agentes/incluiragente", "ERROR");

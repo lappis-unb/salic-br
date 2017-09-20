@@ -105,23 +105,15 @@ class Agente_Model_Nomes extends MinC_Db_Model
         $this->_Usuario = $usuario;
     }
 
-    /**
-     *
-     * @name toArray
-     * @return array
-     *
-     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
-     * @since  01/09/2016
-     */
     public function toArray()
     {
         return array(
-            'idnome' => self::getIdNome(),
+            'idNome' => self::getIdNome(),
             'idAgente' => self::getIdAgente(),
-            'tiponome' => self::getTipoNome(),
+            'TipoNome' => self::getTipoNome(),
             'Descricao' => self::getDescricao(),
-            'status' => self::getStatus(),
-            'usuario' => self::getUsuario()
+            'Status' => self::getStatus(),
+            'Usuario' => self::getUsuario()
         );
     }
 }

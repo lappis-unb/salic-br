@@ -2,11 +2,9 @@
 
 class Agente_Model_DbTable_TbVinculo extends MinC_Db_Table_Abstract{
 
-    protected $_banco = 'agentes';
     protected $_schema = 'agentes';
     protected $_name = 'tbVinculo';
     protected $_primary = 'idVinculo';
-
 
 	public function buscarVinculoProponenteResponsavel($where=array())
     {
@@ -77,7 +75,6 @@ class Agente_Model_DbTable_TbVinculo extends MinC_Db_Table_Abstract{
         if(!empty($mecanismo)){
             $slct1->where('a.Mecanismo = ?', $mecanismo);
         }
-xd($slct1->assemble());
 
         $slct2 = $this->select()
                     ->setIntegrityCheck(false)
