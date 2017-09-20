@@ -323,6 +323,7 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
             }
             return $c;
         } else {
+            #$this->databaseAdapter->_uniqueCorrelation($name);
             return parent::_uniqueCorrelation($name);
         }
     }

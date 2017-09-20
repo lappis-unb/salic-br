@@ -631,7 +631,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
                 $this->view->vinculado = "sim";
             }
             $tbTipodeDocumento = new VerificacaoAGENTES();
-            $whereLista['idTipo = ?'] = 5;
+            $whereLista['IdTipo = ?'] = 5;
             $rsTipodeDocumento = $tbTipodeDocumento->buscar($whereLista);
             $this->view->tipoDocumento = $rsTipodeDocumento;
 
@@ -1739,7 +1739,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         }
 
         $Verificacao = new VerificacaoAGENTES();
-        $buscaNivel = $Verificacao->buscar(array('idtipo=?' => 25), 'Descricao');
+        $buscaNivel = $Verificacao->buscar(array('IdTipo=?' => 25), 'Descricao');
 
         $this->view->anosexperiencia = $anos;
         $this->view->credenciados = $credenciados;
