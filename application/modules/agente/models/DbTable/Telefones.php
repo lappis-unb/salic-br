@@ -36,11 +36,16 @@ class Agente_Model_DbTable_Telefones extends MinC_Db_Table_Abstract
             'ddd.Codigo as codigo',
         );
 
-        $sql = $db->select()->distinct()
+        $sql = $this->select()->distinct()
             ->from(array('tl' => $this->_name), $tl, $this->_schema)
             ->join(array('uf' => 'UF'), 'uf.idUF = tl.UF', array('uf.Sigla as ufsigla'), $this->_schema)
             ->join(array('ag' => 'Agentes'), 'ag.idAgente = tl.idAgente', array('ag.idAgente'), $this->_schema)
-            ->joinLeft(array('ddd' => 'DDD'), 'tl.DDD = ddd.Codigo', $ddd, $this->_schema);
+            ->joinLeft(
+                array('ddd' => 'DDD'),
+                new Zend_Db_Expr('tl.DDD::varchar = ddd.Codigo'),
+                $ddd,
+                $this->_schema
+            );
 
         if (!empty($idAgente)) { // busca de acordo com o id do agente
             $sql->where('tl.idAgente = ?', $idAgente);

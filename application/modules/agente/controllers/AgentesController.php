@@ -244,8 +244,10 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
                 parent::message("Agente n&atilde;o encontrado!", "agente/agentes/buscaragente", "ALERT");
             }
 
-            $this->view->telefones = Agente_Model_ManterAgentesDAO::buscarFones($idAgente);
-            $this->view->emails = Agente_Model_ManterAgentesDAO::buscarEmails($idAgente);
+            $dbTableTelefones = new Agente_Model_DbTable_Telefones();
+            $dbTableIntenet = new Agente_Model_DbTable_Internet();
+            $this->view->telefones = $dbTableTelefones->buscarFones($idAgente);
+            $this->view->emails = $dbTableIntenet->buscarEmails($idAgente);
             $visaoTable = new Agente_Model_DbTable_Visao();
             $visoes = $visaoTable->buscarVisao($idAgente);
             $this->view->visoes = $visoes;

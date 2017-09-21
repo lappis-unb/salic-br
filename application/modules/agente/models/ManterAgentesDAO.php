@@ -1,42 +1,12 @@
 <?php
-/**
- * ManterAgentesDAO
- * @author Equipe RUP - Politec
- * @author wouerner <wouerner@gmail.com>
- * @since 09/08/2010
- * @version 1.0
- * @package application
- * @subpackage application.model.DAO
- */
 
 class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
 {
-    /**
-     * Metodo para buscar agentes
-     * @access public
-     * @static
-     * @param string $cnpjcpf
-     * @param string $nome
-     * @param integer $idAgente
-     * @return object
-     */
     public static function buscarAgentes($cnpjcpf = null, $nome = null, $idAgente = null)
     {
         throw new Exception("Método descontinuado. Favor utilizar o m&eacute;todo buscarAgentes da classe.");
     }
 
-    /**
-     * M�todo para buscar agentes vinculados
-     *
-     * @access public
-     * @static
-     * @param string $cnpjcpfSuperior
-     * @param string $nome
-     * @param integer $idAgente
-     * @param integer $idVinculado
-     * @param integer $idVinculoPrincipal
-     * @return object
-     */
     public static function buscarVinculados($cnpjcpfSuperior = null, $nome = null, $idAgente = null, $idVinculado = null, $idVinculoPrincipal = null)
     {
         $db= Zend_Db_Table::getDefaultAdapter();
@@ -161,12 +131,12 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
             ,'i.tipointernet'
             ,'i.Descricao'
             ,'i.status'
-            ,'i.divulgar'
+            ,'i.Divulgar'
         );
 
         $sql = $db->select()
             ->from(array('i' => 'internet'), $i, $tblAgentes->getSchema('agentes'))
-            ->join(array('v' => 'Verificacao'), 'i.tipointernet = v.idverificacao', 'v.Descricao as tipo', $tblAgentes->getSchema('agentes'))
+            ->join(array('v' => 'Verificacao'), 'i.tipointernet = v.idVerificacao', 'v.Descricao as tipo', $tblAgentes->getSchema('agentes'))
             ->join(array('t' => 'tipo'), 't.idTipo = v.idTipo', null, $tblAgentes->getSchema('agentes'));
 
         if (!empty($idAgente)) {// busca de acordo com o id do agente
@@ -179,7 +149,7 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
     }
 
     /**
-     * M�todo para buscar os telefones do agente
+     * M�todo para buscar os Telefones do agente
      *
      * @access public
      * @static
@@ -193,23 +163,23 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
         $db = Zend_Db_Table::getDefaultAdapter();
 
         $tl = array(
-            'tl.idtelefone',
-            'tl.tipotelefone',
-            'tl.numero',
-            'tl.divulgar',
+            'tl.idTelefone',
+            'tl.TipoTelefone',
+            'tl.Numero',
+            'tl.Divulgar',
         );
 
         $ddd = array(
-            'ddd.codigo as ddd',
-            'ddd.codigo as codigo',
+            'ddd.Codigo as ddd',
+            'ddd.Codigo as codigo',
         );
 
         $sql = $db->select()
-            ->from(array('tl' => 'telefones'), $tl, $tblAgentes->getSchema('agentes'))
-            ->join(array('uf' => 'uf'), 'uf.iduf = tl.uf', array('uf.sigla as ufsigla'), $tblAgentes->getSchema('agentes'))
+            ->from(array('tl' => 'Telefones'), $tl, $tblAgentes->getSchema('agentes'))
+            ->join(array('uf' => 'UF'), 'uf.iduf = tl.uf', array('uf.sigla as ufsigla'), $tblAgentes->getSchema('agentes'))
             ->join(array('ag' => 'Agentes'), 'ag.idAgente = tl.idAgente', array('ag.idAgente'), $tblAgentes->getSchema('agentes'))
-            ->joinLeft(array('ddd' => 'ddd'), 'tl.ddd = ddd.codigo', $ddd, $tblAgentes->getSchema('agentes'))
-            ->joinLeft(array('v' => 'Verificacao'), 'v.idverificacao = tl.tipotelefone', array('v.Descricao as dstelefone'), $tblAgentes->getSchema('agentes'))
+            ->joinLeft(array('ddd' => 'DDD'), 'tl.DDD = ddd.Codigo', $ddd, $tblAgentes->getSchema('agentes'))
+            ->joinLeft(array('v' => 'Verificacao'), 'v.idVerificacao = tl.TipoTelefone', array('v.Descricao as dstelefone'), $tblAgentes->getSchema('agentes'))
             ;
         if (!empty($idAgente)) { // busca de acordo com o id do agente
             $sql->where('tl.idAgente = ?', $idAgente);

@@ -10,7 +10,7 @@ class Agente_Model_DbTable_Internet extends MinC_Db_Table_Abstract
     /**
      * @var bool
      */
-    protected $_name = 'internet';
+    protected $_name = 'Internet';
 
     /**
      * @var bool
@@ -44,22 +44,22 @@ class Agente_Model_DbTable_Internet extends MinC_Db_Table_Abstract
      * @access public
      * @param string $cpfcnpj
      * @param integer $idAgente
-     * @param integer $statusEmail (1 = ATIVADO, 0 = DESATIVADO)
-     * @param integer $statusDivulgacao (1 = ATIVADO, 0 = DESATIVADO)
+     * @param integer $StatusEmail (1 = ATIVADO, 0 = DESATIVADO)
+     * @param integer $StatusDivulgacao (1 = ATIVADO, 0 = DESATIVADO)
      * @param boolean $buscarTodos (informa se busca todos ou somente um)
      * @return array || object
      */
-    public function buscarEmailAgente($cpfcnpj = null, $idAgente = null, $statusEmail = null, $statusDivulgacao = null, $buscarTodos = true)
+    public function buscarEmailAgente($cpfcnpj = null, $idAgente = null, $StatusEmail = null, $StatusDivulgacao = null, $buscarTodos = true)
     {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
             array("e" => $this->_name),
-            array("e.idinternet as idemail"
-            ,"e.tipointernet as tipoemail"
+            array("e.idInternet as idemail"
+            ,"e.TipoInternet as tipoemail"
             ,"e.Descricao as email"
-            ,"e.status"
-            ,"e.divulgar"),
+            ,"e.Status"
+            ,"e.Divulgar"),
             $this->_schema
         );
 
@@ -83,15 +83,15 @@ class Agente_Model_DbTable_Internet extends MinC_Db_Table_Abstract
         }
 
         // busca pelo email ativado/desativado
-        if (!empty($statusEmail))
+        if (!empty($StatusEmail))
         {
-            $select->where("e.status = ?", $statusEmail);
+            $select->where("e.Status = ?", $StatusEmail);
         }
 
         // busca pelo email de divulgacao
-        if (!empty($statusDivulgacao))
+        if (!empty($StatusDivulgacao))
         {
-            $select->where("e.divulgar = ?", $statusDivulgacao);
+            $select->where("e.Divulgar = ?", $StatusDivulgacao);
         }
 
         return $buscarTodos ? $this->fetchAll($select) : $this->fetchRow($select);
@@ -111,18 +111,18 @@ class Agente_Model_DbTable_Internet extends MinC_Db_Table_Abstract
         $db = Zend_Db_Table::getDefaultAdapter();
 
         $i = array(
-            'i.idinternet',
+            'i.idInternet',
             'i.idAgente',
-            'i.tipointernet',
+            'i.TipoInternet',
             'i.Descricao',
-            'i.status',
-            'i.divulgar'
+            'i.Status',
+            'i.Divulgar'
         );
 
         $sql = $db->select()
-            ->from(array('i' => 'internet'), $i, $this->_schema)
-            ->join(array('v' => 'Verificacao'), 'i.tipointernet = v.idverificacao', 'v.Descricao as tipo', $this->_schema)
-            ->join(array('t' => 'tipo'), 't.idTipo = v.idTipo', null, $this->_schema);
+            ->from(array('i' => 'Internet'), $i, $this->_schema)
+            ->join(array('v' => 'Verificacao'), 'i.TipoInternet = v.idVerificacao', 'v.Descricao as tipo', $this->_schema)
+            ->join(array('t' => 'Tipo'), 't.idTipo = v.idTipo', null, $this->_schema);
 
         if (!empty($idAgente)) {// busca de acordo com o id do agente
 
