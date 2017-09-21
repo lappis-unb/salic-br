@@ -17,18 +17,18 @@ class Agente_Model_DbTable_Telefones extends MinC_Db_Table_Abstract
             'tl.TipoTelefone',
             'tl.Numero',
             'tl.Divulgar',
-            new Zend_Db_Expr("
+            new Zend_Db_Expr('
                     CASE
-                    WHEN tl.TipoTelefone = 22 or tl.TipoTelefone = 24
-                    THEN 'Residencial'
-                    WHEN tl.TipoTelefone = 23 or tl.TipoTelefone = 25
-                    THEN 'Comercial'
-                    WHEN tl.TipoTelefone = 26
-                    THEN 'Celular'
-                    WHEN tl.TipoTelefone = 27
-                    THEN 'Fax'
+                    WHEN "tl"."TipoTelefone" = 22 or "tl"."TipoTelefone" = 24
+                    THEN \'Residencial\'
+                    WHEN "tl"."TipoTelefone" = 23 or "tl"."TipoTelefone" = 25
+                    THEN \'Comercial\'
+                    WHEN "tl"."TipoTelefone" = 26
+                    THEN \'Celular\'
+                    WHEN "tl"."TipoTelefone" = 27
+                    THEN \'Fax\'
                     END as dstelefone
-            ")
+            ')
         );
 
         $ddd = array(
