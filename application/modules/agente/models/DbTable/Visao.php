@@ -44,7 +44,7 @@ class Agente_Model_DbTable_Visao extends MinC_Db_Table_Abstract
             $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-            $objSelect = $db->select();
+            $objSelect = $this->select();
             $objSelect->from(
                 array('vis' => 'Visao'),
                 array('idVisao', 'idAgente', 'Usuario', 'stAtivo', 'Visao'),
@@ -68,9 +68,8 @@ class Agente_Model_DbTable_Visao extends MinC_Db_Table_Abstract
                 array('Area' => 'ar.Descricao'),
                 $this->getSchema('sac')
             );
-            $objSelect->where('ver.idVerificacao = vis.Visao');
-            $objSelect->where('ver.idTipo = ? ', 16);
-            $objSelect->where('sistema = ? ', 21);
+            $objSelect->where('ver.IdTipo = ?', 16);
+            $objSelect->where('Sistema = ?', 21);
 
             if (!empty($idAgente)) {
                 $objSelect->where('vis.idAgente = ? ', $idAgente);
@@ -85,7 +84,6 @@ class Agente_Model_DbTable_Visao extends MinC_Db_Table_Abstract
         }
         return $dados;
     }
-
 
     public function cadastrarVisao($dados)
     {

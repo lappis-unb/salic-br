@@ -631,7 +631,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
                 $this->view->vinculado = "sim";
             }
             $tbTipodeDocumento = new VerificacaoAGENTES();
-            $whereLista['idTipo = ?'] = 5;
+            $whereLista['IdTipo = ?'] = 5;
             $rsTipodeDocumento = $tbTipodeDocumento->buscar($whereLista);
             $this->view->tipoDocumento = $rsTipodeDocumento;
 
@@ -1739,7 +1739,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         }
 
         $Verificacao = new VerificacaoAGENTES();
-        $buscaNivel = $Verificacao->buscar(array('idtipo=?' => 25), 'Descricao');
+        $buscaNivel = $Verificacao->buscar(array('IdTipo=?' => 25), 'Descricao');
 
         $this->view->anosexperiencia = $anos;
         $this->view->credenciados = $credenciados;
@@ -1899,9 +1899,9 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         $usuario = isset($arrAuth['IdUsuario']) ? $arrAuth['IdUsuario'] : $arrAuth['usu_codigo'];
         $arrayAgente = array(
             'CNPJCPF' => $this->_request->getParam("cpf"),
-            'tipopessoa' => $this->_request->getParam("Tipo"),
-            'status' => 0,
-            'usuario' => $usuario
+            'TipoPessoa' => $this->_request->getParam("Tipo"),
+            'Status' => 0,
+            'Usuario' => $usuario
         );
 
         $mprAgentes = new Agente_Model_AgentesMapper();
@@ -1909,11 +1909,11 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         $mdlAgente = new Agente_Model_Agentes($arrayAgente);
         $mprAgentes->save($mdlAgente);
 
-        $agente = $mprAgentes->findBy(array('CNPJCPF' => $mdlAgente->getCnpjcpf()));
+        $agente = $mprAgentes->findBy(array('CNPJCPF' => $mdlAgente->getCNPJCPF()));
         $cpf = preg_replace('/\.|-|\//', '', $_REQUEST['cpf']);
         $idAgente = $agente['idAgente'];
         $nome = $this->_request->getParam("nome");
-        $TipoNome = (strlen($mdlAgente->getCnpjcpf()) == 11 ? 18 : 19); // 18 = pessoa fisica e 19 = pessoa juridica
+        $TipoNome = (strlen($mdlAgente->getCNPJCPF()) == 11 ? 18 : 19); // 18 = pessoa fisica e 19 = pessoa juridica
         if ($this->modal == "s") {
             $nome = Seguranca::tratarVarAjaxUFT8($nome);
         }
@@ -1922,13 +1922,15 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         try {
             $arrNome = array(
                 'idAgente' => $idAgente,
-                'tiponome' => $TipoNome,
+                'TipoNome' => $TipoNome,
                 'Descricao' => $nome,
-                'status' => 0,
-                'usuario' => $usuario
+                'Status' => 0,
+                'Usuario' => $usuario,
+                'CPF' => $this->_request->getParam("cpf"),
             );
 
-            $mprNomes->save(new Agente_Model_Nomes($arrNome));
+            $modelNome = new Agente_Model_Nomes($arrNome);
+            $mprNomes->save($modelNome);
 
         } catch (Exception $e) {
             parent::message("Erro ao salvar o nome: " . $e->getMessage(), "agente/agentes/incluiragente", "ERROR");
@@ -1945,8 +1947,8 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
             $GravarVisao = array(// insert
                 'idAgente' => $idAgente,
                 'Visao' => $Visao,
-                'usuario' => $usuario,
-                'stativo' => 'A');
+                'Usuario' => $usuario,
+                'stAtivo' => 'A');
             try {
                 $visaoTable = new Agente_Model_DbTable_Visao();
                 $busca = $visaoTable->buscarVisao($idAgente, $Visao);
@@ -2011,18 +2013,18 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         try {
             $arrayEnderecos = array(
                 'idAgente' => $idAgente,
-                'cep' => str_replace(".", "", str_replace("-", "", $cepEndereco)),
-                'tipoendereco' => $tipoEndereco,
-                'uf' => $ufEndereco,
-                'cidade' => $CidadeEndereco,
-                'logradouro' => $Endereco,
-                'divulgar' => $divulgarEndereco,
+                'Cep' => str_replace(".", "", str_replace("-", "", $cepEndereco)),
+                'TipoEndereco' => $tipoEndereco,
+                'UF' => $ufEndereco,
+                'Cidade' => $CidadeEndereco,
+                'Logradouro' => $Endereco,
+                'Divulgar' => $divulgarEndereco,
                 'TipoLogradouro' => $tipoLogradouro,
-                'numero' => $numero,
-                'complemento' => $complemento,
-                'bairro' => $bairro,
-                'status' => $enderecoCorrespodencia,
-                'usuario' => $usuario
+                'Numero' => $numero,
+                'Complemento' => $complemento,
+                'Bairro' => $bairro,
+                'Status' => $enderecoCorrespodencia,
+                'Usuario' => $usuario
             );
 
             $enderecoDAO = new Agente_Model_EnderecoNacionalDAO();
@@ -2043,12 +2045,12 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
             try {
                 $arrayTelefones = array(
                     'idAgente' => $idAgente,
-                    'tipotelefone' => $tipoFone,
-                    'uf' => $ufFone,
-                    'ddd' => $dddFone,
-                    'numero' => $Fone,
-                    'divulgar' => $divulgarFone,
-                    'usuario' => $usuario
+                    'TipoTelefone' => $tipoFone,
+                    'UF' => $ufFone,
+                    'DDD' => $dddFone,
+                    'Numero' => $Fone,
+                    'Divulgar' => $divulgarFone,
+                    'Usuario' => $usuario
                 );
 
                 $insereTelefone = new Agente_Model_DbTable_Telefones();
@@ -2069,11 +2071,11 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
             try {
                 $arrayEmail = array(
                     'idAgente' => $idAgente,
-                    'tipointernet' => $tipoEmail,
+                    'TipoInternet' => $tipoEmail,
                     'Descricao' => $Email,
-                    'status' => $enviarEmail,
-                    'divulgar' => $divulgarEmail,
-                    'usuario' => $usuario
+                    'Status' => $enviarEmail,
+                    'Divulgar' => $divulgarEmail,
+                    'Usuario' => $usuario
                 );
 
                 $insere = new Agente_Model_Email();

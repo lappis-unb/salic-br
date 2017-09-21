@@ -1,74 +1,60 @@
 <?php
 
-/**
- * Class Agente_Model_Nomes
- *
- * @name Agente_Model_Nomes
- * @package Modules/Agente
- * @subpackage Models
- * @version $Id$
- *
- * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
- * @since 05/09/2016
- *
- * @copyright © 2012 - Ministerio da Cultura - Todos os direitos reservados.
- * @link http://salic.cultura.gov.br
- */
 class Agente_Model_Nomes extends MinC_Db_Model
 {
-    protected $_idnome;
-    protected $_idagente;
-    protected $_tiponome;
-    protected $_descricao;
-    protected $_status;
-    protected $_usuario;
+    protected $_idNome;
+    protected $_idAgente;
+    protected $_TipoNome;
+    protected $_Descricao;
+    protected $_Status;
+    protected $_Usuario;
 
     /**
      * @return mixed
      */
-    public function getIdnome()
+    public function getIdNome()
     {
-        return $this->_idnome;
+        return $this->_idNome;
     }
 
     /**
      * @param mixed $idnome
      */
-    public function setIdnome($idnome)
+    public function setIdNome($idnome)
     {
-        $this->_idnome = $idnome;
+        $this->_idNome = $idnome;
     }
 
     /**
      * @return mixed
      */
-    public function getIdagente()
+    public function getIdAgente()
     {
-        return $this->_idagente;
+        return $this->_idAgente;
     }
 
     /**
      * @param mixed $idagente
      */
-    public function setIdagente($idagente)
+    public function setIdAgente($idagente)
     {
-        $this->_idagente = $idagente;
+        $this->_idAgente = $idagente;
     }
 
     /**
      * @return mixed
      */
-    public function getTiponome()
+    public function getTipoNome()
     {
-        return $this->_tiponome;
+        return $this->_TipoNome;
     }
 
     /**
      * @param mixed $tiponome
      */
-    public function setTiponome($tiponome)
+    public function setTipoNome($tiponome)
     {
-        $this->_tiponome = $tiponome;
+        $this->_TipoNome = $tiponome;
     }
 
     /**
@@ -76,7 +62,7 @@ class Agente_Model_Nomes extends MinC_Db_Model
      */
     public function getDescricao()
     {
-        return $this->_descricao;
+        return $this->_Descricao;
     }
 
     /**
@@ -84,7 +70,7 @@ class Agente_Model_Nomes extends MinC_Db_Model
      */
     public function setDescricao($descricao)
     {
-        $this->_descricao = $descricao;
+        $this->_Descricao = $descricao;
     }
 
     /**
@@ -92,7 +78,7 @@ class Agente_Model_Nomes extends MinC_Db_Model
      */
     public function getStatus()
     {
-        return $this->_status;
+        return $this->_Status;
     }
 
     /**
@@ -100,7 +86,7 @@ class Agente_Model_Nomes extends MinC_Db_Model
      */
     public function setStatus($status)
     {
-        $this->_status = $status;
+        $this->_Status = $status;
     }
 
     /**
@@ -108,7 +94,7 @@ class Agente_Model_Nomes extends MinC_Db_Model
      */
     public function getUsuario()
     {
-        return $this->_usuario;
+        return $this->_Usuario;
     }
 
     /**
@@ -116,26 +102,18 @@ class Agente_Model_Nomes extends MinC_Db_Model
      */
     public function setUsuario($usuario)
     {
-        $this->_usuario = $usuario;
+        $this->_Usuario = $usuario;
     }
 
-    /**
-     *
-     * @name toArray
-     * @return array
-     *
-     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
-     * @since  01/09/2016
-     */
     public function toArray()
     {
         return array(
-            'idnome' => self::getIdnome(),
-            'idAgente' => self::getIdagente(),
-            'tiponome' => self::getTiponome(),
+            'idNome' => self::getIdNome(),
+            'idAgente' => self::getIdAgente(),
+            'TipoNome' => self::getTipoNome(),
             'Descricao' => self::getDescricao(),
-            'status' => self::getStatus(),
-            'usuario' => self::getUsuario()
+            'Status' => self::getStatus(),
+            'Usuario' => self::getUsuario()
         );
     }
 }

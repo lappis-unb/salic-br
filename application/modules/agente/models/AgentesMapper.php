@@ -1,19 +1,5 @@
 <?php
 
-/**
- * Class Agente_Model_AgentesMapper
- *
- * @name Agente_Model_AgentesMapper
- * @package Modules/Agente
- * @subpackage Models
- * @version $Id$
- *
- * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
- * @since 01/09/2016
- *
- * @copyright © 2012 - Ministerio da Cultura - Todos os direitos reservados.
- * @link http://salic.cultura.gov.br
- */
 class Agente_Model_AgentesMapper extends MinC_Db_Mapper
 {
 
@@ -35,15 +21,14 @@ class Agente_Model_AgentesMapper extends MinC_Db_Mapper
 
     public function isUniqueCpfCnpj($value)
     {
-        return ($this->findBy(array("CNPJCPF" => $value))) ? true : false;
+        return ($this->findBy(array("CNPJCPF = ?" => $value))) ? true : false;
     }
 
     public function save( $model)
     {
-        if (self::isUniqueCpfCnpj($model->getCnpjcpf())) {
-            throw new Exception('CNPJ ou CPF j&aacute; cadastrado.');
-        } else {
+        if (!self::isUniqueCpfCnpj($model->getCnpjcpf())) {
             return parent::save($model);
         }
+        throw new Exception('CNPJ ou CPF j&aacute; cadastrado.');
     }
 }
