@@ -119,18 +119,17 @@ class Agente_Model_DbTable_Internet extends MinC_Db_Table_Abstract
             'i.Divulgar'
         );
 
-        $sql = $db->select()
-            ->from(array('i' => 'Internet'), $i, $this->_schema)
-            ->join(array('v' => 'Verificacao'), 'i.TipoInternet = v.idVerificacao', 'v.Descricao as tipo', $this->_schema)
-            ->join(array('t' => 'Tipo'), 't.idTipo = v.idTipo', null, $this->_schema);
+        $query = $this->select();
+        $query->from(array('i' => 'Internet'), $i, $this->_schema);
+        $query->join(array('v' => 'Verificacao'), 'i.TipoInternet = v.idVerificacao', 'v.Descricao as tipo', $this->_schema);
+        $query->join(array('t' => 'Tipo'), 't.idTipo = v.IdTipo', null, $this->_schema);
 
         if (!empty($idAgente)) {// busca de acordo com o id do agente
-
-            $sql->where('i.idAgente = ?', $idAgente);
+            $query->where('i.idAgente = ?', $idAgente);
         }
 
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        return $db->fetchAll($sql);
+        return $db->fetchAll($query);
     }
 
     /**
