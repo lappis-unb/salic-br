@@ -150,7 +150,11 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
                     && $field != "false"
                     && $field != "true"
                 ) {
-                    $field = '"' . $field . '"';
+                    if(strpos($field, '::') !== false) {
+                        $field = '"' . substr($field, 0, strpos($field, '::')). '"' . substr($field, strpos($field, '::'));
+                    } else {
+                        $field = '"' . $field . '"';
+                    }
                 }
             }
         }
