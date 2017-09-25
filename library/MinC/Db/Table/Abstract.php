@@ -434,7 +434,7 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
                 return new Zend_Db_Expr('CONVERT(CHAR(10), ' . $strColumn . ' , 103)');
             }
         } else {
-            return new Zend_Db_Expr('TO_CHAR(' . $strColumn . ', \'' . $strFormat . '\')');
+            return new Zend_Db_Expr('to_char(' . $strColumn . ', \'' . $strFormat . '\')');
         }
     }
 
