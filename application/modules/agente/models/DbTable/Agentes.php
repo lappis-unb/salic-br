@@ -102,7 +102,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
 
         foreach ($result as &$value) {
             $value['CNPJCPF'] = Mascara::addMaskCpfCnpj($value['CNPJCPF']);
-            if($value['cep']) {
+            if(isset($value['cep'])) {
                 $value['cep'] = Mascara::addMaskCEP($value['cep']);
             }
         }
