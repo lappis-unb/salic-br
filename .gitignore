@@ -2,6 +2,6 @@
 /log
 /app
 docker-compose.yml
-.idea/
+.idea
 .vscode/
 npm-debug.log

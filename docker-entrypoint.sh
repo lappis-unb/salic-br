@@ -9,7 +9,7 @@ if ! [ -d "/var/www/salic-br" ] || ! [ -d "/var/www/salic-br/application" ]; the
     fi
     echo "[ ****************** ] Cloning Project repository to tmp folder"
     #rm -Rf /tmp/salic-br
-    git clone -b 'develop' https://github.com/culturagovbr/salic-br /tmp/salic-br
+    git clone -b "$GIT_BRANCH" $GIT_REPOSITORY /tmp/salic-br
     ls -la /tmp/salic-br
 
     echo "[ ****************** ] Copying Project from temporary folder to workdir"
