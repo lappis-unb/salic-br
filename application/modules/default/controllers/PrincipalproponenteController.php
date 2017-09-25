@@ -54,16 +54,16 @@ class PrincipalproponenteController extends MinC_Controller_Action_Abstract
         $stOpcao  = $this->_request->getParam("stOpcao");
 
         if (!empty($periodo1) && !empty($periodo1)) {
-            $where['dtiniciovigencia >= ?']  = $periodo1;
-            $where['dtterminovigencia <= ?'] = $periodo2;
+            $where['dtInicioVigencia >= ?']  = $periodo1;
+            $where['dtTerminoVigencia <= ?'] = $periodo2;
         }
 
         if ($stEstado != '') {
-            $where['stestado = ?'] = $stEstado;
+            $where['stEstado = ?'] = $stEstado;
         }
 
         if ($stOpcao != '') {
-            $where['stopcao = ?'] = $stOpcao;
+            $where['stOpcao = ?'] = $stOpcao;
         }
 
 

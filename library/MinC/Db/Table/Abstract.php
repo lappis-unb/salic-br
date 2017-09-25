@@ -434,7 +434,7 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
                 return new Zend_Db_Expr('CONVERT(CHAR(10), ' . $strColumn . ' , 103)');
             }
         } else {
-            return new Zend_Db_Expr('TO_CHAR(' . $strColumn . ', \'' . $strFormat . '\')');
+            return new Zend_Db_Expr('to_char("' . $strColumn . '", \'' . $strFormat . '\')');
         }
     }
 
@@ -471,7 +471,7 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
         if ($this->getAdapter() instanceof Zend_Db_Adapter_Pdo_Mssql) {
             return new Zend_Db_Expr("DATEDIFF ( {$strDatePart} , {$strColumn} , {$strColumnTwo})");
         }
-        return new Zend_Db_Expr("DATE_PART('{$strDatePart}', {$strColumn}) - DATE_PART('{$strDatePart}', {$strColumnTwo})");
+        return new Zend_Db_Expr("DATE_PART('{$strDatePart}', \"{$strColumn}\") - DATE_PART('{$strDatePart}', \"{$strColumnTwo}\")");
     }
 
     public function getExpressionDatePart($strColumn, $strDatePart = 'month')
@@ -479,7 +479,7 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
         if ($this->getAdapter() instanceof Zend_Db_Adapter_Pdo_Mssql) {
             return new Zend_Db_Expr("{$strDatePart}({$strColumn})");
         }
-        return new Zend_Db_Expr("DATE_PART('{$strDatePart}', {$strColumn})");
+        return new Zend_Db_Expr("DATE_PART('{$strDatePart}', \"{$strColumn}\")");
     }
 
 

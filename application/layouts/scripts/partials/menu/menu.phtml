@@ -602,7 +602,7 @@ $arrMenu['seguranca']['menu'][] = array(
     'label' => 'Permiss&otilde;es do SalicWeb'
 );
 $auth = array_change_key_case((array) Zend_Auth::getInstance()->getIdentity());
-if ( trim($auth['usu_identificacao']) == 23969156149) {
+if ( trim($auth['cpf']) == 23969156149) {
 //    $arrMenu['seguranca']['menu'][] = array(
 //        'grupo' => array(97),
 //        'url' => $this->url(array('controller' => 'login', 'action' => 'logarcomo')),

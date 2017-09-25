@@ -89,7 +89,7 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
             }
         }
 
-        if($newCondition) {
+        if ($newCondition) {
             $condition = $newCondition;
         } else {
             $condition = $this->treatColumnWithDoubleQuote($condition);
@@ -145,13 +145,13 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
                     $field .= $this->addDoubleQuote($fieldPiece);
                 }
             } else {
-                if (
-                    !is_numeric($field) && strpos($field, "'") === false
+                if (!is_numeric($field) && strpos($field, "'") === false
                     && $field != "false"
-                    && $field != "true"
-                ) {
-                    if(strpos($field, '::') !== false) {
-                        $field = '"' . substr($field, 0, strpos($field, '::')). '"' . substr($field, strpos($field, '::'));
+                    && $field != "true") {
+                    if (strpos($field, '::') !== false) {
+                        $field = '"' . substr($field, 0, strpos($field, '::')) . '"' . substr($field, strpos($field, '::'));
+                    } elseif (strpos($field, 'to_char(') !== false) {
+                        $field = 'to_char("'. substr($field, strpos($field, 'to_char(') + 1, strpos($field, ',')) . '"' . substr($field, strpos($field, ','));
                     } else {
                         $field = '"' . $field . '"';
                     }

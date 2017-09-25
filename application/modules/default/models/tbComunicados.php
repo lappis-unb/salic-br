@@ -29,13 +29,13 @@ class tbComunicados extends MinC_Db_Table_Abstract {
     public function listarComunicados($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $count=false) {
         $query = $this->select();
         $query->setIntegrityCheck(false);
-        $query->from(
+        $query->from( 
                 array("c" => $this->_name),
                 array("idComunicado",
 					  "Comunicado",
 					  "idSistema",
 					  "stOpcao",
-					  "stEstado",
+					  "c.stEstado",
 					  "dtInicioVigencia",
 					  "dtTerminoVigencia",
 					  "dtInicioVigencia AS dtiniciovigenciapt",

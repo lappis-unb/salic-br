@@ -97,7 +97,7 @@ if (getenv('APPLICATION_ENV') != 'production') {
                 <div class="col s4 l4">
                     <div class="center-align">
                         <?php if ($strDb): ?>
-                            <?php echo $arrEnv[$strEnv]; ?> | <?php echo $arrDb[$strDb]; ?>
+                            <?php echo $arrEnv[$strEnv]; ?> | <?php echo $arrDb[strtoupper($strDb)]; ?>
                         <?php endif; ?>
                     </div>
                 </div>

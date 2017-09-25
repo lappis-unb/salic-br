@@ -258,7 +258,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
                 }
             }
 
-            if ($dados[0]->tipopessoa == 1) {
+            if ($dados[0]['TipoPessoa'] == 1) {
                 $dirigentes = Agente_Model_ManterAgentesDAO::buscarVinculados(null, null, null, null, $idAgente);
                 $qtdDirigentes = count($dirigentes);
                 $this->view->dirigentes = $dirigentes;
