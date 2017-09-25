@@ -102,7 +102,8 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
 
 
                 if ($verificaStatus) {
-                    $verificaStatus = array_change_key_case(reset($verificaStatus));
+                    // $verificaStatus = array_change_key_case(reset($verificaStatus));
+                    $verificaStatus = reset($verificaStatus);
 
                     $IdUsuario = $verificaStatus['IdUsuario'];
                     $verificaSituacao = $verificaStatus['Situacao'];

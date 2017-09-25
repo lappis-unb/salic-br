@@ -82,7 +82,7 @@ abstract class MinC_Controller_Action_Abstract extends Zend_Controller_Action
             $agente = $tblAgentes->findBy(array('CNPJCPF' => $cpf));
 
             if ($acessos) {
-                $this->idResponsavel = $acessos['idUsuario'];
+                $this->idResponsavel = $acessos['IdUsuario'];
             }
             if ($agente) {
                 $this->idAgente = $agente['idAgente'];
