@@ -60,14 +60,22 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
      * @param null $schema
      * @return Zend_Db_Select
      */
-    public function joinInner($name, $cond, $cols = self::SQL_WILDCARD, $schema = null)
-    {
+    public function joinInner(
+        $name, 
+        $cond, 
+        $cols = self::SQL_WILDCARD, 
+        $schema = null
+    ) {
         if ($this->isUseSchema) {
             $schema = $this->getSchema($schema);
         }
 
         if ($this->databaseAdapter instanceof MinC_Db_Adapter_Pdo_Pgsql) {
             $cond = $this->databaseAdapter->treatConditionDoubleQuotes($cond);
+            #$cols = $this->databaseAdapter->treatColumnsDoubleQuotes($cols);
+            #if($cols) {
+            #    $cols = $this->databaseAdapter->treatColumnsDoubleQuotes($cols);
+            #}
         }
 
         return parent::joinInner($name, $cond, $cols, $schema);

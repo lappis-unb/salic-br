@@ -15,8 +15,11 @@ class Agente_Model_DbTable_TbInformacaoProfissional extends MinC_Db_Table_Abstra
         $select->setIntegrityCheck(false);
 
         $select->from(array('a' => $this->_name),
-            array('*', $this->getExpressionToChar('dtInicioVinculo') . ' as dtinicio',
-                $this->getExpressionToChar('dtFimVinculo') . ' as dtfim'),
+            array(
+                '*',
+                $this->getExpressionToChar('dtInicioVinculo') . ' as dtinicio',
+                $this->getExpressionToChar('dtFimVinculo') . ' as dtfim'
+            ),
             $this->_schema
         );
 
