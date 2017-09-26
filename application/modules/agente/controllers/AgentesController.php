@@ -259,7 +259,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
             }
 
             if ($dados[0]['TipoPessoa'] == 1) {
-                $objManterAgentes = new Agente_Model_ManterAgentesDAO();
+                $objManterAgentes = new Agente_Model_DbTable_Agentes();
                 $dirigentes = $objManterAgentes->buscarVinculados(null, null, null, null, $idAgente);
                 $qtdDirigentes = count($dirigentes);
                 $this->view->dirigentes = $dirigentes;
@@ -613,7 +613,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
 
         if (isset($idAgente)) {
 
-            $objManterAgentes = new Agente_Model_ManterAgentesDAO();
+            $objManterAgentes = new Agente_Model_DbTable_Agentes();
             $dadosDirigenteD = $objManterAgentes->buscarVinculados(null, null, $idDirigente, null, $idAgente);
             $objModelAgentes = new Agente_Model_DbTable_Agentes();
             $dados = $objModelAgentes->buscarAgentes(null, null, $idDirigente);
@@ -2457,7 +2457,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         // =========================================== INICIO SALVAR VINCULO ====================================================
         try {
             // busca o dirigente vinculado ao cnpj/cpf
-            $objManterAgentes = new Agente_Model_ManterAgentesDAO();
+            $objManterAgentes = new Agente_Model_DbTable_Agentes();
             $dadosDirigente = $objManterAgentes->buscarVinculados(null, null, $idAgente, $idAgenteGeral, $idAgenteGeral);
 
             // caso o agente nao esteja vinculado, realizara a vinculacao
@@ -2496,7 +2496,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
 
         try {
             // busca o dirigente vinculado ao cnpj/cpf
-            $objManterAgentes = new Agente_Model_ManterAgentesDAO();
+            $objManterAgentes = new Agente_Model_DbTable_Agentes();
             $dadosDirigente = $objManterAgentes->buscarVinculados(null, null, $idDirigente, $idAgenteGeral, $idAgenteGeral);
 
             // caso o agente nao esteja vinculado, realizara a vinculacao

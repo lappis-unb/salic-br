@@ -526,7 +526,7 @@ class Vinculo extends MinC_Db_Table_Abstract
 
         $dadosEmail = Email::buscar($rsPreProjeto->idAgente);
 
-        $objManterAgentes = new Agente_Model_ManterAgentesDAO();
+        $objManterAgentes = new Agente_Model_DbTable_Agentes();
         $dadosDirigente = $objManterAgentes->buscarVinculados(null, null, null, null, $rsPreProjeto->idAgente);
         //$dadosDirigente = ManterAgentes::buscaDirigentes($rsProponente->CNPJCPF);
 

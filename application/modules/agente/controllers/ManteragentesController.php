@@ -619,7 +619,7 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
         if (!empty($cnpjcpf) && !empty($idAgenteGeral)) {
             // busca os dirigentes vinculados ao cnpj/cpf informado
             //$Dirigentes = Agente_Model_ManterAgentesDAO::buscarVinculados($cnpjcpf);
-            $objManterAgentes = new Agente_Model_ManterAgentesDAO();
+            $objManterAgentes = new Agente_Model_DbTable_Agentes();
             $Dirigentes = $objManterAgentes->buscarVinculados(null, null, null, null, $idAgenteGeral);
             $this->view->Dirigentes = $Dirigentes;
         }
@@ -961,7 +961,7 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
 
             // busca o dirigente vinculado ao cnpj/cpf
             //$dadosDirigente = Agente_Model_ManterAgentesDAO::buscarVinculados($buscarAgente[0]->CNPJCPF, null, $idAgente, $idAgenteGeral, $idAgenteGeral);
-            $objManterAgentes = new Agente_Model_ManterAgentesDAO();
+            $objManterAgentes = new Agente_Model_DbTable_Agentes();
             $dadosDirigente = $objManterAgentes->buscarVinculados(null, null, $idAgente, $idAgenteGeral, $idAgenteGeral);
 
             // caso o agente nao esteja vinculado, realizara a vinculacao

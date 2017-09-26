@@ -1009,7 +1009,7 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
         $objEmail = new Agente_Model_Email();
         $dadosEmail = $objEmail->buscar($rsPreProjeto->idAgente);
 
-        $objManterAgentes = new Agente_Model_ManterAgentesDAO();
+        $objManterAgentes = new Agente_Model_DbTable_Agentes();
         $dadosDirigente = $objManterAgentes->buscarVinculados(null, null, null, null, $rsPreProjeto->idAgente);
 
         $tblLocaisRealizacao = new Proposta_Model_DbTable_Abrangencia();
