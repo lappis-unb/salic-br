@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Controller Disvincular Agentes
  * @author wouerner <wouerner@gmail.com>
@@ -8,14 +9,14 @@
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
  */
+class Proposta_ManterpropostaeditalController extends Proposta_GenericController
+{
 
-class Proposta_ManterpropostaeditalController extends Proposta_GenericController {
-
-    private $getIdUsuario   = 0;
-    private $idResponsavel  = 0;
-    private $idAgente       = 0;
-    private $idUsuario      = 0;
-    private $cpfLogado      = null;
+    private $getIdUsuario = 0;
+    private $idResponsavel = 0;
+    private $idAgente = 0;
+    private $idUsuario = 0;
+    private $cpfLogado = null;
 
 
     /**
@@ -26,10 +27,10 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
         $auth = Zend_Auth::getInstance(); // pega a autenticacao
         $idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
 
-        $arrIdentity = array_change_key_case((array) Zend_Auth::getInstance()->getIdentity());
-        $GrupoAtivo   = new Zend_Session_Namespace('GrupoAtivo');
+        $arrIdentity = array_change_key_case((array)Zend_Auth::getInstance()->getIdentity());
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
 
-	    // verifica as permissoes
+        // verifica as permissoes
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 97;  // Gestor do SALIC
         $PermissoesGrupo[] = 93;  // Coordenador de Parecerista
@@ -44,21 +45,21 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
         $cpf = isset($arrIdentity['usu_codigo']) ? $arrIdentity['usu_identificacao'] : $arrIdentity['cpf'];
 
         // Busca na SGCAcesso
-        $modelSgcAcesso 	 = new Autenticacao_Model_Sgcacesso();
+        $modelSgcAcesso = new Autenticacao_Model_Sgcacesso();
         $arrAcesso = $modelSgcAcesso->findBy(array('cpf' => $cpf));
 
         // Busca na Usuarios
         //Excluir ProposteExcluir Proposto
-        $usuarioDAO   = new Autenticacao_Model_Usuario();
+        $usuarioDAO = new Autenticacao_Model_Usuario();
         $arrUsuario = $usuarioDAO->findBy(array('usu_identificacao' => $cpf));
 
         // Busca na Agentes
-        $tableAgentes  = new Agente_Model_DbTable_Agentes();
+        $tableAgentes = new Agente_Model_DbTable_Agentes();
         $arrAgente = $tableAgentes->findBy(array('CNPJCPF' => trim($cpf)));
 
-        if ($arrAcesso)  $this->idResponsavel = $arrAcesso['idusuario'];
-        if ($arrAgente)  $this->idAgente 	  = $arrAgente['idAgente'];
-        if ($arrUsuario) $this->idUsuario     = $arrUsuario['usu_codigo'];
+        if ($arrAcesso) $this->idResponsavel = $arrAcesso['idusuario'];
+        if ($arrAgente) $this->idAgente = $arrAgente['idAgente'];
+        if ($arrUsuario) $this->idUsuario = $arrUsuario['usu_codigo'];
         if ($this->idAgente != 0) $this->usuarioProponente = "S";
         $this->cpfLogado = $cpf;
         parent::init();
@@ -102,7 +103,7 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
             //VERIFICA SE A PROPOSTA FOI ENVIADA AO MINC ALGUMA VEZ
             $arrbusca = array();
             $arrbusca['idProjeto = ?'] = $idPreProjeto;
-            $arrbusca['Movimentacao = ?']= '96';
+            $arrbusca['Movimentacao = ?'] = '96';
             $rsHistMov = $Movimentacao->buscar($arrbusca);
             $this->view->blnJaEnviadaAoMinc = $rsHistMov->count();
         }
@@ -114,7 +115,9 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
      * @access public
      * @return void
      */
-    public function indexAction() {}
+    public function indexAction()
+    {
+    }
 
     /**
      * editalAction
@@ -214,26 +217,26 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
                 $this->view->tpmensagem = "msgERROR";
             }
 
-        	$ag = new Agente_Model_DbTable_Agentes();
+            $ag = new Agente_Model_DbTable_Agentes();
             $verificarvinculo = $ag->buscarAgenteVinculoProponente(array('vprp.idPreProjeto = ?' => $dados[0]->idPreProjeto,
-            															 'vprp.siVinculoProposta = ?' => 2));
-            if(count($verificarvinculo) > 0){
-                if($verificarvinculo[0]->siVinculo != 2) {
+                'vprp.siVinculoProposta = ?' => 2));
+            if (count($verificarvinculo) > 0) {
+                if ($verificarvinculo[0]->siVinculo != 2) {
                     $this->view->siVinculoProponente = true;
                 } else {
                     $this->view->siVinculoProponente = false;
                 }
             }
 
-           $tblVinculo = new Agente_Model_DbTable_TbVinculo();
+            $tblVinculo = new Agente_Model_DbTable_TbVinculo();
 
-	        $arrBuscaP['VP.idPreProjeto = ?'] 			= $dados[0]->idPreProjeto;
-	        $arrBuscaP['VI.idUsuarioResponsavel = ?'] 	= $this->idResponsavel;
-	        $rsVinculoP = $tblVinculo->buscarVinculoProponenteResponsavel($arrBuscaP);
+            $arrBuscaP['VP.idPreProjeto = ?'] = $dados[0]->idPreProjeto;
+            $arrBuscaP['VI.idUsuarioResponsavel = ?'] = $this->idResponsavel;
+            $rsVinculoP = $tblVinculo->buscarVinculoProponenteResponsavel($arrBuscaP);
 
-	        $arrBuscaN['VI.siVinculo in (0,2)'] 		= '';
-	        $arrBuscaN['VI.idUsuarioResponsavel = ?'] 	= $this->idResponsavel;
-	        $rsVinculoN = $tblVinculo->buscarVinculoProponenteResponsavel($arrBuscaN);
+            $arrBuscaN['VI.siVinculo in (0,2)'] = '';
+            $arrBuscaN['VI.idUsuarioResponsavel = ?'] = $this->idResponsavel;
+            $rsVinculoN = $tblVinculo->buscarVinculoProponenteResponsavel($arrBuscaN);
 
             $this->view->listaProponentes = $rsVinculoN;
             $this->view->dadosVinculo = $rsVinculoP;
@@ -285,10 +288,10 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
                 $array['idAgente'] = $_REQUEST['idAgente'];
                 $array['idEdital'] = $_REQUEST['idEdital'];
                 $array['AgenciaBancaria'] = $_REQUEST['agencia'];
-                $datainicio = explode('/',$_REQUEST['dtIniExec']);
-                $array['DtInicioDeExecucao'] = $datainicio['2'].'-'.$datainicio['1'].'-'.$datainicio['0'];
-                $datafim = explode('/',$_REQUEST['dtFimExec']);
-                $array['DtFinalDeExecucao'] = $datafim['2'].'-'.$datafim['1'].'-'.$datafim['0'];
+                $datainicio = explode('/', $_REQUEST['dtIniExec']);
+                $array['DtInicioDeExecucao'] = $datainicio['2'] . '-' . $datainicio['1'] . '-' . $datainicio['0'];
+                $datafim = explode('/', $_REQUEST['dtFimExec']);
+                $array['DtFinalDeExecucao'] = $datafim['2'] . '-' . $datafim['1'] . '-' . $datafim['0'];
                 $array['NomeProjeto'] = TratarString::escapeString($_REQUEST['nomeProjeto']);
                 $array['stTipoDemanda'] = 'ED';
                 $array['ResumoDoProjeto'] = trim(TratarString::escapeString($_REQUEST['resumoProjeto']));
@@ -296,57 +299,55 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
                 // Salvar o responsavel
                 $array['idUsuario'] = $this->idResponsavel;
 
-                if (isset($_REQUEST['idPreProjeto']) ) {
-                    $array['idPreProjeto'] 	= $_REQUEST['idPreProjeto'];
+                if (isset($_REQUEST['idPreProjeto'])) {
+                    $array['idPreProjeto'] = $_REQUEST['idPreProjeto'];
                     $dados = ManterpropostaeditalDAO::alterarDadosProposta($array);
-                    $array['mensagem'] 		= 'Altera&ccedil;&atilde;o realizada com sucesso!';
-                    $array['tpmensagem'] 	= 'msgCONFIRM';
-                    $array['mensagem'] 		= htmlspecialchars($array['mensagem']);
+                    $array['mensagem'] = 'Altera&ccedil;&atilde;o realizada com sucesso!';
+                    $array['tpmensagem'] = 'msgCONFIRM';
+                    $array['mensagem'] = htmlspecialchars($array['mensagem']);
                     parent::message("Altera&ccedil;&atilde;o realizada com sucesso!", "/manterpropostaedital/dadospropostaedital?idPreProjeto=" . $array['idPreProjeto'], "CONFIRM");
                 } else {
                     $dados = ManterpropostaeditalDAO::inserirProposta($array);
                     $array['idPreProjeto'] = $dados;
                     $tblMovimentacao = new Proposta_Model_DbTable_TbMovimentacao();
-                    $dados = array(	"idProjeto" 		=> $array['idPreProjeto'],
-			                        "Movimentacao" 		=> "95", //Status = Proposta com Proponente
-			                        "DtMovimentacao" 	=> date("Y/m/d H:i:s"),
-			                        "stEstado" 			=> "0",
-			                        "Usuario" 			=> $this->idUsuario); //$this->view->usuario->usu_codigo;
+                    $dados = array("idProjeto" => $array['idPreProjeto'],
+                        "Movimentacao" => "95", //Status = Proposta com Proponente
+                        "DtMovimentacao" => date("Y/m/d H:i:s"),
+                        "stEstado" => "0",
+                        "Usuario" => $this->idUsuario); //$this->view->usuario->usu_codigo;
 
                     $tblMovimentacao->salvar($dados);
 
 
                     /*******************************************************************************************/
-	                // Salvando os dados na TbVinculoProposta
-	                $tbVinculoDAO 		  = new Agente_Model_DbTable_TbVinculo();
-	                $tbVinculoPropostaDAO = new Agente_Model_DbTable_TbVinculoProposta();
+                    // Salvando os dados na TbVinculoProposta
+                    $tbVinculoDAO = new Agente_Model_DbTable_TbVinculo();
+                    $tbVinculoPropostaDAO = new Agente_Model_DbTable_TbVinculoProposta();
 
-	                $whereVinculo['idUsuarioResponsavel = ?'] = $this->idResponsavel;
-	                $whereVinculo['idAgenteProponente   = ?'] = $_REQUEST['idAgente'];
-	                $vinculo = $tbVinculoDAO->buscar($whereVinculo);
+                    $whereVinculo['idUsuarioResponsavel = ?'] = $this->idResponsavel;
+                    $whereVinculo['idAgenteProponente   = ?'] = $_REQUEST['idAgente'];
+                    $vinculo = $tbVinculoDAO->buscar($whereVinculo);
 
-	                if(count($vinculo) == 0)
-	                {
-						$dadosV = array( 'idAgenteProponente'		=> $_REQUEST['idAgente'],
-	    				   				'dtVinculo' 				=> MinC_Db_Expr::date(),
-	    				   				'siVinculo' 				=> 2,
-	    				   				'idUsuarioResponsavel' 		=> $this->idResponsavel
-	    				);
+                    if (count($vinculo) == 0) {
+                        $dadosV = array('idAgenteProponente' => $_REQUEST['idAgente'],
+                            'dtVinculo' => MinC_Db_Expr::date(),
+                            'siVinculo' => 2,
+                            'idUsuarioResponsavel' => $this->idResponsavel
+                        );
 
-	    				$insere = $tbVinculoDAO->inserir($dadosV);
-	                }
+                        $insere = $tbVinculoDAO->inserir($dadosV);
+                    }
 
 
-	                $vinculo2 = $tbVinculoDAO->buscar($whereVinculo);
-	                if(count($vinculo2) > 0)
-	                {
-		                $novosDadosV = array('idVinculo' 			=> $idVinculo = $vinculo2[0]->idVinculo,
-		    								 'idPreProjeto' 		=> $array['idPreProjeto'],
-		    								 'siVinculoProposta' 	=> 2
-		                );
+                    $vinculo2 = $tbVinculoDAO->buscar($whereVinculo);
+                    if (count($vinculo2) > 0) {
+                        $novosDadosV = array('idVinculo' => $idVinculo = $vinculo2[0]->idVinculo,
+                            'idPreProjeto' => $array['idPreProjeto'],
+                            'siVinculoProposta' => 2
+                        );
 
-		    			$insere = $tbVinculoPropostaDAO->inserir($novosDadosV, false);
-	                }
+                        $insere = $tbVinculoPropostaDAO->inserir($novosDadosV, false);
+                    }
 
                     $array['mensagem'] = 'Cadastro realizado com sucesso!';
                     $array['tpmensagem'] = 'msgCONFIRM';
@@ -356,7 +357,7 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
 
             }
         } else {
-            $array['mensagem'] 	 = 'Dados incorretos.';
+            $array['mensagem'] = 'Dados incorretos.';
             $array['tpmensagem'] = 'Erro!';
         }
         $this->_redirect('/proposta/manterpropostaedital/dadospropostaedital?idPreProjeto=' . $array['idPreProjeto'] . '&mensagem=' . $array['mensagem'] . '&tpmensagem=' . $array['tpmensagem']);
@@ -368,7 +369,9 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
      * @access public
      * @return void
      */
-    public function localderealizacaoeditalAction() {}
+    public function localderealizacaoeditalAction()
+    {
+    }
 
     /**
      * responderquestionarioeditalAction
@@ -381,7 +384,7 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
         if (isset($_REQUEST['idPreProjeto'])) {
 
             /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
-            $this->verificarPermissaoAcesso(true,false,false);
+            $this->verificarPermissaoAcesso(true, false, false);
 
             $where = array();
             $where['p.stTipoDemanda NOT LIKE ?'] = 'NA';
@@ -505,7 +508,8 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
      * @access public
      * @return void
      */
-    public function incluirarquivoAction() {
+    public function incluirarquivoAction()
+    {
         $post = Zend_Registry::get('post');
 
         if ($_FILES['arquivo']['tmp_name']) {
@@ -546,7 +550,8 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
      * @access private
      * @return void
      */
-    private function anexararquivo() {
+    private function anexararquivo()
+    {
         // pega as informacoes do arquivo
         $idUltimoArquivo = 'null';
         $post = Zend_Registry::get('post');
@@ -579,7 +584,7 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
 
             // pega o id do ultimo arquivo cadastrado
             $idUltimoArquivo = ArquivoDAO::buscarIdArquivo();
-            $idUltimoArquivo = (int) $idUltimoArquivo[0]->id;
+            $idUltimoArquivo = (int)$idUltimoArquivo[0]->id;
 
             // cadastra o binario do arquivo
             $dadosBinario = array(
@@ -596,7 +601,8 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
      * @access public
      * @return void
      */
-    public function enviarpropostaaominceditalAction() {
+    public function enviarpropostaaominceditalAction()
+    {
 
     }
 
@@ -606,7 +612,8 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
      * @access public
      * @return void
      */
-    public function manteragentesAction() {
+    public function manteragentesAction()
+    {
 
     }
 
@@ -616,7 +623,8 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
      * @access public
      * @return void
      */
-    public function dadosproponenteenderecoeditalAction() {
+    public function dadosproponenteenderecoeditalAction()
+    {
 
         $get = Zend_Registry::get('get');
         $idpreprojeto = $get->idpreprojeto;
@@ -654,7 +662,8 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
      * @access public
      * @return void
      */
-    public function msnenviadasaominceditalAction() {
+    public function msnenviadasaominceditalAction()
+    {
 
     }
 
@@ -664,7 +673,8 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
      * @access public
      * @return void
      */
-    public function acompanhesuapropostaeditalAction() {
+    public function acompanhesuapropostaeditalAction()
+    {
 
     }
 
@@ -674,7 +684,8 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
      * @access public
      * @return void
      */
-    public function alterardtnascimentoeditalAction() {
+    public function alterardtnascimentoeditalAction()
+    {
 
     }
 
@@ -684,7 +695,8 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
      * @access public
      * @return void
      */
-    public function dadosenderecoeditalAction() {
+    public function dadosenderecoeditalAction()
+    {
 
     }
 
@@ -694,7 +706,8 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
      * @access public
      * @return void
      */
-    public function novodadosenderecoeditalAction() {
+    public function novodadosenderecoeditalAction()
+    {
 
     }
 
@@ -704,7 +717,8 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
      * @access public
      * @return void
      */
-    public function exluirpropostaAction() {
+    public function exluirpropostaAction()
+    {
 
         /* =============================================================================== */
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
@@ -733,7 +747,8 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
      * @access public
      * @return void
      */
-    public function editallocalizarAction() {
+    public function editallocalizarAction()
+    {
         $this->view->idAgente = $_REQUEST['idAgente'];
     }
 
@@ -743,7 +758,8 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
      * @access public
      * @return void
      */
-    public function editalconfirmarAction() {
+    public function editalconfirmarAction()
+    {
 
         if ($_REQUEST['idAgente']) {
             if (isset($_POST['dtEditalInicial']) || isset($_POST['nrEdital']) || isset($_POST['dtEditalFinal']) || isset($_POST['dtInicoInscricaoInicial']) || isset($_POST['dtInicoInscricaoFinal']) || isset($_POST['dtFinalInscricaoInicial']) || isset($_POST['dtFinalInscricaoFinal']) || isset($_POST['Classificacao']) || isset($_POST['nmEdital'])) {
@@ -780,7 +796,8 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
      * @access public
      * @return void
      */
-    public function editalconfirmarlocalizarAction() {
+    public function editalconfirmarlocalizarAction()
+    {
         if ($_REQUEST['idEdital']) {
             $this->view->dado = ManterpropostaeditalDAO::buscaEditalConfirmarLocalizar(array('idEdital' => $_REQUEST['idEdital']));
         }
@@ -797,7 +814,8 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
      * @access public
      * @return void
      */
-    public function editalnovoAction() {
+    public function editalnovoAction()
+    {
 
         $post = Zend_Registry::get('post');
         $idPreProjeto = $post->idPreProjeto;
@@ -817,7 +835,8 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
      * @access public
      * @return void
      */
-    public function editalresumoAction() {
+    public function editalresumoAction()
+    {
         $array = array();
         $this->view->dados = ManterpropostaeditalDAO::listarEditalResumo($array);
     }
@@ -829,7 +848,8 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
      * @return void
      * @todo retirar html da controller
      */
-    public function gerarpdfAction() {
+    public function gerarpdfAction()
+    {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
 
@@ -877,7 +897,6 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
 			</style>';
 
 
-
         $output .= $_POST['html'];
 
         $patterns = array();
@@ -910,7 +929,8 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
      * @access public
      * @return void
      */
-    public function enviarPropostaAction() {
+    public function enviarPropostaAction()
+    {
 
         /* =============================================================================== */
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
@@ -948,7 +968,8 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
      * @access public
      * @return void
      */
-    public function validarEnvioPropostaAoMinc($idPreProjeto) {
+    public function validarEnvioPropostaAoMinc($idPreProjeto)
+    {
 
         //BUSCA DADOS DO PROJETO
         $arrBusca = array();
@@ -988,28 +1009,29 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
         $objEmail = new Agente_Model_Email();
         $dadosEmail = $objEmail->buscar($rsPreProjeto->idAgente);
 
-        $dadosDirigente = Agente_Model_ManterAgentesDAO::buscarVinculados(null, null, null, null, $rsPreProjeto->idAgente);
+        $objManterAgentes = new Agente_Model_ManterAgentesDAO();
+        $dadosDirigente = $objManterAgentes->buscarVinculados(null, null, null, null, $rsPreProjeto->idAgente);
 
         $tblLocaisRealizacao = new Proposta_Model_DbTable_Abrangencia();
         $dadosLocais = $tblLocaisRealizacao->buscar(array("a.idProjeto" => $idPreProjeto, "a.stAbrangencia" => 1));
 
         if (count($rsProponente) > 0) {
 
-        //VERIFICA SE O PROPONENTE ESTA VINCULADO
-	        $vinculoProponente = new Agente_Model_DbTable_TbVinculoProposta();
-	        $whereProp['VP.idPreProjeto = ?'] 		= $idPreProjeto;
-	        $whereProp['VP.siVinculoProposta = ?'] 	= 2;
-	        $rsVinculo = $vinculoProponente->buscarResponsaveisProponentes($whereProp);
+            //VERIFICA SE O PROPONENTE ESTA VINCULADO
+            $vinculoProponente = new Agente_Model_DbTable_TbVinculoProposta();
+            $whereProp['VP.idPreProjeto = ?'] = $idPreProjeto;
+            $whereProp['VP.siVinculoProposta = ?'] = 2;
+            $rsVinculo = $vinculoProponente->buscarResponsaveisProponentes($whereProp);
 
-			if($rsVinculo[0]->siVinculo == 2){
-				$arrResultado['erro'] = false;
-		        $arrResultado['vinculoproponente']['erro'] = false;
-		        $arrResultado['vinculoproponente']['msg'] = "Vinculo do Proponente REGULAR";
-			} else {
-				$arrResultado['erro'] = true;
-		        $arrResultado['vinculoproponente']['erro'] = true;
-	    	    $arrResultado['vinculoproponente']['msg'] = "Vinculo do Proponente IRREGULAR";
-			}
+            if ($rsVinculo[0]->siVinculo == 2) {
+                $arrResultado['erro'] = false;
+                $arrResultado['vinculoproponente']['erro'] = false;
+                $arrResultado['vinculoproponente']['msg'] = "Vinculo do Proponente REGULAR";
+            } else {
+                $arrResultado['erro'] = true;
+                $arrResultado['vinculoproponente']['erro'] = true;
+                $arrResultado['vinculoproponente']['msg'] = "Vinculo do Proponente IRREGULAR";
+            }
 
             //REGULARIDADE DO PROPONENTE
             if (count($regularidade) > 0) {
@@ -1122,7 +1144,8 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
      * @access public
      * @return void
      */
-    public function confirmarEnvioPropostaAoMincAction() {
+    public function confirmarEnvioPropostaAoMincAction()
+    {
 
         /* =============================================================================== */
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
@@ -1291,15 +1314,15 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
      * @access public
      * @return void
      */
-    public function validarAgenciaBancariaAction() {
+    public function validarAgenciaBancariaAction()
+    {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         $ba = new BancoAgencia;
-        $validaragencia = $ba->buscar(array('Agencia = ?'=>$_POST['agencia']))->count();
-        if($validaragencia > 0){
-            $this->_helper->json(array('error'=>false));
-        }
-        else{
-            $this->_helper->json(array('error'=>true));
+        $validaragencia = $ba->buscar(array('Agencia = ?' => $_POST['agencia']))->count();
+        if ($validaragencia > 0) {
+            $this->_helper->json(array('error' => false));
+        } else {
+            $this->_helper->json(array('error' => true));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
@@ -1311,9 +1334,10 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
      * @access public
      * @return void
      */
-    public function excluiranexoAction() {
+    public function excluiranexoAction()
+    {
         if (isset($_GET['idArquivo']) && !empty($_GET['idArquivo']) && isset($_GET['idPreProjeto']) && !empty($_GET['idPreProjeto']) && isset($_GET['tipoDocumento']) && !empty($_GET['tipoDocumento'])) :
-            if($_GET['tipoDocumento'] == 'proposta'){
+            if ($_GET['tipoDocumento'] == 'proposta') {
                 $tbDocumentosPreProjeto = new Proposta_Model_DbTable_TbDocumentosPreProjeto();
                 $file = $tbDocumentosPreProjeto->findBy(array('iddocumentospreprojetos' => $_GET['idArquivo']));
                 $tbDocumentosPreProjeto->apagar(array('iddocumentospreprojetos = ?' => $_GET['idArquivo']));
@@ -1327,9 +1351,9 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
                 unlink($filePath);
             }
 
-            if( isset($_GET['request'] ) ) {
+            if (isset($_GET['request'])) {
                 $request = $_GET['request'];
-            }else {
+            } else {
                 $request = 'proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=' . $_GET['idPreProjeto'];
             }
 

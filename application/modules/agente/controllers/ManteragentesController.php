@@ -41,7 +41,7 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
 
         # Pega a autenticacao
         $auth = Zend_Auth::getInstance()->getIdentity();
-        $arrAuth = array_change_key_case((array) $auth);
+        $arrAuth = array_change_key_case((array)$auth);
 
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
 
@@ -87,7 +87,7 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
         $this->view->comboestados = $mapperUF->fetchPairs('idUF', 'Sigla');
         $this->view->combotiposenderecos = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idTipo' => 2));
         $this->view->combotiposlogradouros = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idTipo' => 13));
-        $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'Descricao');
+        $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo', 'Descricao');
         $this->view->combotipostelefones = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idTipo' => 3));
         $this->view->combotiposemails = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idTipo' => 4, 'idverificacao' => array(28, 29)));
 
@@ -619,7 +619,8 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
         if (!empty($cnpjcpf) && !empty($idAgenteGeral)) {
             // busca os dirigentes vinculados ao cnpj/cpf informado
             //$Dirigentes = Agente_Model_ManterAgentesDAO::buscarVinculados($cnpjcpf);
-            $Dirigentes = Agente_Model_ManterAgentesDAO::buscarVinculados(null, null, null, null, $idAgenteGeral);
+            $objManterAgentes = new Agente_Model_ManterAgentesDAO();
+            $Dirigentes = $objManterAgentes->buscarVinculados(null, null, null, null, $idAgenteGeral);
             $this->view->Dirigentes = $Dirigentes;
         }
     } // fecha metodo buscardirigentesAction()
@@ -960,7 +961,8 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
 
             // busca o dirigente vinculado ao cnpj/cpf
             //$dadosDirigente = Agente_Model_ManterAgentesDAO::buscarVinculados($buscarAgente[0]->CNPJCPF, null, $idAgente, $idAgenteGeral, $idAgenteGeral);
-            $dadosDirigente = Agente_Model_ManterAgentesDAO::buscarVinculados(null, null, $idAgente, $idAgenteGeral, $idAgenteGeral);
+            $objManterAgentes = new Agente_Model_ManterAgentesDAO();
+            $dadosDirigente = $objManterAgentes->buscarVinculados(null, null, $idAgente, $idAgenteGeral, $idAgenteGeral);
 
             // caso o agente nao esteja vinculado, realizara a vinculacao
             if (!$dadosDirigente) {
