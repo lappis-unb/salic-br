@@ -844,11 +844,10 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
 
     /**
      * Migração da função fnNome do banco agentes
-     * @return varchar(150)
+     * @return varchar[150]
      */
     public function obterNomeAgente($idAgente)
     {
-
         $objQuery = $this->select();
         $objQuery->setIntegrityCheck(false);
         $objQuery->from(
@@ -925,36 +924,36 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         , 'a.CNPJCPFSuperior'
         );
 
-        $sql = $this->select()
-            ->from(array('a' => 'Agentes'), $a, 'agentes')
-            ->joinLeft(array('n' => 'Nomes'), 'N.idAgente = A.idAgente', array('n.Descricao AS Nome'), 'agentes')
+        $objSelect = $this->select();
+        $objSelect->from(array('a' => $this->_name), $a, $this->_schema)
+            ->joinLeft(array('n' => 'Nomes'), 'n.idAgente = a.idAgente', array('n.Descricao AS Nome'), 'agentes')
             ->joinLeft(array('vis' => 'Visao'), 'a.idAgente = vis.idAgente', null, 'agentes')
             ->joinLeft(array('ver' => 'Verificacao'), 'ver.idVerificacao = vis.Visao', null, 'agentes')
             ->joinLeft(array('vin' => 'Vinculacao'), 'a.idAgente = vin.idAgente', null, 'agentes')
             ->joinLeft(array('tp' => 'Tipo'), 'tp.idTipo = ver.IdTipo', null, 'agentes')
-            ->where('a.TipoPessoa = 0 OR a.TipoPessoa = 1')
-            ->where('n.TipoNome = 18 OR n.TipoNome = 19')
+            ->where('a.TipoPessoa = false OR a.TipoPessoa = true')
+            ->where('n.TipoNome::int = 18 OR n.TipoNome::int = 19')
             ->where('vis.Visao = 198');
 
         if (!empty($cnpjcpfSuperior)) { // busca pelo cnpj/cpf com o vinculo principal
-            $sql->where('a.CNPJCPFSuperior = ?', $cnpjcpfSuperior);
+            $objSelect->where('a.CNPJCPFSuperior = ?', $cnpjcpfSuperior);
         }
         if (!empty($nome)) { // filtra pelo nome
-            $sql->where('n.Descricao LIKE ?', "$nome%");
+            $objSelect->where('n.Descricao LIKE ?', "$nome%");
         }
         if (!empty($idAgente)) { // busca pelo idAgente
-            $sql->where('vin.idAgente =  ?', $idAgente);
+            $objSelect->where('vin.idAgente =  ?', $idAgente);
         }
         if (!empty($idVinculado)) { // busca pelo idVinculado
-            $sql->where('vin.idVinculado =  ?', $idVinculado);
+            $objSelect->where('vin.idVinculado =  ?', $idVinculado);
         }
         if (!empty($idVinculoPrincipal)) {// busca pelo idVinculoPrincipal
-            $sql->where('vin.idVinculoPrincipal =  ?', $idVinculoPrincipal);
+            $objSelect->where('vin.idVinculoPrincipal =  ?', $idVinculoPrincipal);
         }
 
-        $sql->order(array('n.Descricao'));
+        $objSelect->order(array('n.Descricao'));
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        return $db->fetchAll($sql);
+        return $db->fetchAll($objSelect);
     }
 }
