@@ -2,38 +2,18 @@
 
 class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
 {
-    /**
-     * @var bool $_name
-     */
     protected $_name = 'Agentes';
-
-    /**
-     * @var string $_schema
-     */
     protected $_schema = 'agentes';
-
-    /**
-     * @var bool $_primary
-     */
     protected $_primary = 'idAgente';
 
-    /**
-     * @access public
-     * @param string $cnpjcpf
-     * @param string $nome
-     * @param integer $idAgente
-     * @return array
-     */
     public function buscarAgentes(
         $cnpjcpf = null,
         $nome = null,
         $idAgente = null
     )
     {
-//        $agentesM = new Agente_Model_DbTable_Agentes();
 
         $schemaAgentes = parent::getSchema('agentes');
-//        $schemaSac = parent::getSchema('sac');
 
         $a = array(
             'a.idAgente'
@@ -64,8 +44,6 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         , 't.cdSegmento'
         );
 
-//        $sql = $db->select()->distinct()->from(['a' => 'agentes'], $a, $schemaAgentes)
-
         $select = $this->select()
             ->setIntegrityCheck(false)
             ->distinct()
@@ -83,11 +61,9 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
             ->where('a.TipoPessoa = false or a.TipoPessoa = true');
 
         if (!empty($cnpjcpf)) {
-            # busca pelo cpf/cnpj
             $select->where('a.CNPJCPF = ?', $cnpjcpf);
         }
         if (!empty($nome)) {
-            # filtra pelo nome
             $select->where('n.Descricao LIKE ?', '%' . $nome . '%');
         }
         if (!empty($idAgente)) {
@@ -95,14 +71,13 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
             $select->where('a.idAgente = ?', $idAgente);
         }
 
-//        $select->order(array('e.Status Desc', 'n.Descricao Asc'));
 
         $result = $this->fetchAll($select);
         $result = ($result) ? $result->toArray() : array();
 
         foreach ($result as &$value) {
             $value['CNPJCPF'] = Mascara::addMaskCpfCnpj($value['CNPJCPF']);
-            if(isset($value['cep'])) {
+            if (isset($value['cep'])) {
                 $value['cep'] = Mascara::addMaskCEP($value['cep']);
             }
         }
@@ -110,12 +85,6 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         return $result;
     }
 
-    /**
-     * BuscarComponente
-     *
-     * @access public
-     * @return void
-     */
     public function BuscarComponente()
     {
         $select = $this->select();
@@ -135,47 +104,27 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         return $this->fetchAll($select);
     }
 
-    /**
-     * BuscaAgente
-     *
-     * @param bool $cnpjcpf
-     * @access public
-     * @return void
-     *
-     * @todo renomear e substituir onde utiliza este metodo.
-     */
     public function BuscaAgente($cnpjcpf = null)
     {
         $select = $this->select(Zend_Db_Table_Abstract::SELECT_WITH_FROM_PART);
-//        $select->from($this->_name,$select::SQL_WILDCARD, $this->_schema);
         $select->setIntegrityCheck(false);
         $select->where('CNPJCPF = ?', trim($cnpjcpf));
 
         return $this->fetchAll($select);
     }
 
-    /**
-     * inserirAgentes
-     *
-     * @param mixed $dados
-     * @access public
-     * @return void
-     */
     public function inserirAgentes($dados)
     {
         $insert = $this->insert($dados);
         return $insert;
     }
 
-    /**
-     * Retorna registros do banco de dados referente a Agentes(Proponente)
-     * @param array $where - array com dados where no formato "nome_coluna_1"=>"valor_1","nome_coluna_2"=>"valor_2"
-     * @param array $order - array com orders no formado "coluna_1 desc","coluna_2"...
-     * @param int $tamanho - numero de registros que deve retornar
-     * @param int $inicio - offset
-     * @return Zend_Db_Table_Rowset_Abstract
-     */
-    public function buscarAgenteENome($where = array(), $order = array(), $tamanho = -1, $inicio = -1)
+    public function buscarAgenteENome(
+        $where = array(),
+        $order = array(),
+        $tamanho = -1,
+        $inicio = -1
+    )
     {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
@@ -189,13 +138,6 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         return $this->fetchAll($slct);
     }
 
-    /**
-     * buscarFornecedor
-     *
-     * @param mixed $where
-     * @access public
-     * @return void
-     */
     public function buscarFornecedor($where)
     {
         $select = $this->select();
@@ -219,13 +161,6 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         return $this->fetchAll($select);
     }
 
-    /**
-     * buscarFornecedorFiscalizacao
-     *
-     * @param mixed $where
-     * @access public
-     * @return void
-     */
     public function buscarFornecedorFiscalizacao($where)
     {
         $select = $this->select();
@@ -282,15 +217,6 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         return $this->fetchAll($objAgentes);
     }
 
-    /**
-     * buscarAgenteVinculoProponente
-     *
-     * @param bool $where
-     * @param bool $order
-     * @param mixed $tamanho
-     * @param mixed $inicio
-     * @access public
-     */
     public function buscarAgenteVinculoProponente(
         $where = array(),
         $order = array(),
@@ -343,14 +269,6 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         return $this->fetchAll($slct);
     }
 
-    /**
-     * buscarNovoProponente
-     *
-     * @param bool $where
-     * @param mixed $idResponsavel
-     * @access public
-     * @return void
-     */
     public function buscarNovoProponente($where = array(), $idResponsavel)
     {
         $select = $this->select();
@@ -388,12 +306,6 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         return $this->fetchAll($select);
     }
 
-    /**
-     * todosPareceristas
-     *
-     * @access public
-     * @return void
-     */
     public function todosPareceristas()
     {
         $slct = $this->select();
@@ -418,13 +330,6 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         return $this->fetchAll($slct);
     }
 
-    /**
-     * pareceristasDoOrgao
-     *
-     * @param mixed $idOrgao
-     * @access public
-     * @return void
-     */
     public function pareceristasDoOrgao($idOrgao)
     {
         $slct = $this->select();
@@ -448,13 +353,6 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         return $this->fetchAll($slct);
     }
 
-    /**
-     * consultaPareceristasDoOrgao
-     *
-     * @param bool $idOrgao
-     * @access public
-     * @return void
-     */
     public function consultaPareceristasDoOrgao($idOrgao = null)
     {
         $slct = $this->select();
@@ -488,16 +386,11 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         return $this->fetchAll($slct);
     }
 
-    /**
-     * buscarPareceristas
-     *
-     * @param mixed $idOrgao
-     * @param mixed $idArea
-     * @param mixed $idSegmento
-     * @access public
-     * @return void
-     */
-    public function buscarPareceristas($idOrgao, $idArea, $idSegmento)
+    public function buscarPareceristas(
+        $idOrgao,
+        $idArea,
+        $idSegmento
+    )
     {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
@@ -540,16 +433,11 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         return $this->fetchAll($slct);
     }
 
-    /**
-     * buscarPareceristasIphan
-     *
-     * @param mixed $idOrgao
-     * @param mixed $idArea
-     * @param mixed $idSegmento
-     * @access public
-     * @return void
-     */
-    public function buscarPareceristasIphan($idOrgao, $idArea, $idSegmento)
+    public function buscarPareceristasIphan(
+        $idOrgao,
+        $idArea,
+        $idSegmento
+    )
     {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
@@ -592,14 +480,6 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         return $this->fetchAll($slct);
     }
 
-    /**
-     * consultaPareceristasPainel
-     *
-     * @param mixed $nome
-     * @param mixed $cpf
-     * @access public
-     * @return void
-     */
     public function consultaPareceristasPainel($nome, $cpf)
     {
         $slct = $this->select();
@@ -627,13 +507,6 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         return $this->fetchAll($slct);
     }
 
-    /**
-     * dadosParecerista
-     *
-     * @param mixed $where
-     * @access public
-     * @return void
-     */
     public function dadosParecerista($where)
     {
 
@@ -711,13 +584,6 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         return $this->fetchRow($select);
     }
 
-    /**
-     * buscarAgentesCpfVinculo
-     *
-     * @param bool $where
-     * @access public
-     * @return void
-     */
     public function buscarAgentesCpfVinculo($where = array())
     {
         $sl = $this->select();
@@ -738,16 +604,6 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         return $this->fetchAll($sl);
     }
 
-    /**
-     * buscarDirigentes
-     *
-     * @param bool $where
-     * @param bool $order
-     * @param mixed $tamanho
-     * @param mixed $inicio
-     * @access public
-     * @return void
-     */
     public function buscarDirigentes($where = array(), $order = array(), $tamanho = -1, $inicio = -1)
     {
         $slct = $this->select();
@@ -773,23 +629,17 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
             $slct->where($coluna, $valor);
         }
 
-        //adicionando linha order ao select
         $slct->order($order);
         return $this->fetchAll($slct);
     }
 
-    /**
-     * buscarUfMunicioAgente
-     *
-     * @param bool $where
-     * @param bool $order
-     * @param mixed $tamanho
-     * @param mixed $inicio
-     * @param bool $retornaSelect
-     * @access public
-     * @return void
-     */
-    public function buscarUfMunicioAgente($where = array(), $order = array(), $tamanho = -1, $inicio = -1, $retornaSelect = false)
+    public function buscarUfMunicioAgente(
+        $where = array(),
+        $order = array(),
+        $tamanho = -1,
+        $inicio = -1,
+        $retornaSelect = false
+    )
     {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
@@ -826,18 +676,12 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
             return $this->fetchAll($slct);
     }
 
-
-    /**
-     * buscarAgenteVinculo
-     *
-     * @param bool $where
-     * @param bool $order
-     * @param mixed $tamanho
-     * @param mixed $inicio
-     * @access public
-     * @return void
-     */
-    public function buscarAgenteVinculo($where = array(), $order = array(), $tamanho = -1, $inicio = -1)
+    public function buscarAgenteVinculo(
+        $where = array(),
+        $order = array(),
+        $tamanho = -1,
+        $inicio = -1
+    )
     {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
@@ -1063,5 +907,54 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         }
 
         return $nome;
+    }
+
+    public function buscarVinculados(
+        $cnpjcpfSuperior = null,
+        $nome = null,
+        $idAgente = null,
+        $idVinculado = null,
+        $idVinculoPrincipal = null
+    )
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+
+        $a = array(
+            'a.idAgente'
+        , 'a.CNPJCPF'
+        , 'a.CNPJCPFSuperior'
+        );
+
+        $sql = $this->select()
+            ->from(array('a' => 'Agentes'), $a, 'agentes')
+            ->joinLeft(array('n' => 'Nomes'), 'N.idAgente = A.idAgente', array('n.Descricao AS Nome'), 'agentes')
+            ->joinLeft(array('vis' => 'Visao'), 'a.idAgente = vis.idAgente', null, 'agentes')
+            ->joinLeft(array('ver' => 'Verificacao'), 'ver.idVerificacao = vis.Visao', null, 'agentes')
+            ->joinLeft(array('vin' => 'Vinculacao'), 'a.idAgente = vin.idAgente', null, 'agentes')
+            ->joinLeft(array('tp' => 'Tipo'), 'tp.idTipo = ver.IdTipo', null, 'agentes')
+            ->where('a.TipoPessoa = 0 OR a.TipoPessoa = 1')
+            ->where('n.TipoNome = 18 OR n.TipoNome = 19')
+            ->where('vis.Visao = 198');
+
+        if (!empty($cnpjcpfSuperior)) { // busca pelo cnpj/cpf com o vinculo principal
+            $sql->where('a.CNPJCPFSuperior = ?', $cnpjcpfSuperior);
+        }
+        if (!empty($nome)) { // filtra pelo nome
+            $sql->where('n.Descricao LIKE ?', "$nome%");
+        }
+        if (!empty($idAgente)) { // busca pelo idAgente
+            $sql->where('vin.idAgente =  ?', $idAgente);
+        }
+        if (!empty($idVinculado)) { // busca pelo idVinculado
+            $sql->where('vin.idVinculado =  ?', $idVinculado);
+        }
+        if (!empty($idVinculoPrincipal)) {// busca pelo idVinculoPrincipal
+            $sql->where('vin.idVinculoPrincipal =  ?', $idVinculoPrincipal);
+        }
+
+        $sql->order(array('n.Descricao'));
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        return $db->fetchAll($sql);
     }
 }
