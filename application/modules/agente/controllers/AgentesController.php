@@ -233,7 +233,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
             $idAgente = $this->getIdUsuario;
         }
 
-
         $qtdDirigentes = '';
         if (isset($idAgente)) {
 

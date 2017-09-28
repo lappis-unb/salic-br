@@ -44,12 +44,16 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         , 't.cdSegmento'
         );
 
+        $camposCidade = [
+            'm.Descricao as dscidade'
+        ];
+
         $select = $this->select();
         $select->setIntegrityCheck(false)->distinct();
         $select->from(array('a' => 'Agentes'), $a, $schemaAgentes);
         $select->joinLeft(array('n' => 'Nomes'), 'n.idAgente = a.idAgente', array('n.Descricao as nome'), $schemaAgentes)
             ->joinLeft(array('e' => 'EnderecoNacional'), 'e.idAgente = a.idAgente', $e, $schemaAgentes)
-            ->joinLeft(array('m' => 'Municipios'), 'm.idMunicipioIBGE = e.Cidade', '*', $schemaAgentes)
+            ->joinLeft(array('m' => 'Municipios'), 'm.idMunicipioIBGE = e.Cidade', $camposCidade, $schemaAgentes)
             ->joinLeft(array('u' => 'UF'), 'u.idUF = e.UF', 'u.Sigla as dsuf', $schemaAgentes)
             ->joinLeft(array('ve' => 'Verificacao'), 've.idVerificacao = e.TipoEndereco', 've.Descricao as dstipoendereco', $schemaAgentes)
             ->joinLeft(array('vl' => 'Verificacao'), 'vl.idVerificacao = e.TipoLogradouro', 'vl.Descricao as dsTipoLogradouro', $schemaAgentes)
@@ -65,6 +69,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         if (!empty($nome)) {
             $select->where('n.Descricao LIKE ?', '%' . $nome . '%');
         }
+        
         if (!empty($idAgente)) {
             # busca de acordo com o id do agente
             $select->where('a.idAgente = ?', $idAgente);
@@ -208,7 +213,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         $objAgentes->joinInner(
             array('vprp' => 'tbVinculoProposta'), "vprp.idVinculo = vr.idVinculo", array("vprp.siVinculoProposta", "vprp.idPreProjeto", 'vprp.idVinculoProposta'), $this->_schema
         );
-        $objAgentes->joinLeft(array('pr' => 'Projetos'), 'vprp.idPreProjeto = pr.idProjeto', array('(pr.AnoProjeto ' . parent::getConcatExpression() . ' pr.Sequencial) as pronac'), $this->getSchema('sac'));
+        $objAgentes->joinLeft(array('pr' => 'Projetos'), 'vprp.idPreProjeto = pr.idProjeto', array('pr.AnoProjeto ' . parent::getConcatExpression() . ' pr.Sequencial as pronac'), $this->getSchema('sac'));
 
         foreach ($where as $coluna => $valor) {
             $objAgentes->where($coluna, $valor);
