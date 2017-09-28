@@ -22,7 +22,7 @@
     <div id="confirma"></div>
     <div>
         <?php echo $this->partial('agentes/inc/cabecalho.php', $this)?>
-        <table class="tabela <?php echo $this->dados[0]->idendereco ? 'sumir' : ''; ?>">
+        <table class="tabela <?php echo $this->dados[0]['idEndereco'] ? 'sumir' : ''; ?>">
             <tr>
                 <th>ENDERE&Ccedil;OS</th>
             </tr>
@@ -30,13 +30,13 @@
                 <td>Nenhum Endere&ccedil;o Cadastrado</td>
             </tr>
         </table>
-        <table id="tabEndereco" class="tabela <?php echo $this->dados[0]->idendereco ? '' : 'sumir'; ?>">
+        <table id="tabEndereco" class="tabela <?php echo $this->dados[0]['idEndereco'] ? '' : 'sumir'; ?>">
             <tr>
                 <th colspan="3">ENDERE&Ccedil;OS</th>
             </tr>
             <tr>
-                <td><label>CEP:</label> <?php echo Mascara::addMaskCep($this->dados[0] ->cep); ?></td>
-                <td><label>UF:</label> <?php echo $this->dados[0] ->dsuf; ?></td>
+                <td><label>CEP:</label> <?php echo Mascara::addMaskCep($this->dados[0]['CEP']); ?></td>
+                <td><label>UF:</label> <?php echo $this->dados[0]['dsUf']; ?></td>
                 <td><label>Cidade:</label> <?php echo !empty($this->dados[0]->dscidade) ? $this->dados[0]->dscidade : '' ?></td>
             </tr>
             <tr>

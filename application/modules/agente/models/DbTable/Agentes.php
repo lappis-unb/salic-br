@@ -13,7 +13,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
     )
     {
 
-        $schemaAgentes = parent::getSchema('agentes');
+        $schemaAgentes = $this->getSchema('agentes');
 
         $a = array(
             'a.idAgente'
@@ -44,11 +44,10 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         , 't.cdSegmento'
         );
 
-        $select = $this->select()
-            ->setIntegrityCheck(false)
-            ->distinct()
-            ->from(array('a' => 'Agentes'), $a, $schemaAgentes)
-            ->joinLeft(array('n' => 'Nomes'), 'n.idAgente = a.idAgente', array('n.Descricao as nome'), $schemaAgentes)
+        $select = $this->select();
+        $select->setIntegrityCheck(false)->distinct();
+        $select->from(array('a' => 'Agentes'), $a, $schemaAgentes);
+        $select->joinLeft(array('n' => 'Nomes'), 'n.idAgente = a.idAgente', array('n.Descricao as nome'), $schemaAgentes)
             ->joinLeft(array('e' => 'EnderecoNacional'), 'e.idAgente = a.idAgente', $e, $schemaAgentes)
             ->joinLeft(array('m' => 'Municipios'), 'm.idMunicipioIBGE = e.Cidade', '*', $schemaAgentes)
             ->joinLeft(array('u' => 'UF'), 'u.idUF = e.UF', 'u.Sigla as dsuf', $schemaAgentes)
