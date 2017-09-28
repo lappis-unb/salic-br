@@ -133,7 +133,7 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
 
     protected function addDoubleQuote($field)
     {
-        if (substr($field, 0, 1) != '"') {
+        if (substr(trim($field), 0, 1) != '"') {
             $hasDot = strpos($field, '.');
             if ($hasDot !== false) {
                 $fieldPieces = explode('.', $field);
@@ -178,10 +178,10 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
         return $field;
     }
 
-    public function treatColumnsDoubleQuotes($arrayColumns)
+    public function treatColumnsDoubleQuotes($columns)
     {
-        if (is_array($arrayColumns)) {
-            foreach ($arrayColumns as &$column) {
+        if (is_array($columns)) {
+            foreach ($columns as &$column) {
                 $columnParts = explode(' as ', $column);
                 if (count($columnParts) > 1) {
                     $columnFirstPart = $this->addDoubleQuote($columnParts[0]);
@@ -193,6 +193,11 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
             }
 
         }
+        elseif(!is_null($columns) && !empty($columns)) {
+            $columns = $this->addDoubleQuote($columns);
+        }
+
+        return $columns;
     }
 
     protected function _quoteIdentifierTable($ident, $alias = null, $auto = false, $as = ' AS ')
