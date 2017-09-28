@@ -191,17 +191,17 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
     {
         if (is_array($columns)) {
             foreach ($columns as &$column) {
-                $columnParts = explode(' as ', $column);
-                if (count($columnParts) > 1) {
-                    $columnFirstPart = $this->addDoubleQuote($columnParts[0]);
-                    $columnSecondPart = ' as ' . $this->addDoubleQuote($columnParts[1]);
-                    $column = new Zend_Db_Expr($columnFirstPart . $columnSecondPart);
-                } else {
-                    $column = new Zend_Db_Expr($this->addDoubleQuote($column));
-                }
+                $column = $this->treatColumnsDoubleQuotes($column);
             }
         } elseif (!is_null($columns) && !empty($columns)) {
-            $columns = new Zend_Db_Expr($this->addDoubleQuote($columns));
+            $columnParts = explode(' as ', $columns);
+            if (count($columnParts) > 1) {
+                $columnFirstPart = $this->addDoubleQuote($columnParts[0]);
+                $columnSecondPart = ' as ' . $this->addDoubleQuote($columnParts[1]);
+                $columns = new Zend_Db_Expr($columnFirstPart . $columnSecondPart);
+            } elseif(substr(trim($columns), 0, 1) != '*') {
+                $columns = new Zend_Db_Expr($this->addDoubleQuote($columns));
+            }
         }
 
         return $columns;
