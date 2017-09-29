@@ -7,52 +7,9 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
         throw new Exception("Método descontinuado. Favor utilizar o m&eacute;todo buscarAgentes da classe.");
     }
 
-    public static function buscarVinculados($cnpjcpfSuperior = null, $nome = null, $idAgente = null, $idVinculado = null, $idVinculoPrincipal = null)
+    public function buscarVinculados($cnpjcpfSuperior = null, $nome = null, $idAgente = null, $idVinculado = null, $idVinculoPrincipal = null)
     {
-        $db= Zend_Db_Table::getDefaultAdapter();
-
-        $a = array(
-            'a.idAgente'
-            ,'a.CNPJCPF'
-            ,'a.CNPJCPFSuperior'
-        );
-
-        $sql = $db->select()
-            ->from(array('a' => 'Agentes'), $a, 'agentes')
-            ->joinLeft(array('n' => 'Nomes'), 'N.idAgente = A.idAgente', array('n.Descricao AS Nome'), 'agentes')
-            ->joinLeft(array('vis' => 'Visao'), 'a.idAgente = vis.idAgente', null, 'agentes')
-            ->joinLeft(array('ver' => 'Verificacao'), 'ver.idVerificacao = vis.Visao', null, 'agentes')
-            ->joinLeft(array('vin' => 'Vinculacao'), 'a.idAgente = vin.idAgente', null, 'agentes')
-            ->joinLeft(array('tp' => 'Tipo'), 'tp.idTipo = ver.IdTipo', null, 'agentes')
-            ->where('a.TipoPessoa = 0 OR a.TipoPessoa = 1')
-            ->where('n.TipoNome = 18 OR n.TipoNome = 19')
-            ->where('vis.Visao = 198')
-            ;
-
-        if (!empty($cnpjcpfSuperior)) // busca pelo cnpj/cpf com o vinculo principal
-        {
-            $sql->where('a.CNPJCPFSuperior = ?', $cnpjcpfSuperior);
-        }
-        if (!empty($nome)) // filtra pelo nome
-        {
-            $sql->where('n.Descricao LIKE ?', "$nome%");
-        }
-        if (!empty($idAgente)) // busca pelo idAgente
-        {
-            $sql->where('vin.idAgente =  ?', $idAgente);
-        }
-        if (!empty($idVinculado)) // busca pelo idVinculado
-        {
-            $sql->where('vin.idVinculado =  ?', $idVinculado);
-        }
-        if (!empty($idVinculoPrincipal)) {// busca pelo idVinculoPrincipal
-            $sql->where('vin.idVinculoPrincipal =  ?', $idVinculoPrincipal);
-        }
-
-        $sql->order(array('n.Descricao'));
-
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        return $db->fetchAll($sql);
+        throw new Exception("Método descontinuado. Favor utilizar o m&eacute;todo 'buscarVinculados' da Agente_Model_DbTable_Agentes.");
     }
 
     /**
@@ -104,8 +61,7 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
             ->joinLeft(array('U' => 'UF'), 'U.idUF = E.UF', $u, 'agentes')
             ->joinLeft(array('VL' => 'Verificacao'), 'VL.idVerificacao = E.TipoLogradouro', array('VL.Descricao as dsTipoLogradouro'), 'agentes')
             ->where('E.idAgente = ?', $idAgente)
-            ->order(array('Status DESC'))
-            ;
+            ->order(array('Status DESC'));
 
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
@@ -127,11 +83,11 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
 
         $i = array(
             'i.idinternet'
-            ,'i.idAgente'
-            ,'i.tipointernet'
-            ,'i.Descricao'
-            ,'i.status'
-            ,'i.Divulgar'
+        , 'i.idAgente'
+        , 'i.tipointernet'
+        , 'i.Descricao'
+        , 'i.status'
+        , 'i.Divulgar'
         );
 
         $sql = $db->select()
@@ -179,8 +135,7 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
             ->join(array('uf' => 'UF'), 'uf.iduf = tl.uf', array('uf.sigla as ufsigla'), $tblAgentes->getSchema('agentes'))
             ->join(array('ag' => 'Agentes'), 'ag.idAgente = tl.idAgente', array('ag.idAgente'), $tblAgentes->getSchema('agentes'))
             ->joinLeft(array('ddd' => 'DDD'), 'tl.DDD = ddd.Codigo', $ddd, $tblAgentes->getSchema('agentes'))
-            ->joinLeft(array('v' => 'Verificacao'), 'v.idVerificacao = tl.TipoTelefone', array('v.Descricao as dstelefone'), $tblAgentes->getSchema('agentes'))
-            ;
+            ->joinLeft(array('v' => 'Verificacao'), 'v.idVerificacao = tl.TipoTelefone', array('v.Descricao as dstelefone'), $tblAgentes->getSchema('agentes'));
         if (!empty($idAgente)) { // busca de acordo com o id do agente
             $sql->where('tl.idAgente = ?', $idAgente);
         }
@@ -197,17 +152,14 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
      */
     public static function cadastrarAgente($dados)
     {
-        $db= Zend_Db_Table::getDefaultAdapter();
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $insert = $db->insert(GenericModel::getStaticTableName('agentes', 'Agentes'), $dados); // cadastra
 
-        if ($insert)
-        {
+        if ($insert) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -227,20 +179,28 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
         $rsAgente = $Agentes->createRow();
 
         //ATRIBUINDO VALORES AOS CAMPOS QUE FORAM PASSADOS
-        if(isset($dados['stTipoRespPergunta'])){ $rsAgente->stTipoRespPergunta = $dados['stTipoRespPergunta']; }
+        if (isset($dados['stTipoRespPergunta'])) {
+            $rsAgente->stTipoRespPergunta = $dados['stTipoRespPergunta'];
+        }
 
-        if(isset($dados['dsPergunta'])){ $rsAgente->dsPergunta = $dados['dsPergunta']; }
+        if (isset($dados['dsPergunta'])) {
+            $rsAgente->dsPergunta = $dados['dsPergunta'];
+        }
 
-        if(isset($dados['dtCadastramento'])){ $rsAgente->dtCadastramento = $dados['dtCadastramento']; }
+        if (isset($dados['dtCadastramento'])) {
+            $rsAgente->dtCadastramento = $dados['dtCadastramento'];
+        }
 
-        if(isset($dados['idPessoaCadastro'])){ $rsAgente->idPessoaCadastro = $dados['idPessoaCadastro']; }
+        if (isset($dados['idPessoaCadastro'])) {
+            $rsAgente->idPessoaCadastro = $dados['idPessoaCadastro'];
+        }
 
         //SALVANDO O OBJETO CRIADO
         $id = $rsAgente->save();
 
-        if($id){
+        if ($id) {
             return $id;
-        }else{
+        } else {
             return false;
         }
     }
@@ -257,21 +217,17 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
      */
     public static function alterarAgente($idAgente, $dados)
     {
-        $db= Zend_Db_Table::getDefaultAdapter();
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-
 
 
         $where = "idAgente = {$idAgente}"; // condicao para alteracao
 
         $update = $db->update('agentes.dbo.Agentes', $dados, $where); // altera
 
-        if ($update)
-        {
+        if ($update) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -285,7 +241,7 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
      */
     public static function cadastrarVinculados($dados)
     {
-        $db= Zend_Db_Table::getDefaultAdapter();
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $insert = $db->insert('agentes.dbo.Vinculacao', $dados); // cadastra

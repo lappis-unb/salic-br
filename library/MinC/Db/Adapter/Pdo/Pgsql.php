@@ -48,7 +48,6 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
         $colunaLimpa = trim($condition);
         $separator = '=';
         if ($colunaLimpa && strpos($colunaLimpa, $separator) !== false) {
-
             $arrayColumn = explode($separator, $condition);
             if (strpos($arrayColumn[0], '"') === false) {
                 $conditionOne = $this->addDoubleQuote(trim($arrayColumn[0]));
@@ -56,9 +55,7 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
 //                $conditionTwo = $this->addSimpleQuote($arrayColumn[1]);
                 $condition = "{$conditionOne} {$separator} {$conditionTwo}";
             }
-
         } elseif ($colunaLimpa && strpos($colunaLimpa, 'in') !== false) {
-
             $separator = 'in';
             $arrayColumn = explode($separator, $condition);
             if (substr(trim($arrayColumn[1]), 0, 1) == '(' && strpos($arrayColumn[0], '"') === false) {
@@ -133,7 +130,7 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
 
     protected function addDoubleQuote($field)
     {
-        if (substr($field, 0, 1) != '"') {
+        if (substr(trim($field), 0, 1) != '"') {
             $hasDot = strpos($field, '.');
             if ($hasDot !== false) {
                 $fieldPieces = explode('.', $field);
@@ -144,17 +141,31 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
                     }
                     $field .= $this->addDoubleQuote($fieldPiece);
                 }
-            } else {
-                if (!is_numeric($field) && strpos($field, "'") === false
-                    && $field != "false"
-                    && $field != "true") {
-                    if (strpos($field, '::') !== false) {
-                        $field = '"' . substr($field, 0, strpos($field, '::')) . '"' . substr($field, strpos($field, '::'));
-                    } elseif (strpos($field, 'to_char(') !== false) {
-                        $field = 'to_char("'. substr($field, strpos($field, 'to_char(') + 1, strpos($field, ',')) . '"' . substr($field, strpos($field, ','));
-                    } else {
-                        $field = '"' . $field . '"';
+            } elseif (strpos($field, "||") !== false) {
+                $fieldPieces = explode('||', $field);
+                $field = '';
+                foreach ($fieldPieces as $fieldPiece) {
+                    if (!empty($field)) {
+                        $field .= ' || ';
                     }
+                    $field .= $this->addDoubleQuote($fieldPiece);
+                }
+            } elseif (!is_numeric($field)
+                        && strpos($field, "'") === false
+                        && $field != "false"
+                        && $field != "true") {
+                if (strpos($field, '::') !== false) {
+                    $field = '"'
+                            . substr($field, 0, strpos($field, '::'))
+                            . '"'
+                            . substr($field, strpos($field, '::'));
+                } elseif (strpos($field, 'to_char(') !== false) {
+                    $field = 'to_char("'
+                            . substr($field, strpos($field, 'to_char(') + 1, strpos($field, ','))
+                            . '"'
+                            . substr($field, strpos($field, ','));
+                } else {
+                    $field = '"' . trim($field) . '"';
                 }
             }
         }
@@ -165,34 +176,35 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
     protected function addSimpleQuote($field)
     {
         $field = trim($field);
-        if (
-            strpos($field, "'") === false
+        if (strpos($field, "'") === false
             && strpos($field, '"') === false
             && strpos($field, '(') === false
             && strpos($field, ')') === false
         ) {
-
             $field = "'{$field}'";
         }
 
         return $field;
     }
 
-    public function treatColumnsDoubleQuotes($arrayColumns)
+    public function treatColumnsDoubleQuotes($columns)
     {
-        if (is_array($arrayColumns)) {
-            foreach ($arrayColumns as &$column) {
-                $columnParts = explode(' as ', $column);
-                if (count($columnParts) > 1) {
-                    $columnFirstPart = $this->addDoubleQuote($columnParts[0]);
-                    $columnSecondPart = " as {$columnParts[1]}";
-                    $column = $columnFirstPart . $columnSecondPart;
-                } else {
-                    $column = $this->addDoubleQuote($column);
-                }
+        if (is_array($columns)) {
+            foreach ($columns as &$column) {
+                $column = $this->treatColumnsDoubleQuotes($column);
             }
-
+        } elseif (!is_null($columns) && !empty($columns)) {
+            $columnParts = explode(' as ', $columns);
+            if (count($columnParts) > 1) {
+                $columnFirstPart = $this->addDoubleQuote($columnParts[0]);
+                $columnSecondPart = ' as ' . $this->addDoubleQuote($columnParts[1]);
+                $columns = new Zend_Db_Expr($columnFirstPart . $columnSecondPart);
+            } elseif(substr(trim($columns), 0, 1) != '*') {
+                $columns = new Zend_Db_Expr($this->addDoubleQuote($columns));
+            }
         }
+
+        return $columns;
     }
 
     protected function _quoteIdentifierTable($ident, $alias = null, $auto = false, $as = ' AS ')
