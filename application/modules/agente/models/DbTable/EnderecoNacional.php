@@ -1,43 +1,9 @@
 <?php
 
-/**
- * Class Agente_Model_DbTable_EnderecoNacional
- *
- * @name Agente_Model_DbTable_EnderecoNacional
- * @package Modules/Agente
- * @subpackage Models/DbTable
- * @version $Id$
- *
- * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
- * @since 06/09/2016
- *
- * @copyright © 2012 - Ministerio da Cultura - Todos os direitos reservados.
- * @link http://salic.cultura.gov.br
- */
 class Agente_Model_DbTable_EnderecoNacional extends MinC_Db_Table_Abstract
 {
-    /**
-     * _schema
-     *
-     * @var string
-     * @access protected
-     */
     protected $_schema = 'agentes';
-
-    /**
-     * _name
-     *
-     * @var bool
-     * @access protected
-     */
     protected $_name = 'EnderecoNacional';
-
-    /**
-     * _primary
-     *
-     * @var bool
-     * @access protected
-     */
     protected $_primary = 'idEndereco';
 
     /**
@@ -52,7 +18,7 @@ class Agente_Model_DbTable_EnderecoNacional extends MinC_Db_Table_Abstract
     {
         $ve = array(
             've.Descricao as tipoendereco',
-            've.idverificacao as codtipoendereco',
+            've.idVerificacao as codtipoendereco',
         );
 
         $m = array(
@@ -61,19 +27,19 @@ class Agente_Model_DbTable_EnderecoNacional extends MinC_Db_Table_Abstract
         );
 
         $u = array(
-            'u.sigla as uf',
-            'u.iduf as coduf'
+            'u.Sigla as uf',
+            'u.idUF as coduf'
         );
 
         $sql = $this->select()
             ->setIntegrityCheck(false)
             ->from(array('e' => 'EnderecoNacional'), $this->_getCols(), $this->_schema)
-            ->joinLeft(array('ve' => 'Verificacao'), 've.idverificacao = e.tipoendereco', $ve, $this->_schema)
-            ->joinLeft(array('m' => 'municipios'), 'm.idMunicipioIBGE = e.cidade', $m, $this->_schema)
-            ->joinLeft(array('u' => 'uf'), 'U.iduf = e.uf', $u, $this->_schema)
-            ->joinLeft(array('vl' => 'Verificacao'), 'vl.idverificacao = e.TipoLogradouro', array('vl.Descricao as dsTipoLogradouro'), $this->_schema)
+            ->joinLeft(array('ve' => 'Verificacao'), 've.idVerificacao = e.TipoEndereco', $ve, $this->_schema)
+            ->joinLeft(array('m' => 'Municipios'), 'm.idMunicipioIBGE = e.Cidade', $m, $this->_schema)
+            ->joinLeft(array('u' => 'UF'), 'u.idUF = e.UF', $u, $this->_schema)
+            ->joinLeft(array('vl' => 'Verificacao'), 'vl.idVerificacao = e.TipoLogradouro', array('vl.Descricao as dsTipoLogradouro'), $this->_schema)
             ->where('e.idAgente = ?', $idAgente)
-            ->order(array('status DESC'))
+            ->order(array('Status DESC'))
         ;
 
         return $this->fetchAll($sql);
@@ -91,7 +57,7 @@ class Agente_Model_DbTable_EnderecoNacional extends MinC_Db_Table_Abstract
     {
         try
         {
-            return $resultado = $this->update( array('status' => 0),array('idagente = ?' => $idAgente));
+            return $resultado = $this->update( array('Status' => 0),array('idAgente = ?' => $idAgente));
         }
         catch (Zend_Exception $e)
         {
@@ -113,15 +79,15 @@ class Agente_Model_DbTable_EnderecoNacional extends MinC_Db_Table_Abstract
         try
         {
             $subSelect = $this->select()
-                ->from($this->_name, array(new Zend_Db_Expr('min(idendereco) as valor')), $this->_schema)
-                ->where('idagente = ?', $idAgente);
+                ->from($this->_name, array(new Zend_Db_Expr('min(idEndereco) as valor')), $this->_schema)
+                ->where('idAgente = ?', $idAgente);
 
             $dados = array(
-                'status' => 1
+                'Status' => 1
             );
 
-            $where['idagente = ?'] = $idAgente;
-            $where['idendereco = ?']  = $subSelect;
+            $where['idAgente = ?'] = $idAgente;
+            $where['idEndereco = ?']  = $subSelect;
 
             $this->update($dados, $where);
 
