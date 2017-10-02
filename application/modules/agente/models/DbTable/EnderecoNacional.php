@@ -6,14 +6,6 @@ class Agente_Model_DbTable_EnderecoNacional extends MinC_Db_Table_Abstract
     protected $_name = 'EnderecoNacional';
     protected $_primary = 'idEndereco';
 
-    /**
-     * Metodo para buscar os enderecos do agente
-     *
-     * @access public
-     * @static
-     * @param integer $idAgente
-     * @return object
-     */
     public function buscarEnderecos($idAgente = null)
     {
         $ve = array(
@@ -45,39 +37,18 @@ class Agente_Model_DbTable_EnderecoNacional extends MinC_Db_Table_Abstract
         return $this->fetchAll($sql);
     }
 
-    /**
-     * mudaCorrespondencia
-     *
-     * @param mixed $idAgente
-     * @static
-     * @access public
-     * @return void
-     */
     public function mudaCorrespondencia($idAgente)
     {
-        try
-        {
-            return $resultado = $this->update( array('Status' => 0),array('idAgente = ?' => $idAgente));
-        }
-        catch (Zend_Exception $e)
-        {
+        try {
+            return $resultado = $this->update( array('Status' => 0), array('idAgente = ?' => $idAgente));
+        } catch (Zend_Exception $e) {
             throw new Zend_Db_Exception("Erro ao alterar o Status dos endere&ccedil;os: " . $e->getMessage());
         }
     }
-
-    /**
-     * novaCorrespondencia
-     *
-     * @param mixed $idAgente
-     * @static
-     * @access public
-     * @return void
-     *
-     */
+    
     public function novaCorrespondencia($idAgente)
     {
-        try
-        {
+        try {
             $subSelect = $this->select()
                 ->from($this->_name, array(new Zend_Db_Expr('min(idEndereco) as valor')), $this->_schema)
                 ->where('idAgente = ?', $idAgente);
@@ -90,26 +61,13 @@ class Agente_Model_DbTable_EnderecoNacional extends MinC_Db_Table_Abstract
             $where['idEndereco = ?']  = $subSelect;
 
             $this->update($dados, $where);
-
-        }
-        catch (Zend_Exception_Db $e)
-        {
+        } catch (Zend_Exception_Db $e) {
             $this->view->message = "Erro ao alterar o Status dos endere&ccedil;os: " . $e->getMessage();
         }
     }
 
-    /**
-     * delete
-     * Deleta Endereco Nacional
-     *
-     * @param mixed $idEndereco
-     * @static
-     * @access public
-     * @return void
-     */
     public function delete($idEndereco)
     {
         return parent::delete(array('idEndereco = ? '=> $idEndereco));
     }
-
 }
