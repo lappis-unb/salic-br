@@ -28,7 +28,7 @@ class Agente_Model_DbTable_EnderecoNacional extends MinC_Db_Table_Abstract
             ->from(array('e' => 'EnderecoNacional'), $this->_getCols(), $this->_schema)
             ->joinLeft(array('ve' => 'Verificacao'), 've.idVerificacao = e.TipoEndereco', $ve, $this->_schema)
             ->joinLeft(array('m' => 'Municipios'), 'm.idMunicipioIBGE = e.Cidade', $m, $this->_schema)
-            ->joinLeft(array('u' => 'UF'), 'u.idUF = e.UF', $u, $this->_schema)
+            ->joinLeft(array('u' => 'UF'), 'u.idUF = m.idUFIBGE', $u, $this->_schema)
             ->joinLeft(array('vl' => 'Verificacao'), 'vl.idVerificacao = e.TipoLogradouro', array('vl.Descricao as dsTipoLogradouro'), $this->_schema)
             ->where('e.idAgente = ?', $idAgente)
             ->order(array('Status DESC'))
