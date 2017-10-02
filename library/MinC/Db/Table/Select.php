@@ -17,11 +17,6 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
         $this->isUseSchema = $isUseSchema;
     }
 
-    /**
-     * MinC_Db_Table_Select constructor.
-     * @param Zend_Db_Table_Abstract $table
-     * @return
-     */
     public function __construct(Zend_Db_Table_Abstract $table)
     {
         $this->databaseAdapter = Zend_Db_Table::getDefaultAdapter();
@@ -61,9 +56,9 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
      * @return Zend_Db_Select
      */
     public function joinInner(
-        $name, 
-        $cond, 
-        $cols = self::SQL_WILDCARD, 
+        $name,
+        $cond,
+        $cols = self::SQL_WILDCARD,
         $schema = null
     ) {
         if ($this->isUseSchema) {
@@ -182,23 +177,6 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
                 }
             }
             $sql = str_ireplace('.dbo', '', $sql);
-//
-//            $arrayWhere = explode('WHERE', $sql);
-//            if(count($arrayWhere) > 1) {
-//                $andString = '';
-//                $arrayAndCondition = explode('AND', $arrayWhere[1]);
-//                if(count($arrayAndCondition) > 1) {
-//                    foreach($arrayAndCondition as $andConditions) {
-//                        if(!empty($andString)) {
-//                            $andString .= 'AND';
-//                        }
-//                        $andString .= $this->databaseAdapter->treatWhereConditionsDoubleQuotes($andConditions);
-//                    }
-//                    $andString = ' AND ' . $andString;
-//                }
-//                $sql = $arrayWhere[0] . ' WHERE ' . $this->databaseAdapter->treatWhereConditionsDoubleQuotes($arrayWhere[1]);
-//                $sql .= $andString;
-//            }
 
             return $sql;
         } else {
@@ -230,14 +208,11 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
             if (empty($name)) {
                 $correlationName = $tableName = '';
             } elseif (is_array($name)) {
-                // Must be array($correlationName => $tableName) or array($ident, ...)
                 foreach ($name as $_correlationName => $_tableName) {
                     if (is_string($_correlationName)) {
-                        // We assume the key is the correlation name and value is the table name
                         $tableName = $_tableName;
                         $correlationName = $_correlationName;
                     } else {
-                        // We assume just an array of identifiers, with no correlation name
                         $tableName = $_tableName;
                         $correlationName = $this->_uniqueCorrelation($tableName);
                     }
@@ -254,11 +229,6 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
                 $correlationName = $this->_uniqueCorrelation($tableName);
             }
     
-            // Schema from table name overrides schema argument
-            // if (!is_object($tableName) && false !== strpos($tableName, '.')) {
-            //     list($schema, $tableName) = explode('.', $tableName);
-            // }
-    
             $lastFromCorrelationName = null;
             if (!empty($correlationName)) {
                 if (array_key_exists($correlationName, $this->_parts[self::FROM])) {
@@ -270,10 +240,8 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
                 }
     
                 if ($type == self::FROM) {
-                    // append this from after the last from joinType
                     $tmpFromParts = $this->_parts[self::FROM];
                     $this->_parts[self::FROM] = array();
-                    // move all the froms onto the stack
                     while ($tmpFromParts) {
                         $currentCorrelationName = key($tmpFromParts);
                         if ($tmpFromParts[$currentCorrelationName]['joinType'] != self::FROM) {
@@ -297,13 +265,12 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
                 }
             }
     
-            // add to the columns from this joined table
             if ($type == self::FROM && $lastFromCorrelationName == null) {
                 $lastFromCorrelationName = true;
             }
             $this->_tableCols(
-                $correlationName, 
-                $cols, 
+                $correlationName,
+                $cols,
                 $lastFromCorrelationName
             );
     
@@ -334,5 +301,18 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
             #$this->databaseAdapter->_uniqueCorrelation($name);
             return parent::_uniqueCorrelation($name);
         }
+    }
+
+    /**
+     * Updates existing rows.
+     *
+     * @param  array        $data  Column-value pairs.
+     * @param  array|string $where An SQL WHERE clause, or an array of SQL WHERE clauses.
+     * @return int          The number of rows updated.
+     */
+    public function update(array $data, $where)
+    {
+        $where = $this->databaseAdapter->treatConditionDoubleQuotes($where);
+        return parent::update($data, $where);
     }
 }
