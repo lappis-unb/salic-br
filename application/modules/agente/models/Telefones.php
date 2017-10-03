@@ -11,93 +11,93 @@
 
 class Agente_Model_Telefones extends MinC_Db_Model
 {
-    protected $_idtelefone;
-    protected $_idagente;
-    protected $_tipotelefone;
-    protected $_uf;
-    protected $_ddd;
-    protected $_numero;
-    protected $_divulgar;
-    protected $_usuario;
+    protected $_idTelefone;
+    protected $_idAgente;
+    protected $_TipoTelefone;
+    protected $_UF;
+    protected $_DDD;
+    protected $_Numero;
+    protected $_Divulgar;
+    protected $_Usuario;
 
     /**
      * @return mixed
      */
-    public function getIdtelefone()
+    public function getIdTelefone()
     {
-        return $this->_idtelefone;
+        return $this->_idTelefone;
     }
 
     /**
      * @param mixed $idtelefone
      */
-    public function setIdtelefone($idtelefone)
+    public function setIdTelefone($idtelefone)
     {
-        $this->_idtelefone = $idtelefone;
+        $this->_idTelefone = $idtelefone;
     }
 
     /**
      * @return mixed
      */
-    public function getIdagente()
+    public function getIdAgente()
     {
-        return $this->_idagente;
+        return $this->_idAgente;
     }
 
     /**
      * @param mixed $idagente
      */
-    public function setIdagente($idagente)
+    public function setIdAgente($idagente)
     {
-        $this->_idagente = $idagente;
+        $this->_idAgente = $idagente;
     }
 
     /**
      * @return mixed
      */
-    public function getTipotelefone()
+    public function getTipoTelefone()
     {
-        return $this->_tipotelefone;
+        return $this->_TipoTelefone;
     }
 
     /**
      * @param mixed $tipotelefone
      */
-    public function setTipotelefone($tipotelefone)
+    public function setTipoTelefone($tipotelefone)
     {
-        $this->_tipotelefone = $tipotelefone;
+        $this->_TipoTelefone = $tipotelefone;
     }
 
     /**
      * @return mixed
      */
-    public function getUf()
+    public function getUF()
     {
-        return $this->_uf;
+        return $this->_UF;
     }
 
     /**
      * @param mixed $uf
      */
-    public function setUf($uf)
+    public function setUF($uf)
     {
-        $this->_uf = $uf;
+        $this->_UF = $uf;
     }
 
     /**
      * @return mixed
      */
-    public function getDdd()
+    public function getDDD()
     {
-        return $this->_ddd;
+        return $this->_DDD;
     }
 
     /**
      * @param mixed $ddd
      */
-    public function setDdd($ddd)
+    public function setDDD($ddd)
     {
-        $this->_ddd = $ddd;
+        $this->_DDD = $ddd;
     }
 
     /**
@@ -105,7 +105,7 @@ class Agente_Model_Telefones extends MinC_Db_Model
      */
     public function getNumero()
     {
-        return $this->_numero;
+        return $this->_Numero;
     }
 
     /**
@@ -113,7 +113,7 @@ class Agente_Model_Telefones extends MinC_Db_Model
      */
     public function setNumero($numero)
     {
-        $this->_numero = $numero;
+        $this->_Numero = $numero;
     }
 
     /**
@@ -121,7 +121,7 @@ class Agente_Model_Telefones extends MinC_Db_Model
      */
     public function getDivulgar()
     {
-        return $this->_divulgar;
+        return $this->_Divulgar;
     }
 
     /**
@@ -129,7 +129,7 @@ class Agente_Model_Telefones extends MinC_Db_Model
      */
     public function setDivulgar($divulgar)
     {
-        $this->_divulgar = $divulgar;
+        $this->_Divulgar = $divulgar;
     }
 
     /**
@@ -137,7 +137,7 @@ class Agente_Model_Telefones extends MinC_Db_Model
      */
     public function getUsuario()
     {
-        return $this->_usuario;
+        return $this->_Usuario;
     }
 
     /**
@@ -145,6 +145,6 @@ class Agente_Model_Telefones extends MinC_Db_Model
      */
     public function setUsuario($usuario)
     {
-        $this->_usuario = $usuario;
+        $this->_Usuario = $usuario;
     }
 }

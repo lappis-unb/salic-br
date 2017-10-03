@@ -979,12 +979,12 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         try {
             $arrayTelefones = array(
                 'idAgente' => $idAgente,
-                'tipotelefone' => $tipoFone,
-                'uf' => $ufFone,
-                'ddd' => $dddFone,
-                'numero' => $Fone,
-                'divulgar' => $divulgarFone,
-                'usuario' => $Usuario
+                'TipoTelefone' => $tipoFone,
+                'UF' => $ufFone,
+                'DDD' => $dddFone,
+                'Numero' => $Fone,
+                'Divulgar' => $divulgarFone,
+                'Usuario' => $Usuario
             );
 
             # Salvando telefone.

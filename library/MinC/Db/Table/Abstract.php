@@ -602,11 +602,17 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
      * @param  array  $data  Column-value pairs.
      * @return mixed         The primary key of the row inserted.
      */
-    public function insert(array $data)
-    {
-        if ($this->getAdapter() instanceof MinC_Db_Adapter_Pdo_Pgsql) {
-            $data = $this->getAdapter()->treatColumnsDoubleQuotes($data);
-        }
-        return parent::insert($data);
-    }
+//    public function insert(array $data)
+//    {
+//        if ($this->getAdapter() instanceof MinC_Db_Adapter_Pdo_Pgsql) {
+////            $newDataArray = [];
+////            foreach($data as $key => $value) {
+////                $newDataArray[$this->getAdapter()->treatColumnsDoubleQuotes($key, false)] = $value;
+////            }
+////            $data = $newDataArray;
+//
+////            $data = $this->getAdapter()->treatColumnsDoubleQuotes($data);
+//        }
+//        return parent::insert($data);
+//    }
 }
