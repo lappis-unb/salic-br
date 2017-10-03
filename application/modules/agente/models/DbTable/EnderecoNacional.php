@@ -65,9 +65,4 @@ class Agente_Model_DbTable_EnderecoNacional extends MinC_Db_Table_Abstract
             $this->view->message = "Erro ao alterar o Status dos endere&ccedil;os: " . $e->getMessage();
         }
     }
-
-    public function delete($idEndereco)
-    {
-        return parent::delete(array('idEndereco = ? '=> $idEndereco));
-    }
 }

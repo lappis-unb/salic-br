@@ -928,7 +928,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         try {
             $tblEndereco = new Agente_Model_DbTable_EnderecoNacional();
 
-            $tblEndereco->delete($idEndereco);
+            $tblEndereco->delete(array('idEndereco = ? '=> $idEndereco));
 
             if ($enderecoCorrespondencia == "1") {
                 $tblEndereco->novaCorrespondencia($idAgente);
