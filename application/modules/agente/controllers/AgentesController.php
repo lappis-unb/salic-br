@@ -2,30 +2,10 @@
 
 class Agente_AgentesController extends MinC_Controller_Action_Abstract
 {
-
-    /**
-     * @var integer (variavel com o id do usuario logado)
-     */
     private $getIdUsuario = 0;
-
-    /**
-     * @var integer (variavel para Parecerista)
-     */
     private $getParecerista = 'N';
-
-    /**
-     * @var integer (variavel com o id do grupo ativo)
-     */
     private $GrupoAtivoSalic = 0;
-
-    /**
-     * @var bool
-     */
     private $combovisoes = array();
-
-    /**
-     * @var string
-     */
     private $modal = "n";
 
     public function init()
@@ -125,12 +105,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         parent::init();
     }
 
-    /**
-     * Funcao para tratar data
-     * @access private
-     * @param Date
-     * @return Date
-     */
     private function formatadata($data)
     {
         if ($data) {
@@ -145,12 +119,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         return $dataformatada;
     }
 
-    /**
-     * autenticacao
-     *
-     * @access private
-     * @return void
-     */
     private function autenticacao()
     {
         $arrAuth = array_change_key_case((array)Zend_Auth::getInstance()->getIdentity()); // pega a autenticacao
@@ -197,6 +165,8 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         if (isset($arrAuth['usu_codigo'])) { // autenticacao novo salic
             $this->getIdUsuario = UsuarioDAO::getIdUsuario($arrAuth['usu_codigo']);
             $this->getIdUsuario = ($this->getIdUsuario) ? $this->getIdUsuario["idAgente"] : 0;
+        } elseif($arrAuth['idusuario']) { // autenticacao scriptcase
+            $this->getIdUsuario = $arrAuth['idusuario'];
         } else { // autenticacao scriptcase
             $this->getIdUsuario = (isset($_GET["IdUsuario"])) ? $_GET["IdUsuario"] : 0;
         }
@@ -272,12 +242,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         }
     }
 
-    /**
-     * incluir
-     *
-     * @access private
-     * @return void
-     */
     private function incluir()
     {
         $cpf = Mascara::delMaskCPF(Mascara::delMaskCNPJ($this->_request->getParam("cpf")));
@@ -341,24 +305,11 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         endif;
     }
 
-    /**
-     * Metodo index()
-     * @access public
-     * @param void
-     * @return void
-     * @todo Verificar necessidade dessa action
-     */
     public function indexAction()
     {
 
     }
 
-    /**
-     * buscaPessoaAction
-     *
-     * @access public
-     * @return void
-     */
     public function buscaPessoaAction()
     {
 
@@ -427,12 +378,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         die;
     }
 
-    /**
-     * Metodo incluiragente()
-     * @access public
-     * @param void
-     * @return void
-     */
     public function incluiragenteAction()
     {
         $this->autenticacao();
@@ -453,12 +398,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         $this->incluir();
     }
 
-    /**
-     * Metodo incluirfonecedor()
-     * @access public
-     * @param void
-     * @return void
-     */
     public function incluirfornecedorAction()
     {
         $this->autenticacao();
@@ -472,12 +411,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         $this->incluir();
     }
 
-    /**
-     * Metodo incluirprocurador()
-     * @access public
-     * @param void
-     * @return void
-     */
     public function incluirprocuradorAction()
     {
         $this->autenticacao();
@@ -492,12 +425,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         $this->incluir();
     }
 
-    /**
-     * Metodo incluirbeneficiario()
-     * @access public
-     * @param void
-     * @return void
-     */
     public function incluirbeneficiarioAction()
     {
         $this->autenticacao();
@@ -512,12 +439,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         $this->incluir();
     }
 
-    /**
-     * incluiragenteexternoAction
-     *
-     * @access public
-     * @return void
-     */
     public function incluiragenteexternoAction()
     {
         Zend_Layout::startMvc(array('layout' => 'open'));
@@ -586,23 +507,11 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         $this->view->id = $idAgente;
     }
 
-    /**
-     * Metodo dirigentes()
-     * @access public
-     * @param void
-     * @return void
-     */
     public function dirigentesAction()
     {
         $this->autenticacao();
     }
 
-    /**
-     * Metodo visualizadirigente()
-     * @access public
-     * @param void
-     * @return void
-     */
     public function visualizadirigenteAction()
     {
         $this->autenticacao();
@@ -646,12 +555,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         }
     }
 
-    /**
-     * Metodo mandato()
-     * @access public
-     * @param void
-     * @return void
-     */
     public function mandatoAction()
     {
 
@@ -754,12 +657,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         }
     }
 
-    /**
-     * Metodo excluirmandato()
-     * @access public
-     * @param void
-     * @return void
-     */
     public function excluirmandatoAction()
     {
 
@@ -783,16 +680,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         }
     }
 
-    /**
-     * cadastraranexo
-     *
-     * @param mixed $arquivoNome
-     * @param mixed $arquivoTemp
-     * @param mixed $arquivoTipo
-     * @param mixed $arquivoTamanho
-     * @access public
-     * @return void
-     */
     public function cadastraranexo($arquivoNome, $arquivoTemp, $arquivoTipo, $arquivoTamanho)
     {
         if (!empty($arquivoNome) && !empty($arquivoTemp)) {
@@ -826,13 +713,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         return $idUltimoArquivo;
     }
 
-    /**
-     * Metodo enderecos()
-     * Visualiza, exclui e altera os enderecos do agente
-     * @access public
-     * @param void
-     * @return void
-     */
     public function enderecosAction()
     {
         $this->autenticacao();
@@ -846,13 +726,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         $this->view->qtdEndereco = count($lista);
     }
 
-    /**
-     * Metodo salvaendereco()
-     * Salva o endereco do agente
-     * @access public
-     * @param void
-     * @return void
-     */
     public function salvaenderecoAction()
     {
         $this->autenticacao();
@@ -905,13 +778,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         }
     }
 
-    /**
-     * Metodo excluiendereco()
-     * Exclui o endereco do agente
-     * @access public
-     * @param void
-     * @return void
-     */
     public function excluienderecoAction()
     {
         $this->autenticacao();
@@ -928,7 +794,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         try {
             $tblEndereco = new Agente_Model_DbTable_EnderecoNacional();
 
-            $tblEndereco->delete(array('idEndereco = ? '=> $idEndereco));
+            $tblEndereco->delete(array('idEndereco = ? ' => $idEndereco));
 
             if ($enderecoCorrespondencia == "1") {
                 $tblEndereco->novaCorrespondencia($idAgente);
@@ -940,12 +806,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         }
     }
 
-    /**
-     * Metodo telefones()
-     * @access public
-     * @param void
-     * @return void
-     */
     public function telefonesAction()
     {
         $this->autenticacao();
@@ -957,13 +817,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         $this->view->qtdTel = count($lista);
     }
 
-    /**
-     * Metodo salvatelefone()
-     * Salva o tefefone do agente
-     * @access public
-     * @param void
-     * @return void
-     */
     public function salvatelefoneAction()
     {
         $this->autenticacao();
@@ -1002,13 +855,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         }
     }
 
-    /**
-     * Metodo excluitelefone()
-     * Exclui o tefefone do agente
-     * @access public
-     * @param void
-     * @return void
-     */
     public function excluitelefoneAction()
     {
         $this->autenticacao();
@@ -1031,12 +877,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         }
     }
 
-    /**
-     * Metodo emails()
-     * @access public
-     * @param void
-     * @return void
-     */
     public function emailsAction()
     {
         $this->autenticacao();
@@ -1049,13 +889,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         $this->view->qtdEmail = count($lista);
     }
 
-    /**
-     * Metodo salvaemail()
-     * Salva o email do agente
-     * @access public
-     * @param void
-     * @return void
-     */
     public function salvaemailAction()
     {
         $this->autenticacao();
@@ -1070,11 +903,11 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         try {
             $arrayEmail = array(
                 'idAgente' => $idAgente,
-                'tipointernet' => $tipoEmail,
+                'TipoInternet' => $tipoEmail,
                 'Descricao' => $Email,
-                'status' => $enviarEmail,
-                'divulgar' => $divulgarEmail,
-                'usuario' => $Usuario
+                'Status' => $enviarEmail,
+                'Divulgar' => $divulgarEmail,
+                'Usuario' => $Usuario
             );
 
             $modelInternet = new Agente_Model_Internet($arrayEmail);
@@ -2141,7 +1974,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
 
         $agenteArray = (array)$agente;
         array_walk($agenteArray, function ($value, $key) use ($agente) {
-            if(!empty($value) && is_string($value)) {
+            if (!empty($value) && is_string($value)) {
                 $agente[$key] = utf8_encode($value);
             }
         });
@@ -2181,7 +2014,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
      * @todo retirar html da controller
      */
     private function salvarAgenteRedirect($agente, $idpronac = null, $projetofnc = null, $movimentacacaobancaria = null, $acao = null)
-    { 
+    {
         // Se vim do UC 10 - solicitar alteracao no Projeto
         $idpronac = $this->_request->getParam('idpronac');
         // Se vim do UC38 - Movimentacao bancaria - Captacao
@@ -2943,12 +2776,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         }
     }
 
-    /**
-     * naturezaAction
-     *
-     * @access public
-     * @return void
-     */
     public function naturezaAction()
     {
         $this->autenticacao();
@@ -2973,12 +2800,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         $this->view->dadosNatureza = $result;
     }
 
-    /**
-     * salvarNaturezaAction
-     *
-     * @access public
-     * @return void
-     */
     public function salvarNaturezaAction()
     {
         $post = Zend_Registry::get('post');
@@ -3011,12 +2832,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         }
     }
 
-    /**
-     * areaCulturalAction
-     *
-     * @access public
-     * @return void
-     */
     public function areaCulturalAction()
     {
         $this->autenticacao();
@@ -3032,12 +2847,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         $this->view->AreaCadastrada = $areaCadastrada;
     }
 
-    /**
-     * salvarAreaCulturalAction
-     *
-     * @access public
-     * @return void
-     */
     public function salvarAreaCulturalAction()
     {
         $post = Zend_Registry::get('post');
@@ -3066,9 +2875,9 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
                 $msg = 'cadastrados';
                 $tbTitulacaoConselheiro->inserir($dados);
             }
-            parent::message("Dados $msg com sucesso!", "agente/agentes/area-cultural/id/" . $post->agente, "CONFIRM");
+            parent::message("Dados {$msg} com sucesso!", "agente/agentes/area-cultural/id/{$post->agente}", "CONFIRM");
         } catch (Exception $e) {
-            parent::message("Ocorreu um erro durante a opera&ccedil;&atilde;o!", "agente/agentes/area-cultural/id/" . $post->agente, "ERROR");
+            parent::message("Ocorreu um erro durante a opera&ccedil;&atilde;o!", "agente/agentes/area-cultural/id/{$post->agente}", "ERROR");
         }
     }
 }

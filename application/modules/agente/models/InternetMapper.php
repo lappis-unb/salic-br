@@ -30,11 +30,11 @@ class Agente_Model_InternetMapper extends MinC_Db_Mapper
         for ($i = 0; $i < sizeof($arrData['emails']); $i++) {
             $arrayEmail = array(
                 'idAgente' => $arrData['idAgente'],
-                'tipointernet' => $arrData['tipoemails'][$i],
+                'TipoInternet' => $arrData['tipoemails'][$i],
                 'Descricao' => $arrData['emails'][$i],
-                'status' => $arrData['enviaremails'][$i],
-                'divulgar' => $arrData['divulgaremails'][$i],
-                'usuario' => $arrData['usuario']
+                'Status' => $arrData['enviaremails'][$i],
+                'Divulgar' => $arrData['divulgaremails'][$i],
+                'Usuario' => $arrData['usuario']
             );
             $arrId[] = $this->save(new Agente_Model_Internet($arrayEmail));
         }
