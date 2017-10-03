@@ -589,9 +589,9 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
      */
     public function update(array $data, $where)
     {
-        if ($this->databaseAdapter instanceof MinC_Db_Adapter_Pdo_Pgsql) {
-            $where = $this->databaseAdapter->treatConditionDoubleQuotes($where);
-            $data = $this->databaseAdapter->treatColumnsDoubleQuotes($data);
+        if ($this->getAdapter() instanceof MinC_Db_Adapter_Pdo_Pgsql) {
+            $where = $this->getAdapter()->treatConditionDoubleQuotes($where);
+            $data = $this->getAdapter()->treatColumnsDoubleQuotes($data);
         }
         return parent::update($data, $where);
     }
@@ -604,8 +604,8 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
      */
     public function insert(array $data)
     {
-        if ($this->databaseAdapter instanceof MinC_Db_Adapter_Pdo_Pgsql) {
-            $data = $this->databaseAdapter->treatColumnsDoubleQuotes($data);
+        if ($this->getAdapter() instanceof MinC_Db_Adapter_Pdo_Pgsql) {
+            $data = $this->getAdapter()->treatColumnsDoubleQuotes($data);
         }
         return parent::insert($data);
     }
