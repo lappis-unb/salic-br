@@ -895,9 +895,9 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
 
             if ($enderecoCorrespodencia == "1") {
                 $tblEndereco->mudaCorrespondencia($idAgente);
+            } else {
+                $tblEndereco->insert($arrayEnderecos);
             }
-
-            $tblEndereco->insert($arrayEnderecos);
 
             parent::message("Cadastro realizado com sucesso!", "agente/agentes/enderecos/id/" . $idAgente, "CONFIRM");
         } catch (Exception $e) {
@@ -928,7 +928,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         try {
             $tblEndereco = new Agente_Model_DbTable_EnderecoNacional();
 
-            $tblEndereco->delete($idEndereco);
+            $tblEndereco->delete(array('idEndereco = ? '=> $idEndereco));
 
             if ($enderecoCorrespondencia == "1") {
                 $tblEndereco->novaCorrespondencia($idAgente);
@@ -2136,13 +2136,14 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         $objModelAgentes = new Agente_Model_DbTable_Agentes();
         $agente = $objModelAgentes->buscarAgentes($cpf);
         $agente = $agente[0];
-        $agente->id = $agente->idAgente;
-        $agente->nome = $agente->Nome;
-        $agente->cpfCnpj = $agente->CNPJCPF;
+        $agente['id'] = $agente['idAgente'];
+        $agente['cpfCnpj'] = $agente['CNPJCPF'];
 
         $agenteArray = (array)$agente;
-        array_walk($agenteArpgray, function ($value, $key) use ($agente) {
-            $agente->$key = utf8_encode($value);
+        array_walk($agenteArray, function ($value, $key) use ($agente) {
+            if(!empty($value) && is_string($value)) {
+                $agente[$key] = utf8_encode($value);
+            }
         });
 
         $this->salvarAgenteRedirect($agente, $idpronac, $projetofnc, $movimentacacaobancaria, $acao);
@@ -2180,7 +2181,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
      * @todo retirar html da controller
      */
     private function salvarAgenteRedirect($agente, $idpronac = null, $projetofnc = null, $movimentacacaobancaria = null, $acao = null)
-    {
+    { 
         // Se vim do UC 10 - solicitar alteracao no Projeto
         $idpronac = $this->_request->getParam('idpronac');
         // Se vim do UC38 - Movimentacao bancaria - Captacao
@@ -2222,7 +2223,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
         } else {
             // Caso nao seja ele retorna para a visualizacao dos dados cadastrados do agente
             # editado para atender
-            parent::message('Cadastro realizado com sucesso!', "agente/agentes/agentes/id/{$agente->id}", 'CONFIRM');
+            parent::message('Cadastro realizado com sucesso!', "agente/agentes/agentes/id/{$agente['id']}", 'CONFIRM');
         }
     }
 

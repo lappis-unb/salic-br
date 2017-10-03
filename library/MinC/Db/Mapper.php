@@ -118,7 +118,8 @@ class MinC_Db_Mapper
         if ($this->isValid($model)) {
 
             $table = $this->getDbTable();
-            $pk = is_array($table->getPrimary())? reset($table->getPrimary()) : $table->getPrimary();
+            $pkBruta = $table->getPrimary();
+            $pk = (is_array($pkBruta)) ? reset($pkBruta) : $pkBruta;
 //            $pk = strtolower($pk);
             $method = 'get' . ucfirst($pk);
             $pkValue = $model->$method();

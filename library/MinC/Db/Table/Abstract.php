@@ -565,4 +565,48 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
         }
         return new $rowClass($data);
     }
+
+    /**
+     * Deletes existing rows.
+     *
+     * @param  array|string $where SQL WHERE clause(s).
+     * @return int          The number of rows deleted.
+     */
+    public function delete($where)
+    {
+        if ($this->getAdapter() instanceof MinC_Db_Adapter_Pdo_Pgsql) {
+            $where = $this->getAdapter()->treatConditionDoubleQuotes($where);
+        }
+        return parent::delete($where);
+    }
+
+    /**
+     * Updates existing rows.
+     *
+     * @param  array        $data  Column-value pairs.
+     * @param  array|string $where An SQL WHERE clause, or an array of SQL WHERE clauses.
+     * @return int          The number of rows updated.
+     */
+    public function update(array $data, $where)
+    {
+        if ($this->databaseAdapter instanceof MinC_Db_Adapter_Pdo_Pgsql) {
+            $where = $this->databaseAdapter->treatConditionDoubleQuotes($where);
+            $data = $this->databaseAdapter->treatColumnsDoubleQuotes($data);
+        }
+        return parent::update($data, $where);
+    }
+
+    /**
+     * Inserts a new row.
+     *
+     * @param  array  $data  Column-value pairs.
+     * @return mixed         The primary key of the row inserted.
+     */
+    public function insert(array $data)
+    {
+        if ($this->databaseAdapter instanceof MinC_Db_Adapter_Pdo_Pgsql) {
+            $data = $this->databaseAdapter->treatColumnsDoubleQuotes($data);
+        }
+        return parent::insert($data);
+    }
 }

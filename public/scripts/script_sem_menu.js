@@ -9,11 +9,15 @@ function layout_fluido() {
 	var fluidRodape = janela - 19;	
 	
 	// $("#navglobal").css("width",fluidNavGlobal);
+	
 	$("#conteudo").css("width",fluidConteudo);
 	$("#titulo").css("width",fluidTitulo);
 	$("#rodapeConteudo").css("width",fluidConteudo);
 	$("#rodape").css("width",fluidRodape);
-
+	if($('.left-sidebar-nav').is(':visible')) {
+		$("#conteudo").css("width",'95%');
+		$("#titulo").css("width",'95%');
+	}
 }
 
 $(document).ready(function(){ 

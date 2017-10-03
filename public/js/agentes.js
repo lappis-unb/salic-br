@@ -32,7 +32,7 @@ function remarcarferias(id, diasmarcados) {
     var dias = $("#dias").val();
     var diminuidias = ((parseInt(dias)) - (parseInt(diasmarcados)));
     var disponiveis = (60) - (parseInt(diminuidias));
-    $("#diassubtraidos").html('Total de dias disponíveis: ' + disponiveis);
+    $("#diassubtraidos").html('Total de dias disponï¿½veis: ' + disponiveis);
 
 
 }
@@ -661,6 +661,8 @@ $(document).ready(function () {
     }
 
     $("#cpf").val(cpf);
-
-    buscaragente($("#cpf").val());
+    if($("#cpf").val()) {
+        console.log($("#cpf").val());
+        buscaragente($("#cpf").val());
+    }
 });

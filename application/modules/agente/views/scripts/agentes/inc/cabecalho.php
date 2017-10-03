@@ -5,8 +5,39 @@
         </div>
     </center>
 <?php endif;?>
-
-<table class="tabela">
+<div class="row">
+    <div class="input-field col s4 center">
+        <?php if(($this->dados[0]['TipoPessoa']) == 1): ?>
+            <b>CNPJ:</b> 
+        <?php else:?>
+            <b>CPF:</b>
+        <?php endif;?>
+        <?php echo $this->dados[0]['CNPJCPF']; ?>
+    </div>
+    <div class="input-field col s4 center">
+        <b>NOME:</b> <?php echo $this->dados[0]['nome']; ?>
+    </div>
+    <div class="input-field col s4 center">
+        <b>VIS&Otilde;ES:</b>
+        <?php
+            $i = 0;
+            if($this->visoes):
+                foreach($this->visoes as $v)
+                {
+                        if ( $i == 0 ):
+                            echo $v->Descricao;
+                        else:
+                            echo " | " .$v->Descricao;
+                        endif;
+                        $i++;
+                }
+            else:
+                echo 'O Agente n&atilde;o tem nenhuma vis&atilde;o!';
+            endif;
+        ?>
+    </div>
+</div>
+<!-- <table class="tabela">
     <tr>
         <td width="160" class="centro">
             <?php if(($this->dados[0]['TipoPessoa']) == 1): ?>
@@ -36,4 +67,4 @@
             ?>
         </td>
     </tr>
-</table>
+</table> -->
