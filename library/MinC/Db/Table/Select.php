@@ -324,11 +324,25 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
      * @param  array  $data  Column-value pairs.
      * @return mixed         The primary key of the row inserted.
      */
-     public function insert(array $data)
-     {
+    public function insert(array $data)
+    {
         if ($this->databaseAdapter instanceof MinC_Db_Adapter_Pdo_Pgsql) {
             $data = $this->databaseAdapter->treatColumnsDoubleQuotes($data);
         }
         return parent::insert($data);
-     }
+    }
+
+     /**
+     * Deletes existing rows.
+     *
+     * @param  array|string $where SQL WHERE clause(s).
+     * @return int          The number of rows deleted.
+     */
+    public function delete($where)
+    {
+        if ($this->databaseAdapter instanceof MinC_Db_Adapter_Pdo_Pgsql) {
+            $where = $this->databaseAdapter->treatConditionDoubleQuotes($where);
+        }
+        return parent::delete($where);
+    }
 }
