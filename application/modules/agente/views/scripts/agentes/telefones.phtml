@@ -146,9 +146,9 @@
                 <td><?php echo $t->dstelefone ;?></td>
                 <td align="center"><?php echo $t->ufsigla ;?></td>
                 <td align="center"><?php echo $t->ddd ;?></td>
-                <td><?php echo $t->numero ;?></td>
-                <td><?php echo $t->divulgar == "1" ? "SIM" : "N&Atilde;O"; ?></td>
-                <td width="120" class="centro"><input type="button" class="btn_exclusao" value=" " style="width: 87px;" onclick="confirmaExclusao('', '<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'excluitelefone','idTelefone' => $t->idtelefone, 'qtdTel' => $this->qtdTel));?>');" /></td>
+                <td><?php echo $t->Numero ;?></td>
+                <td><?php echo $t->Divulgar == "1" ? "SIM" : "N&Atilde;O"; ?></td>
+                <td width="120" class="centro"><input type="button" class="btn_exclusao" value=" " style="width: 87px;" onclick="confirmaExclusao('', '<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'excluitelefone','idTelefone' => $t->idTelefone, 'qtdTel' => $this->qtdTel));?>');" /></td>
             </tr>
             <?php endforeach; ?>
         </table>
