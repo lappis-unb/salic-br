@@ -768,9 +768,8 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract
 
             if ($enderecoCorrespodencia == "1") {
                 $tblEndereco->mudaCorrespondencia($idAgente);
-            } else {
-                $tblEndereco->insert($arrayEnderecos);
             }
+            $tblEndereco->insert($arrayEnderecos);
 
             parent::message("Cadastro realizado com sucesso!", "agente/agentes/enderecos/id/" . $idAgente, "CONFIRM");
         } catch (Exception $e) {
