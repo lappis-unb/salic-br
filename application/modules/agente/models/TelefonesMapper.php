@@ -1,19 +1,5 @@
 <?php
 
-/**
- * Class Agente_Model_TelefonesMapper
- *
- * @name Agente_Model_TelefonesMapper
- * @package Modules/Agente
- * @subpackage Models
- * @version $Id$
- *
- * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
- * @since 05/09/2016
- *
- * @copyright © 2012 - Ministerio da Cultura - Todos os direitos reservados.
- * @link http://salic.cultura.gov.br
- */
 class Agente_Model_TelefonesMapper extends MinC_Db_Mapper
 {
     public function __construct()
@@ -27,15 +13,17 @@ class Agente_Model_TelefonesMapper extends MinC_Db_Mapper
 
         # cadastra todos os telefones
         $arrId = array();
+
         for ($i = 0; $i < sizeof($arrData['fones']); $i++) {
             $arrData = array(
                 'idAgente' => $arrData['idAgente'],
-                'tipotelefone' => $arrData['tipofones'][$i],
-                'uf' => $arrData['uffones'][$i],
-                'ddd' => $arrData['dddfones'][$i],
-                'numero' => $arrData['fones'][$i],
-                'divulgar' => $arrData['divulgarfones'][$i],
-                'intidusuario' => $arrData['intidusuario']);
+                'TipoTelefone' => $arrData['tipofones'][$i],
+                'UF' => $arrData['uffones'][$i],
+                'DDD' => $arrData['dddfones'][$i],
+                'Numero' => $arrData['fones'][$i],
+                'Divulgar' => $arrData['divulgarfones'][$i],
+                'intidusuario' => $arrData['intidusuario'],
+                'Usuario' => $arrData['Usuario']);
             $arrId[] = $this->save(new Agente_Model_Telefones($arrData));
         }
         return $arrId;

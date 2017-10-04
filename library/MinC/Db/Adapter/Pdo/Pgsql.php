@@ -199,7 +199,7 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
         return $field;
     }
 
-    public function treatColumnsDoubleQuotes($columns)
+    public function treatColumnsDoubleQuotes($columns, $isReturnAsZendDbExpression = true)
     {
         if (is_array($columns)) {
             foreach ($columns as &$column) {
@@ -210,9 +210,12 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
             if (count($columnParts) > 1) {
                 $columnFirstPart = $this->addDoubleQuote($columnParts[0]);
                 $columnSecondPart = ' as ' . $this->addDoubleQuote($columnParts[1]);
-                $columns = new Zend_Db_Expr($columnFirstPart . $columnSecondPart);
+                $columns = $columnFirstPart . $columnSecondPart;
             } elseif (substr(trim($columns), 0, 1) != '*') {
-                $columns = new Zend_Db_Expr($this->addDoubleQuote($columns));
+                $columns = $this->addDoubleQuote($columns);
+            }
+            if($isReturnAsZendDbExpression) {
+                $columns = new Zend_Db_Expr($columns);
             }
         }
 

@@ -1,75 +1,61 @@
 <?php
 
-/**
- * Class Agente_Model_Internet
- *
- * @name Agente_Model_Internet
- * @package Modules/Agente
- * @subpackage Models
- * @version $Id$
- *
- * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
- * @since 06/09/2016
- *
- * @copyright © 2012 - Ministerio da Cultura - Todos os direitos reservados.
- * @link http://salic.cultura.gov.br
- */
 class Agente_Model_Internet extends MinC_Db_Model
 {
-    protected $_idinternet;
-    protected $_idagente;
-    protected $_tipointernet;
-    protected $_descricao;
-    protected $_status;
-    protected $_divulgar;
-    protected $_usuario;
+    protected $_idInternet;
+    protected $_idAgente;
+    protected $_TipoInternet;
+    protected $_Descricao;
+    protected $_Status;
+    protected $_Divulgar;
+    protected $_Usuario;
 
     /**
      * @return mixed
      */
-    public function getIdinternet()
+    public function getIdInternet()
     {
-        return $this->_idinternet;
+        return $this->_idInternet;
     }
 
     /**
      * @param mixed $idinternet
      */
-    public function setIdinternet($idinternet)
+    public function setIdInternet($idinternet)
     {
-        $this->_idinternet = $idinternet;
+        $this->_idInternet = $idinternet;
     }
 
     /**
      * @return mixed
      */
-    public function getIdagente()
+    public function getIdAgente()
     {
-        return $this->_idagente;
+        return $this->_idAgente;
     }
 
     /**
      * @param mixed $idagente
      */
-    public function setIdagente($idagente)
+    public function setIdAgente($idagente)
     {
-        $this->_idagente = $idagente;
+        $this->_idAgente = $idagente;
     }
 
     /**
      * @return mixed
      */
-    public function getTipointernet()
+    public function getTipoInternet()
     {
-        return $this->_tipointernet;
+        return $this->_TipoInternet;
     }
 
     /**
      * @param mixed $tipointernet
      */
-    public function setTipointernet($tipointernet)
+    public function setTipoInternet($tipointernet)
     {
-        $this->_tipointernet = $tipointernet;
+        $this->_TipoInternet = $tipointernet;
     }
 
     /**
@@ -77,7 +63,7 @@ class Agente_Model_Internet extends MinC_Db_Model
      */
     public function getDescricao()
     {
-        return $this->_descricao;
+        return $this->_Descricao;
     }
 
     /**
@@ -85,7 +71,7 @@ class Agente_Model_Internet extends MinC_Db_Model
      */
     public function setDescricao($descricao)
     {
-        $this->_descricao = $descricao;
+        $this->_Descricao = $descricao;
     }
 
     /**
@@ -93,7 +79,7 @@ class Agente_Model_Internet extends MinC_Db_Model
      */
     public function getStatus()
     {
-        return $this->_status;
+        return $this->_Status;
     }
 
     /**
@@ -101,7 +87,7 @@ class Agente_Model_Internet extends MinC_Db_Model
      */
     public function setStatus($status)
     {
-        $this->_status = $status;
+        $this->_Status = $status;
     }
 
     /**
@@ -109,7 +95,7 @@ class Agente_Model_Internet extends MinC_Db_Model
      */
     public function getDivulgar()
     {
-        return $this->_divulgar;
+        return $this->_Divulgar;
     }
 
     /**
@@ -117,7 +103,7 @@ class Agente_Model_Internet extends MinC_Db_Model
      */
     public function setDivulgar($divulgar)
     {
-        $this->_divulgar = $divulgar;
+        $this->_Divulgar = $divulgar;
     }
 
     /**
@@ -125,7 +111,7 @@ class Agente_Model_Internet extends MinC_Db_Model
      */
     public function getUsuario()
     {
-        return $this->_usuario;
+        return $this->_Usuario;
     }
 
     /**
@@ -133,7 +119,7 @@ class Agente_Model_Internet extends MinC_Db_Model
      */
     public function setUsuario($usuario)
     {
-        $this->_usuario = $usuario;
+        $this->_Usuario = $usuario;
     }
 
 

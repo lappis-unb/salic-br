@@ -2,124 +2,136 @@
     <?php echo $this->partial('agentes/inc/menu.inc.php', $this) ?>
     <div class="col s10">
 
-<script type="text/javascript">
+        <script type="text/javascript">
 
-    function salvaEmail()
-    {
-        if(validaEmail())
-        {
-            $("#formEmail").submit();
-        }
+            function salvaEmail() {
+                if (validaEmail()) {
+                    $("#formEmail").submit();
+                }
 
-    }
+            }
 
-</script>
+        </script>
 
-<div id="breadcrumb">
-    <ul>
-        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principalproponente', 'action' => ''), null, true); ?>" title="Ir para p&aacute;gina inicial" onclick="carregandoModal();">In&iacute;cio</a></li>
-        <li><a href="#" title="Tramita&ccedil;&atilde;o de Documentos">Manter Agentes</a></li>
-        <li class="last">Principal</li>
-    </ul>
-</div>
-<div id="titulo">
-    <div>E-Mails <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
-</div>
-<div id="conteudo">
-    <?php echo $this->partial('agentes/inc/cabecalho.php', $this)?>
-    <table class="tabela">
-        <tr>
-            <td>Para adicionar um novo e-mail, clique em novo ao lado!</td>
-            <th width="150"><input type="button" class="btn_novo" value=" " onclick="novo();"/></th>
-        </tr>
-    </table>
-    <div id="formNovo" class="sumir">
-        <form id="formEmail" action="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'salvaemail'));?>" method="post">
-            <table id="tabEmail" class="tabela">
-                <tr>
-                    <th colspan="5">NOVO E-MAIL</th>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="tipoEmail">Tipo *</label>
-                        <br />
-                        <select name="tipoEmail" id="tipoEmail" class="input_simples">
-                            <option value="0">- Selecione - </option>
-
-                            <?php foreach ($this->combotiposemails as $key => $combotipoemail) { ?>
-                            <option value="<?php echo $key; ?>"><?php echo $combotipoemail; ?></option>
-                            <?php } ?>
-
-                        </select>
-                    </td>
-                    <td>
-                        <label for="email">E-mail *</label>
-                        <br />
-                        <input type="text" name="email" id="email" class="input_simples w200" size="50" maxlength="70"
-                               onclick="limpar_campo(this, ' ');"
-                               onkeypress="limpar_campo(this, ' ');"
-                               onblur="restaurar_campo(this, ' ');"
-                               onmouseout="restaurar_campo(this, ' ');"
-                               value="" />
-                    </td>
-                    <td>
-                        <label>Posso Divulgar? *</label>
-                        <br />
-                        <input type="radio" name="divulgarEmail" id="divulgarEmailS" value="1" style="background: none; border: 0%; float:none; clear:auto; display:inline;" />
-                        <label for="divulgarEmailS">Sim</label>
-                        <input type="radio" name="divulgarEmail" id="divulgarEmailN" value="0" class="checkradio" checked="checked"   style="background: none; border: 0%; float:none; clear:auto; display:inline;"/>
-                        <label for="divulgarEmailN">N&atilde;o</label>
-                    </td>
-                    <td>
-                        <label>Para correpond&ecirc;ncia? *</label>
-                        <br />
-                        <input type="radio" name="enviarEmail" id="enviarEmailS" value="1" class="checkradio" checked="checked"  style="background: none; border: 0%; float:none; clear:auto; display:inline;"/>
-                        <label for="enviarEmailS">Sim</label>
-                        <input type="radio" name="enviarEmail" id="enviarEmailN" value="0" class="checkradio"  style="background: none; border: 0%; float:none; clear:auto; display:inline;"/>
-                        <label for="enviarEmailN">N&atilde;o</label>
-                    </td>
-                </tr>
-
-            </table>
-
+        <div id="breadcrumb">
+            <ul>
+                <li class="first"><a
+                        href="<?php echo $this->url(array('controller' => 'principalproponente', 'action' => ''), null, true); ?>"
+                        title="Ir para p&aacute;gina inicial" onclick="carregandoModal();">In&iacute;cio</a></li>
+                <li><a href="#" title="Tramita&ccedil;&atilde;o de Documentos">Manter Agentes</a></li>
+                <li class="last">Principal</li>
+            </ul>
+        </div>
+        <div id="titulo">
+            <div>E-Mails <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
+        </div>
+        <div id="conteudo">
+            <?php echo $this->partial('agentes/inc/cabecalho.php', $this) ?>
             <table class="tabela">
                 <tr>
-                    <td class="centro">
-                        <input type="button" class="btn_salvar" value=" " onclick="salvaEmail();" /> &nbsp;
-                        <input id="btncancelar" type="button" class="btn_cancelar" onclick="salvo();" />
-                    </td>
+                    <td>Para adicionar um novo e-mail, clique em novo ao lado!</td>
+                    <th width="150"><input type="button" class="btn_novo" value=" " onclick="novo();"/></th>
                 </tr>
             </table>
+            <div id="formNovo" class="sumir">
+                <form id="formEmail"
+                      action="<?php echo $this->url(array('module' => 'agente', 'controller' => 'agentes', 'action' => 'salvaemail')); ?>"
+                      method="post">
+                    <table id="tabEmail" class="tabela">
+                        <tr>
+                            <th colspan="5">NOVO E-MAIL</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="tipoEmail">Tipo *</label>
+                                <br/>
+                                <select name="tipoEmail" id="tipoEmail" class="input_simples">
+                                    <option value="0">- Selecione -</option>
 
-        </form>
+                                    <?php foreach ($this->combotiposemails as $key => $combotipoemail) { ?>
+                                        <option value="<?php echo $key; ?>"><?php echo $combotipoemail; ?></option>
+                                    <?php } ?>
 
+                                </select>
+                            </td>
+                            <td>
+                                <label for="email">E-mail *</label>
+                                <br/>
+                                <input type="text" name="email" id="email" class="input_simples w200" size="50"
+                                       maxlength="70"
+                                       onclick="limpar_campo(this, ' ');"
+                                       onkeypress="limpar_campo(this, ' ');"
+                                       onblur="restaurar_campo(this, ' ');"
+                                       onmouseout="restaurar_campo(this, ' ');"
+                                       value=""/>
+                            </td>
+                            <td>
+                                <label>Posso Divulgar? *</label>
+                                <br/>
+                                <input type="radio" name="divulgarEmail" id="divulgarEmailS" value="1"
+                                       style="background: none; border: 0%; float:none; clear:auto; display:inline;"/>
+                                <label for="divulgarEmailS">Sim</label>
+                                <input type="radio" name="divulgarEmail" id="divulgarEmailN" value="0"
+                                       class="checkradio" checked="checked"
+                                       style="background: none; border: 0%; float:none; clear:auto; display:inline;"/>
+                                <label for="divulgarEmailN">N&atilde;o</label>
+                            </td>
+                            <td>
+                                <label>Para correpond&ecirc;ncia? *</label>
+                                <br/>
+                                <input type="radio" name="enviarEmail" id="enviarEmailS" value="1" class="checkradio"
+                                       checked="checked"
+                                       style="background: none; border: 0%; float:none; clear:auto; display:inline;"/>
+                                <label for="enviarEmailS">Sim</label>
+                                <input type="radio" name="enviarEmail" id="enviarEmailN" value="0" class="checkradio"
+                                       style="background: none; border: 0%; float:none; clear:auto; display:inline;"/>
+                                <label for="enviarEmailN">N&atilde;o</label>
+                            </td>
+                        </tr>
+
+                    </table>
+
+                    <table class="tabela">
+                        <tr>
+                            <td class="centro">
+                                <input type="button" class="btn_salvar" value=" " onclick="salvaEmail();"/> &nbsp;
+                                <input id="btncancelar" type="button" class="btn_cancelar" onclick="salvo();"/>
+                            </td>
+                        </tr>
+                    </table>
+
+                </form>
+
+            </div>
+
+            <div id="salvos">
+
+                <table id="tabEmail" class="tabela <?php echo $this->emails ? '' : 'sumir'; ?>">
+                    <tr>
+                        <th colspan="5">E-MAILS</th>
+                    </tr>
+                    <tr>
+                        <td><label>Tipo</label></td>
+                        <td><label>E-mail</label></td>
+                        <td><label>Divulgar?</label></td>
+                        <td><label>Para correpond&ecirc;ncia?</label></td>
+                        <td></td>
+                    </tr>
+                    <?php foreach ($this->emails as $e): ?>
+                        <tr>
+                            <td><?php echo $e->tipo; ?></td>
+                            <td><?php echo $e->Descricao; ?></td>
+                            <td><?php echo $e->Divulgar == "1" ? "SIM" : "N&Atilde;O"; ?></td>
+                            <td><?php echo $e->Status == "1" ? "SIM" : "N&Atilde;O"; ?></td>
+                            <td width="120" class="centro"><input type="button" class="btn_exclusao" value=" "
+                                                                  style="width: 87px;"
+                                                                  onclick="confirmaExclusao('','<?php echo $this->url(array('module' => 'agente', 'controller' => 'agentes', 'action' => 'excluiemail', 'idInternet' => $e->idInternet, 'qtdEmail' => $this->qtdEmail)); ?>');"/>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+            </div>
+        </div>
     </div>
-
-    <div id="salvos">
-
-        <table id="tabEmail" class="tabela <?php echo $this->emails ? '' : 'sumir'; ?>">
-            <tr>
-                <th colspan="5">E-MAILS</th>
-            </tr>
-            <tr>
-                <td><label>Tipo</label></td>
-                <td><label>E-mail</label></td>
-                <td><label>Divulgar?</label></td>
-                <td><label>Para correpond&ecirc;ncia?</label></td>
-                <td></td>
-            </tr>
-            <?php foreach($this->emails as $e):?>
-            <tr>
-                <td><?php echo $e->tipo ;?></td>
-                <td><?php echo $e->descricao ;?></td>
-                <td><?php echo $e->divulgar == "1" ? "SIM" : "N&Atilde;O" ;?></td>
-                <td><?php echo $e->status == "1" ? "SIM" : "N&Atilde;O" ;?></td>
-                <td width="120" class="centro"><input type="button" class="btn_exclusao" value=" " style="width: 87px;" onclick="confirmaExclusao('','<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'excluiemail', 'idInternet' => $e->idinternet, 'qtdEmail' => $this->qtdEmail));?>');" /></td>
-            </tr>
-            <?php endforeach; ?>
-        </table>
-    </div>
-</div>
-</div>
 </div>
 
