@@ -92,7 +92,7 @@
                 <tr>
                     <td class="destacar bold" align="right" width="150px" nowrap>Sexo<span style="color: red;">*</span></td>
                     <td>
-                        <select name="sexo" id="sexo" class="select_simples obrigatorio">
+                        <select name="sexo" id="sexo" class="obrigatorio">
                             <option value="">- Selecione -</option>
                             <option value="M" <?php echo isset($this->dadosAdicionais) && $this->dadosAdicionais->stSexo == 'M' ? 'selected="selected"' : ''; ?>>Masculino</option>
                             <option value="F" <?php echo isset($this->dadosAdicionais) && $this->dadosAdicionais->stSexo == 'F' ? 'selected="selected"' : ''; ?>>Feminino</option>
@@ -102,7 +102,7 @@
                 <tr>
                     <td class="destacar bold" align="right" width="150px" nowrap>Estado Civil<span style="color: red;">*</span></td>
                     <td>
-                        <select name="estadoCivil" id="estadoCivil" class="select_simples obrigatorio">
+                        <select name="estadoCivil" id="estadoCivil" class="obrigatorio">
                             <option value="">- Selecione -</option>
                             <option value="SO" <?php echo isset($this->dadosAdicionais) && $this->dadosAdicionais->stEstadoCivil == 'SO' ? 'selected="selected"' : ''; ?>>Solteiro(a)</option>
                             <option value="CA" <?php echo isset($this->dadosAdicionais) && $this->dadosAdicionais->stEstadoCivil == 'CA' ? 'selected="selected"' : ''; ?>>Casado(a)</option>
@@ -116,7 +116,7 @@
                 <tr>
                     <td class="destacar bold" align="right" width="150px" nowrap>Necessidade Especial<span style="color: red;">*</span></td>
                     <td>
-                        <select name="necEspecial" id="necEspecial" class="select_simples obrigatorio">
+                        <select name="necEspecial" id="necEspecial" class="obrigatorio">
                             <option value="">- Selecione -</option>
                             <option value="N" <?php echo isset($this->dadosAdicionais) && $this->dadosAdicionais->stNecessidadeEspecial == 'N' ? 'selected="selected"' : ''; ?>>N&atilde;o</option>
                             <option value="S" <?php echo isset($this->dadosAdicionais) && $this->dadosAdicionais->stNecessidadeEspecial == 'S' ? 'selected="selected"' : ''; ?>>Sim</option>
@@ -138,7 +138,7 @@
                 <tr>
                     <td class="destacar bold" align="right" width="150px" nowrap>Cor / Ra&ccedil;a</td>
                     <td>
-                        <select name="raca" id="raca" class="select_simples" style="width: 120px;">
+                        <select name="raca" id="raca" class="" style="width: 120px;">
                             <option value=""> - Selecione - </option>
                             <option value="1" <?php echo isset($this->dadosAdicionais) && $this->dadosAdicionais->stCorRaca == '1' ? 'selected="selected"' : ''; ?>>Branca</option>
                             <option value="2" <?php echo isset($this->dadosAdicionais) && $this->dadosAdicionais->stCorRaca == '2' ? 'selected="selected"' : ''; ?>>Negra</option>
