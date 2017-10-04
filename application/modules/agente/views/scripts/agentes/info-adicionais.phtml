@@ -34,13 +34,14 @@
         $("#dtNascimento").datepicker($.datepicker.regional['pt-BR']);
 
         $("#btnsalvar").click(function(){
-            var preenchimento = false;
+            var camposNaoPreenchidos = true;
             $('.obrigatorio').each(function(){
-                if($.trim($(this).val()) == '')
-                    preenchimento = true;
+                if($.trim($(this).val()) == '' && ($(this).attr('name') !== undefined || $(this).attr('name') === null)) {
+                    camposNaoPreenchidos = false;
+                }
             });
 
-            if(preenchimento) {
+            if(!camposNaoPreenchidos) {
                 $("#camposObrigatorios").dialog("destroy");
                 $("#camposObrigatorios").html("Favor preencher os dados obrig&aacute;torios!");
                 $("#camposObrigatorios").dialog({
