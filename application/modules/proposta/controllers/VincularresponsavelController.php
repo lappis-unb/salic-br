@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Description of VincularresponsavelController
- *
- * @author tisomar
- * @author wouerner <wouerner@gmail.com>
- */
 class Proposta_VincularresponsavelController extends Proposta_GenericController
 {
 
@@ -16,13 +10,11 @@ class Proposta_VincularresponsavelController extends Proposta_GenericController
 
     public function init()
     {
-
-        // verifica as permissoes
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 97;  // Gestor Salic
 
         $auth = Zend_Auth::getInstance();
-        $arrAuth = array_change_key_case((array) $auth->getIdentity());
+        $arrAuth = array_change_key_case((array)$auth->getIdentity());
 
         if (isset($arrAuth['usu_codigo'])) {
             parent::perfil(1, $PermissoesGrupo);
@@ -30,21 +22,14 @@ class Proposta_VincularresponsavelController extends Proposta_GenericController
             parent::perfil(4, $PermissoesGrupo);
         }
 
-        /*********************************************************************************************************/
-
         $cpf = isset($arrAuth['usu_codigo']) ? $arrAuth['usu_identificacao'] : $arrAuth['cpf'];
 
-        /*********************************************************************************************************/
-
-        // Busca na SGCAcesso
         $sgcAcesso = new Autenticacao_Model_Sgcacesso();
         $acesso = $sgcAcesso->findBy(array('Cpf' => $cpf));
 
-        // Busca na Usuarios
         $mdlUsuario = new Autenticacao_Model_Usuario();
         $usuario = $mdlUsuario->findBy(array('usu_identificacao' => $cpf));
 
-        // Busca na Agentes
         $tblAgentes = new Agente_Model_DbTable_Agentes();
         $agente = $tblAgentes->findBy(array('CNPJCPF' => $cpf));
 
@@ -61,21 +46,12 @@ class Proposta_VincularresponsavelController extends Proposta_GenericController
 
         $this->view->idAgenteLogado = $this->idAgente;
         parent::init();
-        // chama o init() do pai GenericControllerNew
     }
 
     public function indexAction()
     {
     }
 
-
-    /**
-     * mostraragentesAction
-     *
-     * @access public
-     * @return void
-     * @todo Remover Html do metodo.
-     */
     public function mostraragentesAction()
     {
         $this->_helper->layout->disableLayout();
@@ -126,13 +102,6 @@ class Proposta_VincularresponsavelController extends Proposta_GenericController
         }
     }
 
-    /**
-     * vinculoAction
-     *
-     * @access public
-     * @return void
-     * @author <wouerner@gmail.com>
-     */
     public function vinculoAction()
     {
         $this->_helper->layout->disableLayout();
@@ -145,7 +114,7 @@ class Proposta_VincularresponsavelController extends Proposta_GenericController
 
         /*Temos que ver aonde vamos buscar o email do cara?*/
         $buscarEmail = $tableInternet->buscarEmailAgente(null, $_POST['idAgente'], 1, null, false);
-        if ($buscarEmail){
+        if ($buscarEmail) {
             $buscarEmail = array_change_key_case($buscarEmail->toArray());
         }
 
@@ -230,8 +199,6 @@ class Proposta_VincularresponsavelController extends Proposta_GenericController
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
-    /* }}} */
-
     public function vincularresponsavelAction()
     {
         $ag = new Agente_Model_DbTable_Agentes;
@@ -280,9 +247,6 @@ class Proposta_VincularresponsavelController extends Proposta_GenericController
         $this->view->vinculo = $buscarVinculo;
     }
 
-
-    /********************************************************************************************************/
-
     public function vinculoproponenteAction()
     {
         $tbVinculo = new Agente_Model_DbTable_TbVinculo();
@@ -306,11 +270,11 @@ class Proposta_VincularresponsavelController extends Proposta_GenericController
         }
 
         try {
-            $alterar = $tbVinculo->alterar($dados, $where);
+            $tbVinculo->alterar($dados, $where);
 
             if ($siVinculo == 3) {
-                $alterarVinculoProposta = $PreProjetoDAO->retirarProjetosVinculos($siVinculo, $idVinculo);
-                $retirarPropostas = $PreProjetoDAO->retirarProjetos($this->idResponsavel, $idUsuarioR, $this->idAgente);
+                $PreProjetoDAO->retirarProjetosVinculos($siVinculo, $idVinculo);
+                $PreProjetoDAO->retirarProjetos($this->idResponsavel, $idUsuarioR, $this->idAgente);
             }
             parent::message($msg, "proposta/manterpropostaincentivofiscal/consultarresponsaveis", "CONFIRM");
         } catch (Exception $e) {
@@ -321,7 +285,6 @@ class Proposta_VincularresponsavelController extends Proposta_GenericController
     public function vinculoresponsavelAction()
     {
         $tbVinculo = new Agente_Model_DbTable_TbVinculo();
-//        $agentes = new Agente_Model_DbTable_Agentes();
         $idResponsavel = $this->_request->getParam("idResponsavel");
         $idProponente = $this->idAgente;
 
@@ -329,11 +292,10 @@ class Proposta_VincularresponsavelController extends Proposta_GenericController
         $where['idAgenteProponente   = ?'] = $idProponente;
         $vinculo = $tbVinculo->buscar($where);
 
-
         $dados = array('idAgenteProponente' => $idProponente,
             'dtVinculo' => $tbVinculo->getExpressionDate(),
             'siVinculo' => 2,
-            'idusuarioResponsavel' => $idResponsavel
+            'idUsuarioResponsavel' => $idResponsavel
         );
 
         try {
@@ -342,9 +304,9 @@ class Proposta_VincularresponsavelController extends Proposta_GenericController
                 $dadosUP['siVinculo'] = 2;
                 $whereUP['idVinculo = ?'] = $vinculo[0]->idVinculo;
 
-                $update = $tbVinculo->alterar($dadosUP, $whereUP);
+                $tbVinculo->alterar($dadosUP, $whereUP);
             } else {
-                $insere = $tbVinculo->inserir($dados);
+                $tbVinculo->inserir($dados);
             }
 
             parent::message("vinculado com sucesso!", "proposta/manterpropostaincentivofiscal/novoresponsavel", "CONFIRM");
@@ -356,13 +318,6 @@ class Proposta_VincularresponsavelController extends Proposta_GenericController
 
     }
 
-    /**
-     * Metodo trocarproponente()
-     * UC 89 - Fluxo FA1 - Trocar Proponente
-     * @access public
-     * @param void
-     * @return void
-     */
     public function trocarproponenteAction()
     {
         $tbVinculoPropostaDAO = new Agente_Model_DbTable_TbVinculoProposta();
@@ -389,9 +344,9 @@ class Proposta_VincularresponsavelController extends Proposta_GenericController
                 'idPreProjeto' => $idPreProjeto,
                 'siVinculoProposta' => 2);
 
-            $insere = $tbVinculoPropostaDAO->inserir($novosDados, false);
+            $tbVinculoPropostaDAO->inserir($novosDados, false);
 
-            $alteraPP = $PreProjetoDAO->alteraproponente($idPreProjeto, $idNovoPropronente);
+            $PreProjetoDAO->alteraproponente($idPreProjeto, $idNovoPropronente);
 
             if ($mecanismo == 2) {
                 parent::message("Proponente trocado com sucesso!", "proposta/manterpropostaedital/dadospropostaedital?idPreProjeto=" . $idPreProjeto, "CONFIRM");
@@ -403,14 +358,6 @@ class Proposta_VincularresponsavelController extends Proposta_GenericController
         }
     }
 
-    /**
-     * UC 89 - Fluxo FA1 - Trocar Proponente
-     * @name vincularpropostasAction
-     *
-     * @author Ruy Junior Ferreira Silva
-     * @author Cleber Santos <oclebersantos@gmail.com>
-     * @since  ${DATE}
-     */
     public function vincularpropostasAction()
     {
         $tblTbVinculoProposta = new Agente_Model_TbVinculoPropostaMapper();
@@ -428,13 +375,6 @@ class Proposta_VincularresponsavelController extends Proposta_GenericController
         }
     }
 
-    /**
-     * Metodo vincularprojetos()
-     * UC 89 - Fluxo FA8 - Desvincular Projetos
-     * @access public
-     * @param void
-     * @return void
-     */
     public function vincularprojetosAction()
     {
         $tbVinculoPropostaDAO = new Agente_Model_DbTable_TbVinculoProposta();
@@ -447,19 +387,8 @@ class Proposta_VincularresponsavelController extends Proposta_GenericController
 
             $dados['siVinculoProposta'] = 3;
             $where['idPreProjeto = ?'] = $idPreProjeto;
-            $alteraVP = $tbVinculoPropostaDAO->alterar($dados, $where, false);
-
-            // Cade a procuracao?
-
-            /* Nao vai cadastrar pois ele e dono da sua proposta
-            $novosDados = array('idVinculo' 		=> $idVinculo,
-                                'idPreProjeto' 		=> $idPreProjeto,
-                                'siVinculoProposta' => 2
-            );
-
-            $insere = $tbVinculoPropostaDAO->inserir($novosDados, false);
-            */
-            $alteraPP = $PreProjetoDAO->alteraresponsavel($idPreProjeto, $idResponsavel);
+            $tbVinculoPropostaDAO->alterar($dados, $where, false);
+            $PreProjetoDAO->alteraresponsavel($idPreProjeto, $idResponsavel);
 
             parent::message("O respons&aacute;vel foi desvinculado.", "proposta/manterpropostaincentivofiscal/vincularprojetos", "CONFIRM");
 
