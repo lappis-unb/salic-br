@@ -108,8 +108,25 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
     {
         if (!empty($condition) && !is_null($condition)) {
             $cleanCondition = trim($condition);
-            $separator = '=';
-            if ($cleanCondition && strpos($cleanCondition, $separator) !== false) {
+            if ($cleanCondition && strpos($cleanCondition, '=') !== false) {
+                $separator = '=';
+                $arrayColunas = explode($separator, $condition);
+                $coluna1 = $this->addDoubleQuote(trim($arrayColunas[0]));
+                $coluna2 = $this->addDoubleQuote(trim($arrayColunas[1]));
+
+                $arrayConditionPart2 = explode(' ', trim($arrayColunas[1]));
+
+                if (is_numeric($arrayConditionPart2[0])) {
+                    $coluna2 = $arrayConditionPart2[0] + 0;
+                } elseif ($arrayConditionPart2[0] == '?') {
+                    $coluna2 = $arrayConditionPart2[0];
+                }
+                $condition = "{$coluna1} {$separator} {$coluna2}";
+                if (isset($arrayConditionPart2[1])) {
+                    $condition += " {$arrayConditionPart2[1]}";
+                }
+            } elseif ($cleanCondition && strpos($cleanCondition, '<>') !== false) {
+                $separator = '<>';
                 $arrayColunas = explode($separator, $condition);
                 $coluna1 = $this->addDoubleQuote(trim($arrayColunas[0]));
                 $coluna2 = $this->addDoubleQuote(trim($arrayColunas[1]));
