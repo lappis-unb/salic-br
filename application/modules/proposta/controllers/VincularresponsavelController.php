@@ -112,7 +112,6 @@ class Proposta_VincularresponsavelController extends Proposta_GenericController
         $emailDAO = new EmailDAO();
         $tableInternet = new Agente_Model_DbTable_Internet();
 
-        /*Temos que ver aonde vamos buscar o email do cara?*/
         $buscarEmail = $tableInternet->buscarEmailAgente(null, $_POST['idAgente'], 1, null, false);
         if ($buscarEmail) {
             $buscarEmail = array_change_key_case($buscarEmail->toArray());
@@ -250,7 +249,6 @@ class Proposta_VincularresponsavelController extends Proposta_GenericController
     public function vinculoproponenteAction()
     {
         $tbVinculo = new Agente_Model_DbTable_TbVinculo();
-        $tbVinculoProposta = new Agente_Model_DbTable_TbVinculoProposta();
         $PreProjetoDAO = new Proposta_Model_DbTable_PreProjeto();
 
         $idVinculo = $this->_request->getParam("idVinculo");
@@ -273,7 +271,8 @@ class Proposta_VincularresponsavelController extends Proposta_GenericController
             $tbVinculo->alterar($dados, $where);
 
             if ($siVinculo == 3) {
-                $PreProjetoDAO->retirarProjetosVinculos($siVinculo, $idVinculo);
+                $dbTableTbVinculoProposta = new Agente_Model_DbTable_TbVinculoProposta();
+                $dbTableTbVinculoProposta->retirarProjetosVinculos($siVinculo, $idVinculo);
                 $PreProjetoDAO->retirarProjetos($this->idResponsavel, $idUsuarioR, $this->idAgente);
             }
             parent::message($msg, "proposta/manterpropostaincentivofiscal/consultarresponsaveis", "CONFIRM");

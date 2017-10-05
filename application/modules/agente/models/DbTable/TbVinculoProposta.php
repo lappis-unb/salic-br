@@ -1,19 +1,7 @@
 <?php
-/**
- * @name Agente_Model_DbTable_TbVinculo
- * @package Modules/Agente
- * @subpackage Models/DbTable
- * @version $Id$
- *
- * @author Equipe UFABC
- * @since 18/08/2016 14:29
- *
- * @link http://salic.cultura.gov.br
- */
 class Agente_Model_DbTable_TbVinculoProposta extends MinC_Db_Table_Abstract
 {
-    protected $_banco = 'agentes';
-    protected $_name = 'tbvinculoproposta';
+    protected $_name = 'tbVinculoProposta';
     protected $_schema = 'agentes';
     protected $_primary = 'idVinculoProposta';
 
@@ -42,6 +30,13 @@ class Agente_Model_DbTable_TbVinculoProposta extends MinC_Db_Table_Abstract
         }
 
         return $this->fetchAll($slct);
+    }
+
+    public function retirarProjetosVinculos($siVinculoProposta, $idVinculo)
+    {
+        $where['idVinculo = ?'] = $idVinculo;
+
+        return $this->update(array('siVinculoProposta' => $siVinculoProposta), $where);
     }
 }
 
