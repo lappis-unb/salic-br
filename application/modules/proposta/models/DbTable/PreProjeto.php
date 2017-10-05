@@ -24,7 +24,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     public function listaProjetos($idUsuario)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
         $subSql = $db->select()
             ->from(array('pr' => 'projetos'), array('*'), $this->_schema)
@@ -203,7 +203,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     public function consultaTodosProjetos($idAgente, $idResponsavel, $arrBusca)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
         $a = array(
             new Zend_Db_Expr('0 as Ordem'),
@@ -259,7 +259,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     public function consultaprojetos($idagente)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
         $sql = $db->select()->from('PreProjeto', array('idPreProjeto', 'idAgente', 'NomeProjeto', 'Mecanismo'), $this->_schema)
             ->where('idagente = ?', $idagente)
@@ -295,7 +295,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     public function listaUF()
     {
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
         $sql = $db->select()->from('UF', array('*'), $this->getSchema('agentes'))->order('Sigla');
 
@@ -305,7 +305,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     public function buscaIdAgente($CNPJCPF)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
         $sql = $db->select()->from('Agentes', array('*'), $this->getSchema('agentes'))->where('CNPJCPF = ?', $CNPJCPF);
 
@@ -339,7 +339,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     public function editarproposta($idPreProjeto)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
         $sql = $db->select()->from('PreProjeto', array('*'), $this->_schema)->where('idPreProjeto = ?', $idPreProjeto);
 
@@ -349,7 +349,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     public function recuperarTecnicosOrgao($idOrgaoSuperior)
     {
         $db = $this->getAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
         $sql = $db->select()->from('vwUsuariosOrgaosGrupos', array('usu_codigo', 'uog_orgao'), 'tabelas')
             ->where('sis_codigo=21')
@@ -597,7 +597,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     public function analiseDeCustos($idPreProjeto)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
         $a = array(
             'a.idPreProjeto',
@@ -743,7 +743,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     {
 
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $db->setFetchMode(Zend_Db::FETCH_OBJ);
 //        $slct->where('NOT EXISTS(SELECT * FROM Projetos p WHERE p.idProjeto = pp.idPreProjeto)', '');
         $subSql = $db->select()
             ->from(array('p' => 'projetos'), array('*'), $this->getSchema('sac'))
@@ -783,7 +783,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     {
 
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
         $subSql = $db->select()
             ->from(array('p' => 'projetos'), array('*'), $this->getSchema('sac'))
@@ -824,7 +824,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     public function gerenciarResponsaveisPendentes($siVinculo, $idAgente = null)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
         $k = array(
             'k.Cpf',
@@ -854,7 +854,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     public function gerenciarResponsaveisVinculados($siVinculo, $idAgente = null)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
         $sql = $db->select()->distinct()
             ->from(array('j' => 'PreProjeto'), array(), $this->_schema)
@@ -874,7 +874,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     public function listarPropostasResultado($idAgente, $idResponsavel, $idAgenteCombo)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
         $subSql = $db->select()
             ->from(array('pr' => 'projetos'), array('idprojeto'), $this->getSchema('sac'))
@@ -936,7 +936,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     public function listarPropostasCombo($idResponsavel)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
         $sql = $this->select()
             ->from(array('a' => 'PreProjeto'), null, $this->_schema)
@@ -1338,7 +1338,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     public function buscarTecnicosHistoricoAnaliseVisual($idOrgao)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
         // Replace da funcao: sac.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
         $subSql = $db->select()
@@ -1431,7 +1431,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     public function buscarAvaliacaoHistoricoAnaliseVisual($idAvaliacao)
     {
         $db = $this->getAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
         $sql = $db->select()
             ->from(array('a' => 'tbAvaliacaoProposta'), array('a.Avaliacao'), $this->_schema)
@@ -1463,7 +1463,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             $sql->where($coluna . ' ?', $valor);
         }
 
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
         return $db->fetchAll($sql);
     }
@@ -1550,7 +1550,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     public function buscarConformidadeVisualTecnico($idPreProjeto)
     {
         $db = $this->getAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
         $sql = $db->select()
             ->from(array('vw' => 'vwConformidadeVisualTecnico'), 'tecnico', $this->_schema)
@@ -1564,7 +1564,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     public function buscarVisual($idUsuario = null, $order = array(), $tamanho = -1, $inicio = -1)
     {
         $db = $this->getAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
         $p = array(
             'p.stTipoDemanda AS TipoDemanda',
@@ -1634,7 +1634,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     public function buscarDocumental($idUsuario = null, $order = array(), $tamanho = -1, $inicio = -1)
     {
         $db = $this->getAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
         $p = array(
             'p.idPreProjeto AS idProjeto',
@@ -1722,7 +1722,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     public function buscaragencia($codigo)
     {
         $db = $this->getAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $db->setFetchMode(Zend_Db::FETCH_OBJ);
         $sql = $db->select()
             ->from(array('b' => 'bancoagencia'), 'agencia', $this->_schema)
             ->where('b.agencia = ?', $codigo)
@@ -2020,7 +2020,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $listaValidacao = array();
 
         $db = $this->getAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
 
         #verificar se a proposta est&aacute; com o proponente
@@ -2354,7 +2354,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     public function listarProdutos($idPreProjeto)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
         $sql = $db->select()
             ->from(array('pre' => 'PreProjeto'), array('pre.idPreProjeto as PreProjeto', 'pre.idPreProjeto as idProposta'), $this->getSchema('sac'))
@@ -2370,7 +2370,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     public function listarEtapasProdutos($idPreProjeto)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
         //$sql = $db->select()
         //->from(['pre' => 'PreProjeto'], 'pre.idPreProjeto as idPreProjeto', $this->getSchema('sac'))
@@ -2408,7 +2408,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     }
 
     //@todo lugar certo &eacute; tbPlanilhaProposta, remover do ManterOrcamentoDAO tbm
-    public function listarItensProdutos($idPreProjeto, $idItem = null, $fetchMode = Zend_DB::FETCH_OBJ)
+    public function listarItensProdutos($idPreProjeto, $idItem = null, $fetchMode = Zend_Db::FETCH_OBJ)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode($fetchMode);
@@ -2449,7 +2449,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     {
 
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
         $select = $this->select();
         $select->setIntegrityCheck(false);
@@ -2488,7 +2488,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     public function buscarEtapasProdutos($idPreProjeto)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
         $sql = "SELECT
                     distinct
@@ -2554,7 +2554,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     public function propostas($idAgente, $idResponsavel, $idAgenteCombo, $where = array(), $order = array(), $start = 0, $limit = 20, $search = null)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
         $subSql = $db->select()
             ->from(array('pr' => 'Projetos'), array('idProjeto'), $this->_schema)
@@ -2629,7 +2629,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     public function propostasTotal($idAgente, $idResponsavel, $idAgenteCombo, $where = array(), $order = array(), $start = 0, $limit = 20, $search = null)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
         $subSql = $db->select()
             ->from(array('pr' => 'projetos'), array('idprojeto'), $this->_schema)
@@ -2718,7 +2718,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
-            $db->setFetchMode(Zend_DB::FETCH_OBJ);
+            $db->setFetchMode(Zend_Db::FETCH_OBJ);
             $result = $db->fetchAll($select);
         } catch (Zend_Exception_Db $e) {
             $this->view->message = $e->getMessage();
@@ -2730,7 +2730,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     {
 
         $db = Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
         $sql = $db->select()
             ->from(array('pre' => 'PreProjeto'), array(), $this->_schema)
