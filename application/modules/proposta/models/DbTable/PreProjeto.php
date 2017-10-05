@@ -877,49 +877,49 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $subSql = $db->select()
-            ->from(array('pr' => 'projetos'), array('idprojeto'), Proposta_Model_DbTable_PreProjeto::getSchema('sac'))
+            ->from(array('pr' => 'projetos'), array('idprojeto'), $this->getSchema('sac'))
             ->where('a.idPreProjeto = pr.idprojeto');
 
         $sql = $db->select()
-            ->from(array('a' => 'PreProjeto'), array('a.idPreProjeto', 'a.nomeprojeto'), Proposta_Model_DbTable_PreProjeto::getSchema('sac'))
-            ->join(array('b' => 'agentes'), 'a.idAgente = b.idAgente', array('b.CNPJCPF', 'b.idAgente'), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
-            ->joinleft(array('n' => 'Nomes'), 'n.idAgente = b.idAgente', array('n.Descricao as nomeproponente'), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
+            ->from(array('a' => 'PreProjeto'), array('a.idPreProjeto', 'a.nomeprojeto'), $this->getSchema('sac'))
+            ->join(array('b' => 'Agentes'), 'a.idAgente = b.idAgente', array('b.CNPJCPF', 'b.idAgente'), $this->getSchema('agentes'))
+            ->joinleft(array('n' => 'Nomes'), 'n.idAgente = b.idAgente', array('n.Descricao as nomeproponente'), $this->getSchema('agentes'))
             ->where('a.idAgente = ? ', $idAgente)
             ->where('a.stestado = 1')
             ->where("NOT EXISTS($subSql)")
             ->where("a.mecanismo = '1'");
 
         $subSql = $db->select()
-            ->from(array('f' => 'projetos'), array('idprojeto'), Proposta_Model_DbTable_PreProjeto::getSchema('sac'))
+            ->from(array('f' => 'projetos'), array('idprojeto'), $this->getSchema('sac'))
             ->where('a.idPreProjeto = f.idprojeto');
 
         $sql2 = $db->select()
-            ->from(array('a' => 'PreProjeto'), array('a.idPreProjeto', 'a.nomeprojeto'), Proposta_Model_DbTable_PreProjeto::getSchema('sac'))
-            ->join(array('b' => 'agentes'), 'a.idAgente = b.idAgente', array('b.CNPJCPF', 'b.idAgente'), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
-            ->join(array('c' => 'vinculacao'), 'b.idAgente = c.idVinculoprincipal', array(), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
-            ->join(array('d' => 'agentes'), 'c.idAgente = d.idAgente', array(), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
-            ->join(array('e' => 'sgcacesso'), 'd.CNPJCPF = e.cpf', array(), Proposta_Model_DbTable_PreProjeto::getSchema('controledeacesso'))
-            ->joinleft(array('n' => 'Nomes'), 'n.idAgente = b.idAgente', array('n.Descricao as nomeproponente'), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
+            ->from(array('a' => 'PreProjeto'), array('a.idPreProjeto', 'a.nomeprojeto'), $this->getSchema('sac'))
+            ->join(array('b' => 'Agentes'), 'a.idAgente = b.idAgente', array('b.CNPJCPF', 'b.idAgente'), $this->getSchema('agentes'))
+            ->join(array('c' => 'Vinculacao'), 'b.idAgente = c.idVinculoPrincipal', array(), $this->getSchema('agentes'))
+            ->join(array('d' => 'Agentes'), 'c.idAgente = d.idAgente', array(), $this->getSchema('agentes'))
+            ->join(array('e' => 'SGCacesso'), 'd.CNPJCPF = e.cpf', array(), $this->getSchema('controledeacesso'))
+            ->joinleft(array('n' => 'Nomes'), 'n.idAgente = b.idAgente', array('n.Descricao as nomeproponente'), $this->getSchema('agentes'))
             ->where('e.idusuario = ?', $idResponsavel)
             ->where('a.stestado = 1')
             ->where("NOT EXISTS($subSql)")
             ->where("a.mecanismo = '1'");
 
         $subSql = $db->select()
-            ->from(array('z' => 'projetos'), array('idprojeto'), Proposta_Model_DbTable_PreProjeto::getSchema('sac'))
+            ->from(array('z' => 'Projetos'), array('idprojeto'), $this->getSchema('sac'))
             ->where('a.idPreProjeto = z.idprojeto');
 
         $sql3 = $db->select()
-            ->from(array('a' => 'PreProjeto'), array('a.idPreProjeto', 'a.nomeprojeto'), Proposta_Model_DbTable_PreProjeto::getSchema('sac'))
-            ->join(array('b' => 'agentes'), 'a.idAgente = b.idAgente', array('b.CNPJCPF', 'b.idAgente'), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
-            ->join(array('c' => 'Nomes'), 'b.idAgente = c.idAgente', array('c.Descricao as nomeproponente'), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
-            ->join(array('d' => 'sgcacesso'), 'a.idusuario = d.idusuario', array(), Proposta_Model_DbTable_PreProjeto::getSchema('controledeacesso'))
-            ->join(array('e' => 'tbvinculoproposta'), 'a.idPreProjeto = e.idPreProjeto', array(), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
-            ->join(array('f' => 'tbVinculo'), 'e.idVinculo = f.idVinculo', array(), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
+            ->from(array('a' => 'PreProjeto'), array('a.idPreProjeto', 'a.nomeprojeto'), $this->getSchema('sac'))
+            ->join(array('b' => 'Agentes'), 'a.idAgente = b.idAgente', array('b.CNPJCPF', 'b.idAgente'), $this->getSchema('agentes'))
+            ->join(array('c' => 'Nomes'), 'b.idAgente = c.idAgente', array('c.Descricao as nomeproponente'), $this->getSchema('agentes'))
+            ->join(array('d' => 'SGCacesso'), 'a.idusuario = d.idusuario', array(), $this->getSchema('controledeacesso'))
+            ->join(array('e' => 'tbVinculoProposta'), 'a.idPreProjeto = e.idPreProjeto', array(), $this->getSchema('agentes'))
+            ->join(array('f' => 'tbVinculo'), 'e.idVinculo = f.idVinculo', array(), $this->getSchema('agentes'))
             ->where('a.stestado = 1')
             ->where("NOT EXISTS($subSql)")
             ->where("a.mecanismo = '1'")
-            ->where('e.sivinculoproposta = 2')
+            ->where('e.siVinculoProposta = 2')
             ->where('f.idUsuarioResponsavel = ?', $idResponsavel);
 
         if (!empty($idAgenteCombo)) {
@@ -938,50 +938,50 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $sql = $db->select()
+        $sql = $this->select()
             ->from(array('a' => 'PreProjeto'), null, $this->_schema)
-            ->join(array('b' => 'agentes'), 'a.idAgente = b.idAgente', array('b.CNPJCPF', 'b.idAgente'), $this->getSchema('agentes'))
+            ->join(array('b' => 'Agentes'), 'a.idAgente = b.idAgente', array('b.CNPJCPF', 'b.idAgente'), $this->getSchema('agentes'))
             ->joinLeft(array('n' => 'Nomes'), 'n.idAgente = b.idAgente', array('n.Descricao as nomeproponente'), $this->getSchema('agentes'))
-            ->join(array('c' => 'sgcacesso'), 'b.CNPJCPF = c.cpf', null, $this->getSchema('controledeacesso'))
-            ->where('c.idusuario = ?', $idResponsavel);
+            ->join(array('c' => 'SGCacesso'), 'b.CNPJCPF = c.Cpf', null, $this->getSchema('controledeacesso'))
+            ->where('c.IdUsuario::varchar = ?', "$idResponsavel");
 
-        $sql2 = $db->select()
+        $sql2 = $this->select()
             ->from(array('a' => 'PreProjeto'), null, $this->_schema)
-            ->join(array('b' => 'agentes'), 'a.idAgente = b.idAgente', array('b.CNPJCPF', 'b.idAgente'), $this->getSchema('agentes'))
+            ->join(array('b' => 'Agentes'), 'a.idAgente = b.idAgente', array('b.CNPJCPF', 'b.idAgente'), $this->getSchema('agentes'))
             ->joinleft(array('n' => 'Nomes'), 'n.idAgente = b.idAgente', array('n.Descricao as nomeproponente'), $this->getSchema('agentes'))
-            ->join(array('c' => 'tbvinculoproposta'), 'a.idPreProjeto = c.idPreProjeto', null, $this->getSchema('agentes'))
+            ->join(array('c' => 'tbVinculoProposta'), 'a.idPreProjeto = c.idPreProjeto', null, $this->getSchema('agentes'))
             ->join(array('d' => 'tbVinculo'), 'c.idVinculo = d.idVinculo', null, $this->getSchema('agentes'))
-            ->join(array('f' => 'agentes'), 'd.idAgenteProponente = f.idAgente', null, $this->getSchema('agentes'))
-            ->join(array('e' => 'sgcacesso'), 'f.CNPJCPF = e.cpf', null, $this->getSchema('controledeacesso'))
-            ->where('e.idusuario = ?', $idResponsavel)
-            ->where('c.sivinculoproposta = 2');
+            ->join(array('f' => 'Agentes'), 'd.idAgenteProponente = f.idAgente', null, $this->getSchema('agentes'))
+            ->join(array('e' => 'SGCacesso'), 'f.CNPJCPF = e.Cpf', null, $this->getSchema('controledeacesso'))
+            ->where('e.IdUsuario::varchar = ?', "$idResponsavel")
+            ->where("c.siVinculoProposta = ?", '2');
 
-        $sql3 = $db->select()
-            ->from(array('a' => 'agentes'), array('a.CNPJCPF', 'a.idAgente'), $this->getSchema('agentes'))
+        $sql3 = $this->select()
+            ->from(array('a' => 'Agentes'), array('a.CNPJCPF', 'a.idAgente'), $this->getSchema('agentes'))
             ->joinleft(array('n' => 'Nomes'), 'n.idAgente = a.idAgente', array('n.Descricao as nomeproponente'), $this->getSchema('agentes'))
-            ->join(array('b' => 'vinculacao'), 'a.idAgente = b.idVinculoprincipal', null, $this->getSchema('agentes'))
-            ->join(array('c' => 'agentes'), 'b.idAgente = c.idAgente', null, $this->getSchema('agentes'))
-            ->join(array('d' => 'sgcacesso'), 'c.CNPJCPF = d.cpf', null, $this->getSchema('controledeacesso'))
-            ->where('d.idusuario = ?', $idResponsavel);
+            ->join(array('b' => 'Vinculacao'), 'a.idAgente = b.idVinculoPrincipal', null, $this->getSchema('agentes'))
+            ->join(array('c' => 'Agentes'), 'b.idAgente = c.idAgente', null, $this->getSchema('agentes'))
+            ->join(array('d' => 'SGCacesso'), 'c.CNPJCPF = d.Cpf', null, $this->getSchema('controledeacesso'))
+            ->where('d.IdUsuario::varchar = ?', "$idResponsavel");
 
-        $sql4 = $db->select()
-            ->from(array('a' => 'agentes'), array('a.CNPJCPF', 'a.idAgente'), $this->getSchema('agentes'))
+        $sql4 = $this->select()
+            ->from(array('a' => 'Agentes'), array('a.CNPJCPF', 'a.idAgente'), $this->getSchema('agentes'))
             ->joinleft(array('n' => 'Nomes'), 'n.idAgente = a.idAgente', array('n.Descricao as nomeproponente'), $this->getSchema('agentes'))
             ->join(array('b' => 'tbVinculo'), 'a.idAgente = b.idAgenteProponente', null, $this->getSchema('agentes'))
-            ->join(array('c' => 'sgcacesso'), 'b.idUsuarioResponsavel = c.idusuario', null, $this->getSchema('controledeacesso'))
-            ->where('b.sivinculo = 2')
-            ->where('c.idusuario = ?', $idResponsavel);
+            ->join(array('c' => 'SGCacesso'), 'b.idUsuarioResponsavel = c.IdUsuario', null, $this->getSchema('controledeacesso'))
+            ->where('b.siVinculo = ?', '2')
+            ->where('c.IdUsuario::varchar = ?', "$idResponsavel");
 
-        $sql5 = $db->select()
-            ->from(array('a' => 'agentes'), array('a.CNPJCPF', 'a.idAgente'), $this->getSchema('agentes'))
+        $sql5 = $this->select()
+            ->from(array('a' => 'Agentes'), array('a.CNPJCPF', 'a.idAgente'), $this->getSchema('agentes'))
             ->joinleft(array('n' => 'Nomes'), 'n.idAgente = a.idAgente', array('n.Descricao as nomeproponente'), $this->getSchema('agentes'))
-            ->join(array('b' => 'sgcacesso'), 'a.CNPJCPF = b.cpf', null, $this->getSchema('controledeacesso'))
-            ->where('b.idusuario = ?', $idResponsavel);
+            ->join(array('b' => 'SGCacesso'), 'a.CNPJCPF = b.Cpf', null, $this->getSchema('controledeacesso'))
+            ->where('b.IdUsuario::varchar = ?', "$idResponsavel");
 
-        $sql = $db->select()->union(array($sql, $sql2, $sql3, $sql4, $sql5))
+        $sql = $this->select()->union(array($sql, $sql2, $sql3, $sql4, $sql5))
             ->group(array('a.CNPJCPF', 'a.idAgente', 'n.Descricao'))
             ->order(array('3 asc'));
-
+//xd($sql->assemble());
 //        echo '<pre>';
 //        print_r(str_replace('"', '', $sql->assemble()));
 //        exit;
@@ -2572,9 +2572,9 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $sql2 = $db->select()
             ->from(array('a' => 'PreProjeto'), array('a.idPreProjeto', 'a.nomeprojeto'), $this->_schema)
             ->join(array('b' => 'Agentes'), 'a.idAgente = b.idAgente', array('b.CNPJCPF', 'b.idAgente'), $this->getSchema('agentes'))
-            ->join(array('c' => 'vinculacao'), 'b.idAgente = c.idVinculoprincipal', array(), $this->getSchema('agentes'))
+            ->join(array('c' => 'Vinculacao'), 'b.idAgente = c.idVinculoPrincipal', array(), $this->getSchema('agentes'))
             ->join(array('d' => 'Agentes'), 'c.idAgente = d.idAgente', array(), $this->getSchema('agentes'))
-            ->join(array('e' => 'sgcacesso'), 'd.CNPJCPF = e.cpf', array(), $this->getSchema('controledeacesso'))
+            ->join(array('e' => 'SGCacesso'), 'd.CNPJCPF = e.cpf', array(), $this->getSchema('controledeacesso'))
             ->joinleft(array('n' => 'Nomes'), 'n.idAgente = b.idAgente', array('n.Descricao as nomeproponente'), $this->getSchema('agentes'))
             ->where('e.idusuario = ?', $idResponsavel)
             ->where('a.stestado = 1')
@@ -2582,16 +2582,16 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             ->where("a.mecanismo = '1'");
 
         $sql3 = $db->select()
-            ->from(array('a' => 'PreProjeto'), array('a.idPreProjeto', 'a.nomeprojeto'), Proposta_Model_DbTable_PreProjeto::getSchema('sac'))
-            ->join(array('b' => 'Agentes'), 'a.idAgente = b.idAgente', array('b.CNPJCPF', 'b.idAgente'), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
-            ->join(array('c' => 'Nomes'), 'b.idAgente = c.idAgente', array('c.Descricao as nomeproponente'), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
-            ->join(array('d' => 'sgcacesso'), 'a.idusuario = d.idusuario', array(), Proposta_Model_DbTable_PreProjeto::getSchema('controledeacesso'))
-            ->join(array('e' => 'tbvinculoproposta'), 'a.idPreProjeto = e.idPreProjeto', array(), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
-            ->join(array('f' => 'tbVinculo'), 'e.idVinculo = f.idVinculo', array(), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
+            ->from(array('a' => 'PreProjeto'), array('a.idPreProjeto', 'a.nomeprojeto'), $this->getSchema('sac'))
+            ->join(array('b' => 'Agentes'), 'a.idAgente = b.idAgente', array('b.CNPJCPF', 'b.idAgente'), $this->getSchema('agentes'))
+            ->join(array('c' => 'Nomes'), 'b.idAgente = c.idAgente', array('c.Descricao as nomeproponente'), $this->getSchema('agentes'))
+            ->join(array('d' => 'SGCacesso'), 'a.idusuario = d.idusuario', array(), $this->getSchema('controledeacesso'))
+            ->join(array('e' => 'tbVinculoProposta'), 'a.idPreProjeto = e.idPreProjeto', array(), $this->getSchema('agentes'))
+            ->join(array('f' => 'tbVinculo'), 'e.idVinculo = f.idVinculo', array(), $this->getSchema('agentes'))
             ->where('a.stestado = 1')
             ->where("NOT EXISTS($subSql)")
             ->where("a.mecanismo = '1'")
-            ->where('e.sivinculoproposta = 2')
+            ->where('e.siVinculoProposta = 2')
             ->where('f.idUsuarioResponsavel = ?', $idResponsavel);
 
         if (!empty($idAgenteCombo)) {
@@ -2647,9 +2647,9 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $sql2 = $db->select()
             ->from(array('a' => 'PreProjeto'), array('a.idPreProjeto', 'a.nomeprojeto'), $this->_schema)
             ->join(array('b' => 'agentes'), 'a.idAgente = b.idAgente', array('b.CNPJCPF', 'b.idAgente'), $this->getSchema('agentes'))
-            ->join(array('c' => 'vinculacao'), 'b.idAgente = c.idVinculoprincipal', array(), $this->getSchema('agentes'))
+            ->join(array('c' => 'Vinculacao'), 'b.idAgente = c.idVinculoPrincipal', array(), $this->getSchema('agentes'))
             ->join(array('d' => 'agentes'), 'c.idAgente = d.idAgente', array(), $this->getSchema('agentes'))
-            ->join(array('e' => 'sgcacesso'), 'd.CNPJCPF = e.cpf', array(), $this->getSchema('controledeacesso'))
+            ->join(array('e' => 'SGCacesso'), 'd.CNPJCPF = e.cpf', array(), $this->getSchema('controledeacesso'))
             ->joinleft(array('n' => 'Nomes'), 'n.idAgente = b.idAgente', array('n.Descricao as nomeproponente'), $this->getSchema('agentes'))
             ->where('e.idusuario = ?', $idResponsavel)
             ->where('a.stestado = 1')
@@ -2657,16 +2657,16 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             ->where("a.mecanismo = '1'");
 
         $sql3 = $db->select()
-            ->from(array('a' => 'PreProjeto'), array('a.idPreProjeto', 'a.nomeprojeto'), Proposta_Model_DbTable_PreProjeto::getSchema('sac'))
-            ->join(array('b' => 'agentes'), 'a.idAgente = b.idAgente', array('b.CNPJCPF', 'b.idAgente'), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
-            ->join(array('c' => 'Nomes'), 'b.idAgente = c.idAgente', array('c.Descricao as nomeproponente'), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
-            ->join(array('d' => 'sgcacesso'), 'a.idusuario = d.idusuario', array(), Proposta_Model_DbTable_PreProjeto::getSchema('controledeacesso'))
-            ->join(array('e' => 'tbvinculoproposta'), 'a.idPreProjeto = e.idPreProjeto', array(), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
-            ->join(array('f' => 'tbVinculo'), 'e.idVinculo = f.idVinculo', array(), Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
+            ->from(array('a' => 'PreProjeto'), array('a.idPreProjeto', 'a.nomeprojeto'), $this->getSchema('sac'))
+            ->join(array('b' => 'agentes'), 'a.idAgente = b.idAgente', array('b.CNPJCPF', 'b.idAgente'), $this->getSchema('agentes'))
+            ->join(array('c' => 'Nomes'), 'b.idAgente = c.idAgente', array('c.Descricao as nomeproponente'), $this->getSchema('agentes'))
+            ->join(array('d' => 'SGCacesso'), 'a.idusuario = d.idusuario', array(), $this->getSchema('controledeacesso'))
+            ->join(array('e' => 'tbVinculoProposta'), 'a.idPreProjeto = e.idPreProjeto', array(), $this->getSchema('agentes'))
+            ->join(array('f' => 'tbVinculo'), 'e.idVinculo = f.idVinculo', array(), $this->getSchema('agentes'))
             ->where('a.stestado = 1')
             ->where("NOT EXISTS($subSql)")
             ->where("a.mecanismo = '1'")
-            ->where('e.sivinculoproposta = 2')
+            ->where('e.siVinculoProposta = 2')
             ->where('f.idUsuarioResponsavel = ?', $idResponsavel);
 
         if (!empty($idAgenteCombo)) {
