@@ -1093,9 +1093,6 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
     /**
      * Metodo vincularpropostas()
      * UC 89 - Fluxo FA8 - Vincular Propostas
-     * @access public
-     * @param void
-     * @return void
      */
     public function vincularprojetosAction()
     {
@@ -1111,11 +1108,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
     }
 
     /**
-     * Metodo novoresponsavel()
      * UC 89 - Fluxo FA4 - Vincular Responsï¿½vel
-     * @access public
-     * @param void
-     * @return void
      */
     public function novoresponsavelAction()
     {
@@ -1123,12 +1116,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
     }
 
     /**
-     * Metodo resnovoresponsavel()
-     * Retorno do novoresponsavel
      * UC 89 - Fluxo FA4 - Vincular Responsaveis
-     * @access public
-     * @param void
-     * @return void
      * @todo retirar html
      */
     public function respnovoresponsavelAction()
@@ -1151,7 +1139,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
         } elseif (!empty($cnpjcpf)) {
             $where['SGA.Cpf = ?'] = $cnpjcpf;
         } elseif (!empty($nome)) {
-            $where['SGA.Nome like (?)'] = "%" . $nome . "%";
+            $where['SGA.Nome like ?'] = "%{$nome}%";
         }
 
         $busca = $tbVinculo->buscarResponsaveis($where, $this->idAgenteProponente);
@@ -1163,8 +1151,6 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
 
     /**
      * Este metodo deve estar igual &agrave; regra de negocio 1.3 da spCheckListParaApresentacaoDeProposta
-     * @param $idPreProjeto
-     * @return ArrayObject|bool|mixed
      */
     public function atualizarDadosPessoaJuridicaVerificandoCNAECultural($idPreProjeto)
     {
