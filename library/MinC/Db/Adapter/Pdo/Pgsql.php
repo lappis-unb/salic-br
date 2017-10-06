@@ -108,14 +108,16 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
     {
         if (!empty($condition) && !is_null($condition)) {
             $cleanCondition = trim($condition);
-            if ($cleanCondition && strpos($cleanCondition, '=') !== false) {
-                $condition = $this->treatWhereConditions($condition, '=');
+            if ($cleanCondition && strpos($cleanCondition, 'NOT EXISTS') !== false) {
+                $condition = $this->treatWhereConditions($condition, 'NOT EXISTS');
+            } elseif ($cleanCondition && strpos($cleanCondition, 'in') !== false) {
+                $condition = $this->treatWhereConditions($condition, 'in');
             } elseif ($cleanCondition && strpos($cleanCondition, '<>') !== false) {
                 $condition = $this->treatWhereConditions($condition, '<>');
             } elseif ($cleanCondition && strpos($cleanCondition, ' like ') !== false) {
                 $condition = $this->treatWhereConditions($condition, ' like ');
-            } elseif ($cleanCondition && strpos($cleanCondition, 'in') !== false) {
-                $condition = $this->treatWhereConditions($condition, 'in');
+            } elseif ($cleanCondition && strpos($cleanCondition, '=') !== false) {
+                $condition = $this->treatWhereConditions($condition, '=');
             }
         }
 
@@ -124,7 +126,7 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
 
     private function treatWhereConditions($condition, $separator)
     {
-        if($separator == 'in') {
+        if($separator == 'in' || $separator == 'NOT EXISTS') {
             $arrayColumn = explode($separator, $condition);
             if (substr(trim($arrayColumn[1]), 0, 1) == '(' && strpos($arrayColumn[0], '"') === false) {
                 $conditionOne = $this->addDoubleQuote(trim($arrayColumn[0]));
