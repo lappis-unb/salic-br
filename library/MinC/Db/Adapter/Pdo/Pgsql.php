@@ -108,16 +108,16 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
     {
         if (!empty($condition) && !is_null($condition)) {
             $cleanCondition = trim($condition);
-            if ($cleanCondition && strpos($cleanCondition, 'NOT EXISTS') !== false) {
-                $condition = $this->treatWhereConditions($condition, 'NOT EXISTS');
-            } elseif ($cleanCondition && strpos($cleanCondition, ' in ') !== false) {
-                $condition = $this->treatWhereConditions($condition, ' in ');
-            } elseif ($cleanCondition && strpos($cleanCondition, '<>') !== false) {
-                $condition = $this->treatWhereConditions($condition, '<>');
-            } elseif ($cleanCondition && strpos($cleanCondition, ' like ') !== false) {
-                $condition = $this->treatWhereConditions($condition, ' like ');
-            } elseif ($cleanCondition && strpos($cleanCondition, '=') !== false) {
-                $condition = $this->treatWhereConditions($condition, '=');
+            if ($cleanCondition && strpos($cleanCondition, 'NOT EXISTS') === false) {
+                if ($cleanCondition && strpos($cleanCondition, ' in ') !== false) {
+                    $condition = $this->treatWhereConditions($condition, ' in ');
+                } elseif ($cleanCondition && strpos($cleanCondition, '<>') !== false) {
+                    $condition = $this->treatWhereConditions($condition, '<>');
+                } elseif ($cleanCondition && strpos($cleanCondition, ' like ') !== false) {
+                    $condition = $this->treatWhereConditions($condition, ' like ');
+                } elseif ($cleanCondition && strpos($cleanCondition, '=') !== false) {
+                    $condition = $this->treatWhereConditions($condition, '=');
+                }
             }
         }
 
