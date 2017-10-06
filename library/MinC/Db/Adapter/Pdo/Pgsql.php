@@ -110,8 +110,8 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
             $cleanCondition = trim($condition);
             if ($cleanCondition && strpos($cleanCondition, 'NOT EXISTS') !== false) {
                 $condition = $this->treatWhereConditions($condition, 'NOT EXISTS');
-            } elseif ($cleanCondition && strpos($cleanCondition, 'in') !== false) {
-                $condition = $this->treatWhereConditions($condition, 'in');
+            } elseif ($cleanCondition && strpos($cleanCondition, ' in ') !== false) {
+                $condition = $this->treatWhereConditions($condition, ' in ');
             } elseif ($cleanCondition && strpos($cleanCondition, '<>') !== false) {
                 $condition = $this->treatWhereConditions($condition, '<>');
             } elseif ($cleanCondition && strpos($cleanCondition, ' like ') !== false) {
@@ -126,14 +126,14 @@ class MinC_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Pgsql
 
     private function treatWhereConditions($condition, $separator)
     {
-        if($separator == 'in' || $separator == 'NOT EXISTS') {
+        if ($separator == ' in ') {
             $arrayColumn = explode($separator, $condition);
             if (substr(trim($arrayColumn[1]), 0, 1) == '(' && strpos($arrayColumn[0], '"') === false) {
                 $conditionOne = $this->addDoubleQuote(trim($arrayColumn[0]));
                 $conditionTwo = trim($arrayColumn[1]);
                 $condition = "{$conditionOne} {$separator} {$conditionTwo}";
             }
-        } else {
+        } elseif ($separator != 'NOT EXISTS') {
             $arrayColunas = explode($separator, $condition);
             $coluna1 = $this->addDoubleQuote(trim($arrayColunas[0]));
             $coluna2 = $this->addDoubleQuote(trim($arrayColunas[1]));
