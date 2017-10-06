@@ -108,7 +108,7 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
      */
     public function getSchema($strSchema)
     {
-        if (!$strSchema) {
+        if (is_null($strSchema)) {
             $strSchema = $this->_info['schema'];
         }
 

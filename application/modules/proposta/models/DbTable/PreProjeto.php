@@ -2612,7 +2612,8 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $sql = $this->select()->union(array($sql, $sql2, $sql3), Zend_Db_Select::SQL_UNION);
 
         $sqlFinal = $this->select();
-        $sqlFinal->from(array("p" => $sql), '*', false);
+        $sqlFinal->isUseSchema(false);
+        $sqlFinal->from(array("p" => $sql), '*', null);
 //        ->joinInner( array('mov' => 'tbmovimentacao'), 'p.idPreProjeto = mov.idprojeto', array(), $this->_schema)
 //        ->joinInner( array('ver' => 'Verificacao'), 'mov.Movimentacao = ver.idVerificacao', array('Descricao as situacao'), $this->_schema)
 //        ->where('mov.stestado = ? ', 0);
