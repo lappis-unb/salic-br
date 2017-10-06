@@ -2570,7 +2570,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             ->where('a.idPreProjeto = pr.idProjeto');
 
         $sql = $this->select();
-        $sql->from(array('a' => 'PreProjeto'), array('a.idPreProjeto', 'a.NomeProjeto'), $this->_schema);
+        $sql->from(array('a' => 'PreProjeto'), array('a.idPreProjeto', 'a.NomeProjeto as nomeprojeto'), $this->_schema);
         $sql->join(array('b' => 'Agentes'), 'a.idAgente = b.idAgente', array('b.CNPJCPF', 'b.idAgente'), $this->getSchema('agentes'));
         $sql->joinleft(array('n' => 'Nomes'), 'n.idAgente = b.idAgente', array('n.Descricao as nomeproponente'), $this->getSchema('agentes'));
         $sql->where('a.idAgente = ? ', $idAgente);
@@ -2579,7 +2579,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $sql->where("a.Mecanismo = '1'");
 
         $sql2 = $this->select()
-            ->from(array('a' => 'PreProjeto'), array('a.idPreProjeto', 'a.NomeProjeto'), $this->_schema)
+            ->from(array('a' => 'PreProjeto'), array('a.idPreProjeto', 'a.NomeProjeto as nomeprojeto'), $this->_schema)
             ->join(array('b' => 'Agentes'), 'a.idAgente = b.idAgente', array('b.CNPJCPF', 'b.idAgente'), $this->getSchema('agentes'))
             ->join(array('c' => 'Vinculacao'), 'b.idAgente = c.idVinculoPrincipal', array(), $this->getSchema('agentes'))
             ->join(array('d' => 'Agentes'), 'c.idAgente = d.idAgente', array(), $this->getSchema('agentes'))
@@ -2623,7 +2623,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         }
 
         if (!empty($search['value'])) {
-            $sqlFinal->where('p.idPreProjeto like ? OR p.NomeProjeto like ? OR  p.nomeproponente like ?', '%' . $search['value'] . '%');
+            $sqlFinal->where('p.idPreProjeto like ? OR p.nomeprojeto like ? OR  p.nomeproponente like ?', '%' . $search['value'] . '%');
         }
 
         $sqlFinal->order($order);
