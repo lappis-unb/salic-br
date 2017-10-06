@@ -983,7 +983,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
         $search = $this->getRequest()->getParam('search');
         $order = $this->getRequest()->getParam('order');
         $columns = $this->getRequest()->getParam('columns');
-        $order = ($order[0]['dir'] != 1) ? array($columns[$order[0]['column']]['name'] . ' ' . $order[0]['dir']) : array("idpreprojeto DESC");
+        $order = ($order[0]['dir'] != 1) ? array($columns[$order[0]['column']]['name'] . ' ' . $order[0]['dir']) : array("idPreProjeto DESC");
 
         $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
 
