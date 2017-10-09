@@ -16,23 +16,23 @@
 
         <?php foreach ($this->vinculo as $vinculo): ?>
 
-            <?php if($vinculo->idagente != $idAgente):?>
+            <?php if($vinculo->idAgente != $idAgente):?>
 	            <tr class="centro">
-	                <td align="left"> <?php echo Validacao::mascaraCPFCNPJ($vinculo->cnpjcpf); ?></td>
+	                <td align="left"> <?php echo Validacao::mascaraCPFCNPJ($vinculo->CNPJCPF); ?></td>
 	                <td align="left"><?php echo $vinculo->nomeagente ?></td>
 	                <td style="font-weight: 600;">
 		                <?php if(($vinculo->usuariovinculo) == null): ?>
-		                	<?php if(($vinculo->sivinculo != '')): ?>
-		                		<?php echo $this->stVinculo($vinculo->sivinculo); ?>
+		                	<?php if(($vinculo->siVinculo != '')): ?>
+		                		<?php echo $this->stVinculo($vinculo->siVinculo); ?>
 		                	<?php else:   ?>
-		                        <img style="cursor: pointer;" class="vincular" id="vincular" onclick="vincularproponente('<?php echo $vinculo->idagente; ?>');" idAgente="<?php echo $vinculo->idagente; ?>" src="<?php echo $this->baseUrl(); ?>/public/img/passed.gif" />
+		                        <img style="cursor: pointer;" class="vincular" id="vincular" onclick="vincularproponente('<?php echo $vinculo->idAgente; ?>');" idAgente="<?php echo $vinculo->idAgente; ?>" src="<?php echo $this->baseUrl(); ?>/public/img/passed.gif" />
 		                	<?php endif;?>
 		                <?php else: ?>
 		                	Servidor do Minist&eacute;rio da Cultura n&atilde;o pode ser Proponente!
 		                <?php endif; ?>
 	                </td>
 	            </tr>
-	        <?php $idAgente = $vinculo->idagente; ?>
+	        <?php $idAgente = $vinculo->idAgente; ?>
 	        <?php endif;?>
         <?php endforeach; ?>
     </table>
