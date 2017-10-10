@@ -80,7 +80,7 @@ class Proposta_VincularresponsavelController extends Proposta_GenericController
             }
 
             if ($nome != '') {
-                $where["nm.Descricao like (?)"] = "%" . $nome . "%";
+                $where["nm.Descricao like ?"] = "%{$nome}%";
             }
             $buscarvinculo = $ag->buscarNovoProponente($where, $this->idResponsavel);
             if ($buscarvinculo->count() > 0) {
