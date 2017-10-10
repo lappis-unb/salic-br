@@ -2,19 +2,8 @@
 
 class Agente_Model_DbTable_Internet extends MinC_Db_Table_Abstract
 {
-    /**
-     * @var string
-     */
     protected $_schema = 'agentes';
-
-    /**
-     * @var bool
-     */
     protected $_name = 'Internet';
-
-    /**
-     * @var bool
-     */
     protected $_primary = 'idInternet';
 
     /**
@@ -49,17 +38,24 @@ class Agente_Model_DbTable_Internet extends MinC_Db_Table_Abstract
      * @param boolean $buscarTodos (informa se busca todos ou somente um)
      * @return array || object
      */
-    public function buscarEmailAgente($cpfcnpj = null, $idAgente = null, $StatusEmail = null, $StatusDivulgacao = null, $buscarTodos = true)
+        public function buscarEmailAgente(
+        $cpfcnpj = null,
+        $idAgente = null,
+        $StatusEmail = null,
+        $StatusDivulgacao = null,
+        $buscarTodos = true)
     {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
             array("e" => $this->_name),
-            array("e.idInternet as idemail"
-            ,"e.TipoInternet as tipoemail"
-            ,"e.Descricao as email"
-            ,"e.Status"
-            ,"e.Divulgar"),
+            array(
+                "e.idInternet as idemail"
+                , "e.TipoInternet as tipoemail"
+                , "e.Descricao as email"
+                , "e.Status"
+                , "e.Divulgar"
+            ),
             $this->_schema
         );
 
@@ -71,26 +67,22 @@ class Agente_Model_DbTable_Internet extends MinC_Db_Table_Abstract
         );
 
         // busca pelo cnpj ou cpf
-        if (!empty($cpfcnpj))
-        {
+        if (!empty($cpfcnpj)) {
             $select->where("a.CNPJCPF = ?", $cpfcnpj);
         }
 
         // busca pelo id do agente
-        if (!empty($idAgente))
-        {
+        if (!empty($idAgente)) {
             $select->where("a.idAgente = ?", $idAgente);
         }
 
         // busca pelo email ativado/desativado
-        if (!empty($StatusEmail))
-        {
+        if (!empty($StatusEmail)) {
             $select->where("e.Status = ?", $StatusEmail);
         }
 
         // busca pelo email de divulgacao
-        if (!empty($StatusDivulgacao))
-        {
+        if (!empty($StatusDivulgacao)) {
             $select->where("e.Divulgar = ?", $StatusDivulgacao);
         }
 
@@ -153,21 +145,18 @@ class Agente_Model_DbTable_Internet extends MinC_Db_Table_Abstract
     public function excluirEmailAgente($idAgente = null, $idInternet = null)
     {
         // exclui todos os e-mails de um agente
-        if (!empty($idAgente))
-        {
+        if (!empty($idAgente)) {
             $where['idAgente = ?'] = $idAgente;
-        }
-
-        // exclui um determinado e-mail
-        else if (!empty($idInternet))
-        {
+        } // exclui um determinado e-mail
+        else if (!empty($idInternet)) {
             $where['idInternet = ?'] = $idInternet;
         }
 
         return $this->delete($where);
     }
 
-    public function obterEmailProponentesPorPreProjeto($idPreProjeto) {
+    public function obterEmailProponentesPorPreProjeto($idPreProjeto)
+    {
 
         $select = $this->select();
         $this->_db->setFetchMode(Zend_DB::FETCH_OBJ);

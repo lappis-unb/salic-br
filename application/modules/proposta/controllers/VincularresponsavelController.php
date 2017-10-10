@@ -105,6 +105,7 @@ class Proposta_VincularresponsavelController extends Proposta_GenericController
     public function vinculoAction()
     {
         $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
 
         $v = new Agente_Model_DbTable_TbVinculo();
         $pp = new Proposta_Model_DbTable_PreProjeto();
@@ -112,7 +113,7 @@ class Proposta_VincularresponsavelController extends Proposta_GenericController
         $emailDAO = new EmailDAO();
         $tableInternet = new Agente_Model_DbTable_Internet();
 
-        $buscarEmail = $tableInternet->buscarEmailAgente(null, $_POST['idAgente'], 1, null, false);
+        $buscarEmail = $tableInternet->buscarEmailAgente(null, $_POST['idAgente'], true, null, false);
         if ($buscarEmail) {
             $buscarEmail = array_change_key_case($buscarEmail->toArray());
         }
@@ -125,13 +126,13 @@ class Proposta_VincularresponsavelController extends Proposta_GenericController
             $idAgenteProponente = $_POST['idAgente'];
             $idUsuarioResponsavel = $this->idResponsavel;
             $dados = array('idUsuarioResponsavel' => $idUsuarioResponsavel,
-                'idagenteproponente' => $idAgenteProponente,
-                'dtvinculo' => $tableInternet->getExpressionDate(),
-                'sivinculo' => 0
+                'idAgenteProponente' => $idAgenteProponente,
+                'dtVinculo' => $tableInternet->getExpressionDate(),
+                'siVinculo' => 0
             );
             try {
 
-                $where['idagenteproponente   = ?'] = $idAgenteProponente;
+                $where['idAgenteProponente   = ?'] = $idAgenteProponente;
                 $where['idUsuarioResponsavel = ?'] = $idUsuarioResponsavel;
                 $vinculocadastrado = $v->buscar($where);
 
@@ -140,14 +141,14 @@ class Proposta_VincularresponsavelController extends Proposta_GenericController
                 } else {
                     $v->inserir($dados);
                 }
-
-                $enviarEmail = $emailDAO->enviarEmail($emailProponente, $assunto, $texto);
+                if($emailProponente) {
+                    $emailDAO->enviarEmail($emailProponente, $assunto, $texto);
+                }
 
                 $this->_helper->json(array('error' => false));
             } catch (Zend_Exception $e) {
-                echo '<pre>';
-                var_dump($e->getMessage());
-                $this->_helper->viewRenderer->setNoRender(TRUE);
+                $e->getMessage();
+
                 $this->_helper->json(array('error' => true));
             }
         }
@@ -195,7 +196,6 @@ class Proposta_VincularresponsavelController extends Proposta_GenericController
             }
         }
 
-        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function vincularresponsavelAction()
