@@ -77,8 +77,9 @@
     $(document).ready( function() {
         $('#btn_pesquisar').click(function(){
             $('#mostraproponente').html();
-            var cnpjcpf   = retirarAcento(document.getElementById('cnpjcpf').value);
-            var nome      = retirarAcento(document.getElementById('nome').value);
+            var cnpjcpf   = $('#cnpjcpf').val();
+            var nome      = $('#nome').val();
+//            var nome      = retirarAcento(document.getElementById('nome').value);
 
             if(nome == '' && cnpjcpf == '') {
                 $("#error").removeClass('sumir');
@@ -97,7 +98,9 @@
             } else {
                 $("#error").addClass('sumir');
                 dados = 'cnpjcpf=' + encodeURIComponent(cnpjcpf);
-                dados+= '&nome=' + encodeURIComponent(nome);
+                dados+= '&nome=' + nome;
+//                dados+= '&nome=' + encodeURIComponent(nome);
+console.log(dados);
                 enviar_pag("<?php echo $this->url(array('module' => 'proposta', 'controller' => 'vincularresponsavel', 'action' => 'mostraragentes')) ?>", dados, 'mostraproponente');
             }
             return false;

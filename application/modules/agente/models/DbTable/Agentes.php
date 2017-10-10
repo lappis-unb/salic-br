@@ -292,7 +292,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
 
         $select->joinLeft(
             array('vp' => 'tbVinculo'), "vp.idAgenteProponente = ag.idAgente and vp.idUsuarioResponsavel = $idResponsavel",
-            array("vp.idVinculo as idVinculoproponente", "sivinculo", "idUsuarioResponsavel"),
+            array("vp.idVinculo as idVinculoproponente", "siVinculo", "idUsuarioResponsavel"),
             $this->_schema
         );
 
@@ -701,14 +701,6 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         return $this->fetchAll($slct);
     }
 
-    /**
-     * gerenciarResponsaveisListas
-     *
-     * @param mixed $siVinculo
-     * @param mixed $idUsuario
-     * @access public
-     * @return void
-     */
     public function gerenciarResponsaveisListas($siVinculo, $idUsuario)
     {
         $a = $this->select();
@@ -732,7 +724,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         );
         $a->where('c.IdUsuario = ?', $idUsuario);
         $a->where('b.siVinculo = ?', $siVinculo);
-        $a->where(new Zend_Db_Expr('a.CNPJCPF <> c.Cpf'));
+        $a->where('a.CNPJCPF <> c.Cpf');
 
         $b = $this->select();
         $b->setIntegrityCheck(false);
@@ -799,22 +791,15 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         $c->where('d.Visao = ?', 198);
         $c->where('f.IdUsuario = ?', $idUsuario);
         $c->where('b.siVinculo = ?', $siVinculo);
-        $c->where(new Zend_Db_Expr('a.CNPJCPF <> f.Cpf'));
+        $c->where('a.CNPJCPF <> f.Cpf');
 
         $slctUnion = $this->select()
             ->union(array('(' . $a . ')', '(' . $b . ')', '(' . $c . ')'))
-            ->order('nomeresponsavel');
+            ->order('NomeResponsavel');
 
         return $this->fetchAll($slctUnion);
     }
 
-    /**
-     * listarVincularPropostaCombo
-     *
-     * @param mixed $idResponsavel
-     * @access public
-     * @return void
-     */
     public function listarVincularPropostaCombo($idResponsavel)
     {
         $slct = $this->select();
