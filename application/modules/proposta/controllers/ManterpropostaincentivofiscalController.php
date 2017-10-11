@@ -957,12 +957,12 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
 
         $i = 0;
         foreach ($rsVinculo as $rs) {
-            $cpfCnpj = Mascara::addMaskCPF($rs->cnpjcpf);
-            if (strlen(trim($rs->cnpjcpf)) > 11) {
-                $cpfCnpj = Mascara::addMaskCNPJ($rs->cnpjcpf);
+            $cpfCnpj = Mascara::addMaskCPF($rs->CNPJCPF);
+            if (strlen(trim($rs->CNPJCPF)) > 11) {
+                $cpfCnpj = Mascara::addMaskCNPJ($rs->CNPJCPF);
             }
 
-            $dadosCombo[$i]['idAgenteProponente'] = $rs->idagente;
+            $dadosCombo[$i]['idAgenteProponente'] = $rs->idAgente;
             $dadosCombo[$i]['CPF'] = $cpfCnpj;
             $dadosCombo[$i]['Nome'] = $rs->nomeproponente;
 
