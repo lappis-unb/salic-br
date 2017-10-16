@@ -6,7 +6,7 @@ services:
     container_name: salic-br
     ports:
      - "80:80"
-     - "9000:9000"
+     - "9000"
     volumes:
      - ./app:/var/www/salic-br
      - ./log/apache2:/var/log/apache2
