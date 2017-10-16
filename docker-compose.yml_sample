@@ -28,8 +28,8 @@ services:
      #- XDEBUGINI_PATH=/usr/local/etc/php/conf.d/xdebug.ini
      #- PHP_IDE_CONFIG="serverName=Test"
 
-     #- XDEBUG_DEFAULT_ENABLE = 1
-     #- XDEBUG_IDEKEY = "PHPSTORM"
+     #- XDEBUG_DEFAULT_ENABLE=1
+     #- XDEBUG_IDEKEY=PHPSTORM
      restart: always
   dependency_manager:
       image: composer:1.5.1
