@@ -55,10 +55,10 @@ class Proposta_Model_DbTable_TbDeslocamento extends MinC_Db_Table_Abstract
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(array('de' => $this->_name), '*', $this->_schema)
-            ->joinLeft(array('pao' => 'pais'), 'de.idpaisorigem = pao.idpais', array('continente as continenteorigem', 'descricao as paisorigem'), $this->getSchema('agentes'))
+            ->joinLeft(array('pao' => 'Pais'), 'de.idpaisorigem = pao.idpais', array('continente as continenteorigem', 'descricao as paisorigem'), $this->getSchema('agentes'))
             ->joinLeft(array('ufO' => 'uf'), 'de.iduforigem = ufo.idUF', array('descricao as uforigem'), $this->getSchema('agentes'))
             ->joinLeft(array('muO' => 'municipios'), 'de.idmunicipioorigem = muo.idMunicipioIBGE', array('descricao as municipioorigem'), $this->getSchema('agentes'))
-            ->joinLeft(array('paD' => 'pais'), 'de.idpaisdestino = pad.idpais', array('continente as continentedestino', 'descricao as paisodestino'), $this->getSchema('agentes'))
+            ->joinLeft(array('paD' => 'Pais'), 'de.idpaisdestino = pad.idpais', array('continente as continentedestino', 'descricao as paisodestino'), $this->getSchema('agentes'))
             ->joinLeft(array('ufD' => 'uf'), 'de.idufdestino = ufd.idUF', array('descricao as ufdestino'), $this->getSchema('agentes'))
             ->joinLeft(array('muD' => 'municipios'), 'de.idmunicipiodestino = mud.idMunicipioIBGE', array('descricao as municipiodestino'), $this->getSchema('agentes'))
         ;
@@ -108,10 +108,10 @@ class Proposta_Model_DbTable_TbDeslocamento extends MinC_Db_Table_Abstract
         $sql = $this->select()
             ->setIntegrityCheck(false)
             ->from(array('de' => $this->_name), $de, $this->_schema)
-            ->joinLeft(array('pao'=>'pais'), 'de.idpaisorigem = pao.idpais','pao.Descricao as po', $agenteSchema)
+            ->joinLeft(array('pao'=>'Pais'), 'de.idpaisorigem = pao.idpais','pao.Descricao as po', $agenteSchema)
             ->joinLeft(array('ufo'=>'uf'), 'de.iduforigem = ufo.idUF','ufo.Descricao as ufo', $agenteSchema)
             ->joinLeft(array('muo' => 'municipios'), 'de.idmunicipioorigem = muo.idMunicipioIBGE','muo.Descricao as muo', $agenteSchema)
-            ->joinLeft(array('pad' => 'pais'), 'de.idpaisdestino = pad.idpais', 'pad.Descricao as pd', $agenteSchema)
+            ->joinLeft(array('pad' => 'Pais'), 'de.idpaisdestino = pad.idpais', 'pad.Descricao as pd', $agenteSchema)
             ->joinLeft(array('ufd' => 'uf'), 'de.idufdestino = ufd.idUF','ufd.Descricao as ufd', $agenteSchema)
             ->joinLeft(array('mud' => 'municipios'), 'de.idmunicipiodestino = mud.idMunicipioIBGE', 'mud.Descricao as mud', $agenteSchema)
             ->where("idprojeto = ?", $idProjeto)
