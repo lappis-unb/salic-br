@@ -1,19 +1,5 @@
 <?php
 
-/**
- * Class Agente_Model_EnderecoNacionalMapper
- *
- * @name Agente_Model_EnderecoNacionalMapper
- * @package Modules/Agente
- * @subpackage Models
- * @version $Id$
- *
- * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
- * @since 06/09/2016
- *
- * @copyright © 2012 - Ministerio da Cultura - Todos os direitos reservados.
- * @link http://salic.cultura.gov.br
- */
 class Agente_Model_EnderecoNacionalMapper extends MinC_Db_Mapper
 {
     public function __construct()
@@ -35,18 +21,18 @@ class Agente_Model_EnderecoNacionalMapper extends MinC_Db_Mapper
         for ($i = 0; $i < sizeof($arrData['ceps']); $i++) {
             $arrayEnderecos = array(
                 'idAgente' => $arrData['idAgente'],
-                'cep' => str_replace(".", "", str_replace("-", "", $arrData['ceps'][$i])),
-                'tipoendereco' => $arrData['tipoenderecos'][$i],
-                'uf' => $arrData['ufs'][$i],
-                'cidade' => $arrData['cidades'][$i],
-                'logradouro' => $arrData['logradouros'][$i],
-                'divulgar' => $arrData['divulgarEnderecos'][$i],
+                'Cep' => str_replace(".", "", str_replace("-", "", $arrData['ceps'][$i])),
+                'TipoEndereco' => $arrData['tipoenderecos'][$i],
+                'UF' => $arrData['ufs'][$i],
+                'Cidade' => $arrData['cidades'][$i],
+                'Logradouro' => $arrData['logradouros'][$i],
+                'Divulgar' => $arrData['divulgarEnderecos'][$i],
                 'TipoLogradouro' => $arrData['TipoLogradouros'][$i],
-                'numero' => $arrData['numeros'][$i],
-                'complemento' => $arrData['complementos'][$i],
-                'bairro' => $arrData['bairros'][$i],
-                'status' => $correspondenciaEnderecos,
-                'usuario' => $arrData['IdUsuario']);
+                'Numero' => $arrData['numeros'][$i],
+                'Complemento' => $arrData['complementos'][$i],
+                'Bairro' => $arrData['bairros'][$i],
+                'Status' => $correspondenciaEnderecos,
+                'Usuario' => $arrData['IdUsuario']);
             $arrId[] = $this->save(new Agente_Model_EnderecoNacional($arrayEnderecos));
         }
 
