@@ -2,8 +2,9 @@
 
 class Agente_Model_Email extends MinC_Db_Table_Abstract
 {
-    protected $_name = 'Internet'; // nome da tabela
-    protected $_schema = 'agentes'; // nome da tabela
+    protected $_name = 'Internet';
+    protected $_schema = 'agentes';
+    protected $_primary = 'idInternet';
 
     public function buscar($idAgente)
     {
