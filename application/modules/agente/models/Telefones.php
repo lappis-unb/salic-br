@@ -1,14 +1,5 @@
 <?php
 
-/**
- * Modelo Telefone
- *
- *
- * @author wouerner <wouerner@gmail.com>
- * @link   http://www.cultura.gov.br
- * @since  29/03/2010
- */
-
 class Agente_Model_Telefones extends MinC_Db_Model
 {
     protected $_idTelefone;

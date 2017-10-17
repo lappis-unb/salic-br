@@ -30,7 +30,7 @@ class DeslocamentoDAO extends MinC_Db_Table_Abstract {
     }
 
     public function pais() {
-        $sql = "SELECT * FROM " . DeslocamentoDAO::getStaticTableName('agentes', 'pais');
+        $sql = "SELECT * FROM " . DeslocamentoDAO::getStaticTableName('agentes', 'Pais');
 
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -126,10 +126,10 @@ class DeslocamentoDAO extends MinC_Db_Table_Abstract {
 
         $sql = $db->select()
             ->from(array('de' => $this->_name), $de, $this->_schema)
-            ->joinLeft(array('pao'=>'pais'), 'de.idpaisorigem = pao.idpais','pao.Descricao as po', $agenteSchema)
+            ->joinLeft(array('pao'=>'Pais'), 'de.idpaisorigem = pao.idpais','pao.Descricao as po', $agenteSchema)
             ->joinLeft(array('ufo'=>'uf'), 'de.iduforigem = ufo.idUF','ufo.Descricao as ufo', $agenteSchema)
             ->joinLeft(array('muo' => 'municipios'), 'de.idmunicipioorigem = muo.idMunicipioIBGE','muo.Descricao as muo', $agenteSchema)
-            ->joinLeft(array('pad' => 'pais'), 'de.idpaisdestino = pad.idpais', 'pad.Descricao as pd', $agenteSchema)
+            ->joinLeft(array('pad' => 'Pais'), 'de.idpaisdestino = pad.idpais', 'pad.Descricao as pd', $agenteSchema)
             ->joinLeft(array('ufd' => 'uf'), 'de.idufdestino = ufd.idUF','ufd.Descricao as ufd', $agenteSchema)
             ->joinLeft(array('mud' => 'municipios'), 'de.idmunicipiodestino = mud.idMunicipioIBGE', 'mud.Descricao as mud', $agenteSchema)
             ->where("idprojeto = ?", $idProjeto)

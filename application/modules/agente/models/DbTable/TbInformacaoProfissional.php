@@ -3,11 +3,9 @@
 class Agente_Model_DbTable_TbInformacaoProfissional extends MinC_Db_Table_Abstract
 {
 
-    protected $_banco = 'agentes';
-
     protected $_name = 'tbInformacaoProfissional';
-
     protected $_schema = 'agentes';
+    protected $_primary = 'idInformacaoProfissional';
 
     public function BuscarInfo($idAgente, $situacao)
     {

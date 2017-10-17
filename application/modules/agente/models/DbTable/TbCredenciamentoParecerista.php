@@ -2,7 +2,6 @@
 
 class Agente_Model_DbTable_TbCredenciamentoParecerista extends MinC_Db_Table_Abstract
 {
-    // protected $_banco = 'agentes';
     protected $_schema = 'agentes';
     protected $_name = 'tbCredenciamentoParecerista';
     protected $_primary = 'idCredenciamentoParecerista';
@@ -48,9 +47,6 @@ class Agente_Model_DbTable_TbCredenciamentoParecerista extends MinC_Db_Table_Abs
         return $this->fetchAll($select);
     }
 
-    //Select count(distinct idCodigoArea) as qtdArea from agentes.dbotbCredenciamentoParecerista where idCodigoSegmento LIKE '1%'
-    //Select count(distinct idCodigoSegmento) as qtdSeguimentos from agentes.dbotbCredenciamentoParecerista where idCodigoSegmento LIKE '1%'
-    
     public function QtdArea($idAgente)
     {
         $select = $this->select();

@@ -65,7 +65,7 @@ class Proposta_Model_DbTable_Abrangencia extends MinC_Db_Table_Abstract
         $sql = $this->select()
             ->setIntegrityCheck(false)
             ->from(array('a' => 'abrangencia'), $this->_getCols(), $this->_schema)
-            ->join(array('p' => 'pais'), 'a.idpais = p.idpais and a.stabrangencia = 1', 'p.Descricao as pais', $this->getSchema('agentes'))
+            ->join(array('p' => 'Pais'), 'a.idpais = p.idpais and a.stabrangencia = 1', 'p.Descricao as pais', $this->getSchema('agentes'))
             ->joinLeft(array('u' => 'uf'), '(a.iduf = u.iduf)', 'u.Descricao as uf', $this->getSchema('agentes'))
             ->joinLeft(array('m' => 'municipios'), '(a.idMunicipioIBGE = m.idMunicipioIBGE)', 'm.Descricao as cidade', $this->getSchema('agentes'));
         foreach ($where as $coluna => $valor) {

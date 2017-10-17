@@ -1,18 +1,5 @@
 <?php
 
-/**
- * Class Agente_Model_TbVinculoPropostaMapper
- *
- * @name Agente_Model_TbVinculoPropostaMapper
- * @package Modules/Agente
- * @subpackage Models
- *
- * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
- * @author Cleber Santos <oclebersantos@gmail.com>
- * @since 14/10/2016
- *
- * @link http://salic.cultura.gov.br
- */
 class Agente_Model_TbVinculoPropostaMapper extends MinC_Db_Mapper
 {
     public function __construct()
@@ -21,13 +8,8 @@ class Agente_Model_TbVinculoPropostaMapper extends MinC_Db_Mapper
     }
 
     /**
-     * @name saveCustom
      * @param array $arrData - Parametros necessarios para 3 transacoes com o banco.
      * @return bool
-     *
-     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
-     * @author Cleber Santos <oclebersantos@gmail.com>
-     * @since 14/10/2016
      */
     public function saveCustom($arrData)
     {
@@ -58,15 +40,6 @@ class Agente_Model_TbVinculoPropostaMapper extends MinC_Db_Mapper
         return $booStatus;
     }
 
-    /**
-     * @name save
-     * @param Agente_Model_TbVinculoProposta $model
-     * @return mixed
-     *
-     * @author Ruy Junior Ferreira Silva
-     * @author Cleber Santos <oclebersantos@gmail.com>
-     * @since 14/10/2016
-     */
     public function save(Agente_Model_TbVinculoProposta $model) {
         return parent::save($model);
     }

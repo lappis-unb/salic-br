@@ -436,17 +436,17 @@ class Proposta_LocalderealizacaoController extends Proposta_GenericController
 
         //INSERE LOCAIS DE REALIZACAO (tabela sac.dbo.Abrangencia)
         $dadosAbrangencia = array(
-            "idprojeto" => $this->idPreProjeto,
-            "stabrangencia" => 1,
-            "usuario" => $this->usuarioLogado,
-            "idpais" => $pais,
+            "idProjeto" => $this->idPreProjeto,
+            "stAbrangencia" => 1,
+            "Usuario" => $this->usuarioLogado,
+            "idPais" => $pais,
             "idUF" => ($pais == 31) ? $estados : 0,
             "idMunicipioIBGE" => ($pais == 31) ? $cidades : 0
         );
 
         $msg = "Local de realiza&ccedil;&atilde;o cadastrado com sucesso!";
 
-        if (!empty($dadosAbrangencia["idprojeto"]) && !empty($dadosAbrangencia["idpais"])) {
+        if (!empty($dadosAbrangencia["idProjeto"]) && !empty($dadosAbrangencia["idPais"])) {
 
             if (empty($idAbrangencia)) {
                 $retorno = $tblAbrangencia->insert($dadosAbrangencia);

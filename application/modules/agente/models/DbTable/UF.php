@@ -28,7 +28,7 @@ class Agente_Model_DbTable_UF extends MinC_Db_Table_Abstract
     {
         $objEstado = self::obterInstancia();
         $sql = 'SELECT idUF AS id, Descricao AS descricao
-			FROM ' . GenericModel::getStaticTableName($objEstado->_schema, $objEstado->_name) . "
+			FROM ' . $this->getTableName($objEstado->_schema, $objEstado->_name) . "
 			WHERE Regiao = '{$regiao}'
 			ORDER BY Sigla";
 

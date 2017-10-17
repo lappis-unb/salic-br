@@ -1724,8 +1724,8 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $db = $this->getAdapter();
         $db->setFetchMode(Zend_Db::FETCH_OBJ);
         $sql = $this->select()
-            ->from(array('b' => 'bancoagencia'), 'agencia', $this->_schema)
-            ->where('b.agencia = ?', $codigo)
+            ->from(array('b' => 'BancoAgencia'), 'Agencia', $this->_schema)
+            ->where('b.Agencia = ?', $codigo)
             ->query();
 
         return $sql->fetchAll();

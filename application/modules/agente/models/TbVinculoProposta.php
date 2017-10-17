@@ -1,14 +1,4 @@
 <?php
-/**
- * @name Agente_Model_TbVinculoProposta
- * @package Modules/Agente
- * @subpackage Models
- *
- * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
- * @since 14/10/2016
- *
- * @link http://salic.cultura.gov.br
- */
 class Agente_Model_TbVinculoProposta extends MinC_Db_Model
 {
     protected $_idVinculoproposta;

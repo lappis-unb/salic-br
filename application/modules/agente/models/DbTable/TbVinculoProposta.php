@@ -5,10 +5,6 @@ class Agente_Model_DbTable_TbVinculoProposta extends MinC_Db_Table_Abstract
     protected $_schema = 'agentes';
     protected $_primary = 'idVinculoProposta';
 
-    /**
-     * @param array $where
-     * @return Zend_Db_Table_Rowset_Abstract
-     */
     public function buscarResponsaveisProponentes($where = array())
     {
         $slct = $this->select();

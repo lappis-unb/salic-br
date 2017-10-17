@@ -1,19 +1,5 @@
 <?php
 
-/**
- * Class Agente_Model_TbTitulacaoConselheiroMapper
- *
- * @name Agente_Model_TbTitulacaoConselheiroMapper
- * @package Modules/Agente
- * @subpackage Models
- * @version $Id$
- *
- * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
- * @since 06/09/2016
- *
- * @copyright © 2012 - Ministerio da Cultura - Todos os direitos reservados.
- * @link http://salic.cultura.gov.br
- */
 class Agente_Model_TbTitulacaoConselheiroMapper extends MinC_Db_Mapper
 {
     public function __construct()

@@ -1,15 +1,5 @@
 <?php
 
-/**
- * @name Admissibilidade_Model_TbMensagemProjeto
- * @package Modules/Admissibilidade
- * @subpackage Models
- *
- * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
- * @since 06/12/2016
- *
- * @link http://salic.cultura.gov.br
- */
 class Admissibilidade_Model_TbMensagemProjeto extends MinC_Db_Model
 {
     protected $_idMensagemProjeto;

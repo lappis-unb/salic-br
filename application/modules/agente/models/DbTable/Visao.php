@@ -2,37 +2,10 @@
 
 class Agente_Model_DbTable_Visao extends MinC_Db_Table_Abstract
 {
-    /**
-     * _schema
-     *
-     * @var string
-     * @access protected
-     */
     protected $_schema = 'agentes';
-
-    /**
-     * _name
-     *
-     * @var bool
-     * @access protected
-     */
     protected $_name = 'Visao';
-
-    /**
-     * _primary
-     *
-     * @var bool
-     * @access protected
-     */
     protected $_primary = 'idVisao';
 
-    /**
-     * @access public
-     * @param integer $idAgente
-     * @param integer $visao
-     * @param boolean $todasVisoes
-     * @return array
-     */
     public function buscarVisao($idAgente = null, $visao = null, $todasVisoes = false)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
@@ -95,11 +68,6 @@ class Agente_Model_DbTable_Visao extends MinC_Db_Table_Abstract
         return $insert ? true : false;
     }
 
-    /**
-     * @param integer $idAgente
-     * @param array $dados
-     * @return boolean
-     */
     public function alterarVisao($idAgente, $dados)
     {
         $where = "idAgente = " . $idAgente;
@@ -112,10 +80,6 @@ class Agente_Model_DbTable_Visao extends MinC_Db_Table_Abstract
         }
     }
 
-    /**
-     * @param integer $idAgente
-     * @return boolean
-     */
     public function excluirVisao($idAgente)
     {
         $where = "idAgente = " . $idAgente; // condi��o para exclus�o

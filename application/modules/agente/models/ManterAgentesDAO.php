@@ -12,15 +12,6 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
         throw new Exception("Método descontinuado. Favor utilizar o m&eacute;todo 'buscarVinculados' da Agente_Model_DbTable_Agentes.");
     }
 
-    /**
-     * M�todo para buscar os endere�os do agente
-     *
-     * @access public
-     * @static
-     * @param integer $idAgente
-     * @return object
-     * @deprecated utilizar buscarEnderecos da DbTable Endereco Nacional
-     */
     public static function buscarEnderecos($idAgente = null)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
@@ -67,15 +58,6 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
         return $db->fetchAll($sql);
     }
 
-    /**
-     * M�todo para buscar os e-mails do agente
-     *
-     * @access public
-     * @static
-     * @param integer $idAgente
-     * @return object
-     * @deprecated Utilizar metodo da Dbtable
-     */
     public static function buscarEmails($idAgente = null)
     {
         $tblAgentes = new Agente_Model_DbTable_Agentes();
@@ -104,15 +86,6 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
         return $db->fetchAll($sql);
     }
 
-    /**
-     * M�todo para buscar os Telefones do agente
-     *
-     * @access public
-     * @static
-     * @param integer $idAgente
-     * @return object
-     * @deprecated Utilizar metodo da Dbtable
-     */
     public static function buscarFones($idAgente = null)
     {
         $tblAgentes = new Agente_Model_DbTable_Agentes();
@@ -143,13 +116,6 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
         return $db->fetchAll($sql);
     }
 
-    /**
-     * Metodo para cadastrar dados do agente
-     * @access public
-     * @static
-     * @param array $dados
-     * @return boolean
-     */
     public static function cadastrarAgente($dados)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
@@ -164,13 +130,6 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
         }
     }
 
-    /**
-     * M�todo para cadastrar dados do agente
-     * @access public
-     * @static
-     * @param array $dados
-     * @return int (idAgente)
-     */
     public static function cadastraAgente($dados)
     {
         //INSTANCIANDO UM OBJETO DE ACESSO AOS DADOS DA TABELA
@@ -206,13 +165,6 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
     }
 
     /**
-     * Metodo para alterar dados do agente
-     * @access public
-     * @static
-     * @param integer $idAgente
-     * @param array $dados
-     * @return boolean
-     *
      * @todo Existe uma trigger no db que impede o acesso direto a atualizacao. Pendente de verificacao
      */
     public static function alterarAgente($idAgente, $dados)
@@ -232,13 +184,6 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
         }
     }
 
-    /**
-     * M�todo para cadastrar o v�nculo entre os agentes
-     * @access public
-     * @static
-     * @param array $dados
-     * @return boolean
-     */
     public static function cadastrarVinculados($dados)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
