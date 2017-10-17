@@ -148,12 +148,6 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
         );
     }
 
-    /**
-     * declaracaonovapropostaAction
-     *
-     * @access public
-     * @return void
-     */
     public function declaracaonovapropostaAction()
     {
 
