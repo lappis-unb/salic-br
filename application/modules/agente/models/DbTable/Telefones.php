@@ -3,9 +3,7 @@
 class Agente_Model_DbTable_Telefones extends MinC_Db_Table_Abstract
 {
     protected $_schema = 'agentes';
-
     protected $_name = 'Telefones';
-
     protected $_primary = 'idTelefone';
 
     public function buscarFones($idAgente = null)

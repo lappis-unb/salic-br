@@ -12,7 +12,6 @@ class Agente_Model_DbTable_Verificacao extends MinC_Db_Table_Abstract
 
     function combosNatureza($idTipo)
     {
-
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
