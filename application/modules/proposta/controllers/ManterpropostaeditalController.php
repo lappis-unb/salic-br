@@ -1,14 +1,5 @@
 <?php
 
-/**
- * Controller Disvincular Agentes
- * @author wouerner <wouerner@gmail.com>
- * @since 07/06/2010
- * @version 1.0
- * @package application
- * @subpackage application.controller
- * @link http://www.cultura.gov.br
- */
 class Proposta_ManterpropostaeditalController extends Proposta_GenericController
 {
 
@@ -19,9 +10,6 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
     private $cpfLogado = null;
 
 
-    /**
-     * Reescreve o metodo init()
-     */
     public function init()
     {
         $auth = Zend_Auth::getInstance(); // pega a autenticacao
@@ -109,22 +97,10 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
         }
     }
 
-    /**
-     * indexAction
-     *
-     * @access public
-     * @return void
-     */
     public function indexAction()
     {
     }
 
-    /**
-     * editalAction
-     *
-     * @access public
-     * @return void
-     */
     public function editalAction()
     {
         $get = Zend_Registry::get('get');
@@ -154,12 +130,6 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
         $this->view->edital = $array;
     }
 
-    /**
-     * dadospropostaeditalAction
-     *
-     * @access public
-     * @return void
-     */
     public function dadospropostaeditalAction()
     {
         if (isset($_REQUEST['idPreProjeto']) && !empty($_REQUEST['idPreProjeto'])) {
@@ -264,12 +234,6 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
         $this->view->editalpreprojeto = $tbeditalpreprojeto;
     }
 
-    /**
-     * inserirdadospropostaeditalAction
-     *
-     * @access public
-     * @return void
-     */
     public function inserirdadospropostaeditalAction()
     {
         $array = array('mensagem' => '');
@@ -363,22 +327,10 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
         $this->_redirect('/proposta/manterpropostaedital/dadospropostaedital?idPreProjeto=' . $array['idPreProjeto'] . '&mensagem=' . $array['mensagem'] . '&tpmensagem=' . $array['tpmensagem']);
     }
 
-    /**
-     * localderealizacaoeditalAction
-     *
-     * @access public
-     * @return void
-     */
     public function localderealizacaoeditalAction()
     {
     }
 
-    /**
-     * responderquestionarioeditalAction
-     *
-     * @access public
-     * @return void
-     */
     public function responderquestionarioeditalAction()
     {
         if (isset($_REQUEST['idPreProjeto'])) {
@@ -412,12 +364,6 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
         $this->view->idUsuario = $this->idUsuario;
     }
 
-    /**
-     * @name enviararquivoeditalAction
-     *
-     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
-     * @since  02/10/2016
-     */
     public function enviararquivoeditalAction()
     {
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
@@ -458,12 +404,6 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
 
     }
 
-    /**
-     * listararquivosAction
-     *
-     * @access public
-     * @return void
-     */
     public function listararquivosAction()
     {
         $opcao = !empty($_GET['classificao']) ? $_GET['classificao'] : -1;
@@ -479,13 +419,6 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
-    /**
-     *
-     * @name incluirAnexoAction
-     *
-     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
-     * @since  29/09/2016
-     */
     public function incluirAnexoAction()
     {
         if ($this->getRequest()->isPost()) {
@@ -502,12 +435,6 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
         }
     }
 
-    /**
-     * incluirarquivoAction
-     *
-     * @access public
-     * @return void
-     */
     public function incluirarquivoAction()
     {
         $post = Zend_Registry::get('post');
@@ -544,12 +471,6 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
         }
     }
 
-    /**
-     * anexararquivo
-     *
-     * @access private
-     * @return void
-     */
     private function anexararquivo()
     {
         // pega as informacoes do arquivo
@@ -595,34 +516,16 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
         return $idUltimoArquivo;
     }
 
-    /**
-     * enviarpropostaaominceditalAction
-     *
-     * @access public
-     * @return void
-     */
     public function enviarpropostaaominceditalAction()
     {
 
     }
 
-    /**
-     * manteragentesAction
-     *
-     * @access public
-     * @return void
-     */
     public function manteragentesAction()
     {
 
     }
 
-    /**
-     * dadosproponenteenderecoeditalAction
-     *
-     * @access public
-     * @return void
-     */
     public function dadosproponenteenderecoeditalAction()
     {
 
@@ -637,15 +540,8 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
         $this->view->endereco = $tbeendereco;
     }
 
-    /**
-     * documentospendenteseditalAction
-     *
-     * @access public
-     * @return void
-     */
     public function documentospendenteseditalAction()
     {
-        /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
         $this->verificarPermissaoAcesso(true, false, false);
 
         $get = Zend_Registry::get("get");
@@ -656,67 +552,31 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
         $this->view->documentosPendentes = $model->buscarDocumentoPendente($get->idPreProjeto);
     }
 
-    /**
-     * msnenviadasaominceditalAction
-     *
-     * @access public
-     * @return void
-     */
     public function msnenviadasaominceditalAction()
     {
 
     }
 
-    /**
-     * acompanhesuapropostaeditalAction
-     *
-     * @access public
-     * @return void
-     */
     public function acompanhesuapropostaeditalAction()
     {
 
     }
 
-    /**
-     * alterardtnascimentoeditalAction
-     *
-     * @access public
-     * @return void
-     */
     public function alterardtnascimentoeditalAction()
     {
 
     }
 
-    /**
-     * dadosenderecoeditalAction
-     *
-     * @access public
-     * @return void
-     */
     public function dadosenderecoeditalAction()
     {
 
     }
 
-    /**
-     * novodadosenderecoeditalAction
-     *
-     * @access public
-     * @return void
-     */
     public function novodadosenderecoeditalAction()
     {
 
     }
 
-    /**
-     * exluirpropostaAction
-     *
-     * @access public
-     * @return void
-     */
     public function exluirpropostaAction()
     {
 
@@ -741,23 +601,11 @@ class Proposta_ManterpropostaeditalController extends Proposta_GenericController
         }
     }
 
-    /**
-     * editallocalizarAction
-     *
-     * @access public
-     * @return void
-     */
     public function editallocalizarAction()
     {
         $this->view->idAgente = $_REQUEST['idAgente'];
     }
 
-    /**
-     * editalconfirmarAction
-     *
-     * @access public
-     * @return void
-     */
     public function editalconfirmarAction()
     {
 
