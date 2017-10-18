@@ -7,6 +7,7 @@ Bem vindo/a &agrave; documenta&ccedil;&atilde;o do SALIC! Aqui voc&ecirc; vai en
 * [Regras de versionamento](doc/Regras_versionamento.md)
 * [Roteiro de publicação de releases](doc/Roteiro_de_publicacao_de_releases.md)
 
+
 ## Docker
 
 Utilizamos o Docker como plataforma de desenvolvimento com o intuito de garantir o mesmo ambiente de desenvolvimento 
@@ -18,6 +19,7 @@ Para criar um ambiente para trabalhar com o SALIC basta executar o comando abaix
 ```
   docker-compose up -d
 ```
+
 
 Para parar o container basta digitar:
 
