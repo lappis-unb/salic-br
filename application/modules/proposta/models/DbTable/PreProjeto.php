@@ -2574,7 +2574,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $sql->join(array('b' => 'Agentes'), 'a.idAgente = b.idAgente', array('b.CNPJCPF', 'b.idAgente'), $this->getSchema('agentes'));
         $sql->joinleft(array('n' => 'Nomes'), 'n.idAgente = b.idAgente', array('n.Descricao as nomeproponente'), $this->getSchema('agentes'));
         $sql->where('a.idAgente = ? ', $idAgente);
-        $sql->where('a.stEstado = 1');
+        $sql->where('a.stEstado = true');
         $sql->where("NOT EXISTS($subSql)");
         $sql->where("a.Mecanismo = '1'");
 
@@ -2586,7 +2586,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             ->join(array('e' => 'SGCacesso'), 'd.CNPJCPF = e.Cpf', array(), $this->getSchema('controledeacesso'))
             ->joinleft(array('n' => 'Nomes'), 'n.idAgente = b.idAgente', array('n.Descricao as nomeproponente'), $this->getSchema('agentes'))
             ->where('e.IdUsuario = ?', $idResponsavel)
-            ->where('a.stEstado = 1')
+            ->where('a.stEstado = true')
             ->where(new Zend_Db_Expr("NOT EXISTS($subSql)"))
             ->where("a.Mecanismo = '1'");
 
@@ -2597,7 +2597,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             ->join(array('d' => 'SGCacesso'), 'a.idUsuario = d.IdUsuario', array(), $this->getSchema('controledeacesso'))
             ->join(array('e' => 'tbVinculoProposta'), 'a.idPreProjeto = e.idPreProjeto', array(), $this->getSchema('agentes'))
             ->join(array('f' => 'tbVinculo'), 'e.idVinculo = f.idVinculo', array(), $this->getSchema('agentes'))
-            ->where('a.stEstado = 1')
+            ->where('a.stEstado = true')
             ->where(new Zend_Db_Expr("NOT EXISTS($subSql)"))
             ->where("a.Mecanismo = '1'")
             ->where('e.siVinculoProposta = ?', '2')
