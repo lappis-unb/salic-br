@@ -6,7 +6,7 @@ class EmailDAO extends Zend_Db_Table
     {
 
         $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
-        if ($config->mail->activated === true) {
+        if ($config->mail->activated == true) {
             $transport = $config->mail->transport->toArray();
 
             $transport = new Zend_Mail_Transport_Smtp($transport['host'], $transport);

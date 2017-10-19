@@ -167,7 +167,9 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
 
     public function cadastrarusuarioAction()
     {
-        Zend_Layout::startMvc(array('layout' => 'open'));
+        Zend_Layout::startMvc(
+            array('layout' => 'open')
+        );
         if ($_POST) {
             $this->_helper->layout->disableLayout();
             $post = Zend_Registry::get('post');
