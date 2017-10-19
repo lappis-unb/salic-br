@@ -24,16 +24,16 @@ class EmailDAO extends Zend_Db_Table
     public static function buscarEmailsFiscalizacao($idPronac, $idFiscalizacao)
     {
         $sql = "SELECT i.Descricao AS email
-                        FROM sac.dbo.Projetos p
-                        INNER JOIN sac.dbo.PreProjeto pr           ON (p.idProjeto = pr.idPreProjeto)
-                        INNER JOIN sac.dbo.tbFiscalizacao f        ON (f.IdPRONAC = p.IdPRONAC)
-                        INNER JOIN agentes.dbo.Internet i          ON (i.idAgente = pr.idAgente )
+                        FROM sac.Projetos p
+                        INNER JOIN sac.PreProjeto pr           ON (p.idProjeto = pr.idPreProjeto)
+                        INNER JOIN sac.tbFiscalizacao f        ON (f.IdPRONAC = p''.IdPRONAC)
+                        INNER JOIN agentes.Internet i          ON (i.idAgente = pr.idAgente )
                         WHERE (p.IdPRONAC = $idPronac) AND (f.idFiscalizacao = $idFiscalizacao)
                         UNION ALL
                         SELECT t.Descricao AS email
-                        FROM sac.dbo.Projetos p
-                        INNER JOIN sac.dbo.tbFiscalizacao f        ON (f.IdPRONAC = p.IdPRONAC)
-                        INNER JOIN agentes.dbo.Internet t   ON (t.idAgente = f.idAgente)
+                        FROM sac.Projetos p
+                        INNER JOIN sac.tbFiscalizacao f        ON (f.IdPRONAC = p.IdPRONAC)
+                        INNER JOIN agentes.Internet t   ON (t.idAgente = f.idAgente)
                         WHERE (p.IdPRONAC = $idPronac) AND (f.idFiscalizacao = $idFiscalizacao)";
 
         return $sql;
