@@ -319,10 +319,9 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
 
         $dados['idPreProjeto'] = $idPreProjeto;
 
+        $mesagem = "Cadastro realizado com sucesso!";
         if (!empty($idPreProjeto)) {
             $mesagem = "Altera&ccedil;&atilde;o realizada com sucesso!";
-        } else {
-            $mesagem = "Cadastro realizado com sucesso!";
         }
 
         //instancia classe modelo
