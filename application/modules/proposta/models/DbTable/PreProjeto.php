@@ -136,14 +136,14 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $date = new DateTime();
         if (!$this->getAdapter() instanceof Zend_Db_Adapter_Pdo_Mssql) {
             $mprMovimentacao = new Proposta_Model_TbMovimentacaoMapper();
-            $arrMovimentacaoDb = $mprMovimentacao->findBy(array('idprojeto' => $arrData['idpreprojeto']));
+            $arrMovimentacaoDb = $mprMovimentacao->findBy(array('idProjeto' => $arrData['idPreProjeto']));
             if (empty($arrMovimentacaoDb)) {
                 $arrMovimentacao = array();
-                $arrMovimentacao['idprojeto'] = $arrData['idPreProjeto'];
-                $arrMovimentacao['movimentacao'] = 95;
-                $arrMovimentacao['dtmovimentacao'] = $date->format('Y-m-d H:i:sP');
-                $arrMovimentacao['stestado'] = 0;
-                $arrMovimentacao['usuario'] = $arrData['idusuario'];
+                $arrMovimentacao['idProjeto'] = $arrData['idPreProjeto'];
+                $arrMovimentacao['Movimentacao'] = 95;
+                $arrMovimentacao['DtMovimentacao'] = $date->format('Y-m-d H:i:sP');
+                $arrMovimentacao['stEstado'] = 0;
+                $arrMovimentacao['Usuario'] = $arrData['idusuario'];
                 $mprMovimentacao->save(new Proposta_Model_TbMovimentacao($arrMovimentacao));
             }
         }
@@ -151,7 +151,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
     public function salvar($dados)
     {
-        if (!empty ($dados['idpreprojeto'])) {
+        if (!empty ($dados['idPreProjeto'])) {
             $rsPreProjeto = $this->find($dados['idPreProjeto'])->current();
         } else {
             unset($dados['idPreProjeto']);
@@ -162,7 +162,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             return $id;
         }
 
-        $rsPreProjeto->idAgente = $dados["idagente"];
+        $rsPreProjeto->idAgente = $dados["idAgente"];
         $rsPreProjeto->NomeProjeto = $dados["nomeprojeto"];
         $rsPreProjeto->Mecanismo = $dados["mecanismo"];
         $rsPreProjeto->AgenciaBancaria = $dados["agenciabancaria"];
