@@ -338,12 +338,12 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
                 $tbVinculoPropostaDAO = new Agente_Model_DbTable_TbVinculoProposta();
 
                 $whereVinculo['idUsuarioResponsavel = ?'] = $this->idResponsavel;
-                $whereVinculo['idAgenteProponente   = ?'] = $post['idAgente'];
+                $whereVinculo['idAgenteProponente   = ?'] = $post['idagente'];
                 $vinculo = $tbVinculoDAO->buscar($whereVinculo);
 
                 if (count($vinculo) == 0) {
                     $dadosV = array(
-                        'idAgenteProponente' => $post['idAgente'],
+                        'idAgenteProponente' => $post['idagente'],
                         'dtVinculo' => MinC_Db_Expr::date(),
                         'siVinculo' => 2,
                         'idUsuarioResponsavel' => $this->idResponsavel
