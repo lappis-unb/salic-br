@@ -139,7 +139,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             $arrMovimentacaoDb = $mprMovimentacao->findBy(array('idprojeto' => $arrData['idpreprojeto']));
             if (empty($arrMovimentacaoDb)) {
                 $arrMovimentacao = array();
-                $arrMovimentacao['idprojeto'] = $arrData['idpreprojeto'];
+                $arrMovimentacao['idprojeto'] = $arrData['idPreProjeto'];
                 $arrMovimentacao['movimentacao'] = 95;
                 $arrMovimentacao['dtmovimentacao'] = $date->format('Y-m-d H:i:sP');
                 $arrMovimentacao['stestado'] = 0;
@@ -152,16 +152,17 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     public function salvar($dados)
     {
         if (!empty ($dados['idpreprojeto'])) {
-            $rsPreProjeto = $this->find($dados['idpreprojeto'])->current();
+            $rsPreProjeto = $this->find($dados['idPreProjeto'])->current();
         } else {
-            unset($dados['idpreprojeto']);
-            $id = $this->insert(array_filter($dados));
-            $dados['idpreprojeto'] = $id;
+            unset($dados['idPreProjeto']);
+            $id = $this->insert($dados);
+//            $id = $this->insert(array_filter($dados));
+            $dados['idPreProjeto'] = $id;
             $this->salvarMovimentacao($dados);
             return $id;
         }
 
-        $rsPreProjeto->idAgente = $dados["idAgente"];
+        $rsPreProjeto->idAgente = $dados["idagente"];
         $rsPreProjeto->NomeProjeto = $dados["nomeprojeto"];
         $rsPreProjeto->Mecanismo = $dados["mecanismo"];
         $rsPreProjeto->AgenciaBancaria = $dados["agenciabancaria"];

@@ -287,33 +287,34 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
         }
 
         $dados = array(
-            "idAgente" => isset($post['idAgente']) ? $post['idAgente'] : '',
-            "NomeProjeto" => isset($post['nomeprojeto']) ? $post['nomeprojeto'] : '',
+            "idAgente" => isset($post['idagente']) ? $post['idagente'] : null,
+            "NomeProjeto" => isset($post['nomeprojeto']) ? $post['nomeprojeto'] : null,
             "Mecanismo" => 1, //seguindo sistema legado
-            "AgenciaBancaria" => isset($post['agenciabancaria']) ? $post['agenciabancaria'] : '',
-            "AreaAbrangencia" => isset($post['areaabrangencia']) ? $post['areaabrangencia'] : '',
-            "DtInicioDeExecucao" => isset($post['dtiniciodeexecucao']) ? $post['dtiniciodeexecucao'] : '',
-            "DtFinalDeExecucao" => isset($post['dtfinaldeexecucao']) ? $post['dtfinaldeexecucao'] : '',
-            "DtAtoTombamento" => isset($post['dtatotombamento']) ? $post['dtatotombamento'] : '',
-            "NrAtoTombamento" => isset($post['nratotombamento']) ? $post['nratotombamento'] : '',
+            "AgenciaBancaria" => isset($post['agenciabancaria']) ? $post['agenciabancaria'] : null,
+            "AreaAbrangencia" => isset($post['areaabrangencia']) ? $post['areaabrangencia'] : false,
+            "DtInicioDeExecucao" => isset($post['dtiniciodeexecucao']) ? $post['dtiniciodeexecucao'] : null,
+            "DtFinalDeExecucao" => isset($post['dtfinaldeexecucao']) ? $post['dtfinaldeexecucao'] : null,
+            "DtAtoTombamento" => isset($post['dtatotombamento']) ? $post['dtatotombamento'] : null,
+            "NrAtoTombamento" => isset($post['nratotombamento']) ? $post['nratotombamento'] : null,
             "EsferaTombamento" => isset($post['esferatombamento']) ? $post['esferatombamento'] : '0',
-            "ResumoDoProjeto" => isset($post['resumodoprojeto']) ? $post['resumodoprojeto'] : '',
-            "Objetivos" => isset($post['objetivos']) ? $post['objetivos'] : '',
-            "Justificativa" => isset($post['justificativa']) ? $post['justificativa'] : '',
-            "Acessibilidade" => isset($post['acessibilidade']) ? $post['acessibilidade'] : '',
-            "DemocratizacaoDeAcesso" => isset($post['democratizacaodeacesso']) ? $post['democratizacaodeacesso'] : '',
-            "EtapaDeTrabalho" => isset($post['etapadetrabalho']) ? $post['etapadetrabalho'] : '',
-            "FichaTecnica" => isset($post['fichatecnica']) ? $post['fichatecnica'] : '',
-            "Sinopse" => isset($post['sinopse']) ? $post['sinopse'] : '',
-            "ImpactoAmbiental" => isset($post['impactoambiental']) ? $post['impactoambiental'] : '',
-            "EspecificacaoTecnica" => isset($post['especificacaotecnica']) ? $post['especificacaotecnica'] : '', //No legado o que esta sendo gravado aqui e OUTRAS INFORMACOES
-            "EstrategiadeExecucao" => isset($post['estrategiadeexecucao']) ? $post['estrategiadeexecucao'] : '', //No legado o que esta sendo gravado aqui e ESPECIFICAO TECNICA
+            "ResumoDoProjeto" => isset($post['resumodoprojeto']) ? $post['resumodoprojeto'] : null,
+            "Objetivos" => isset($post['objetivos']) ? $post['objetivos'] : null,
+            "Justificativa" => isset($post['justificativa']) ? $post['justificativa'] : null,
+            "Acessibilidade" => isset($post['acessibilidade']) ? $post['acessibilidade'] : null,
+            "DemocratizacaoDeAcesso" => isset($post['democratizacaodeacesso']) ? $post['democratizacaodeacesso'] : null,
+            "EtapaDeTrabalho" => isset($post['etapadetrabalho']) ? $post['etapadetrabalho'] : null,
+            "FichaTecnica" => isset($post['fichatecnica']) ? $post['fichatecnica'] : null,
+            "Sinopse" => isset($post['sinopse']) ? $post['sinopse'] : null,
+            "ImpactoAmbiental" => isset($post['impactoambiental']) ? $post['impactoambiental'] : null,
+            "EspecificacaoTecnica" => isset($post['especificacaotecnica']) ? $post['especificacaotecnica'] : null, //No legado o que esta sendo gravado aqui e OUTRAS INFORMACOES
+            "EstrategiadeExecucao" => isset($post['estrategiadeexecucao']) ? $post['estrategiadeexecucao'] : null, //No legado o que esta sendo gravado aqui e ESPECIFICAO TECNICA
             "dtAceite" => isset($post['dtaceite']) ? $post['dtaceite'] : date("Y/m/d H:i:s"), // verificar se realmente eh sempre que salva
-            "stEstado" => isset($post['stestado']) ? $post['stestado'] : 1,
-            "stDataFixa" => isset($post['stdatafixa']) ? $post['stdatafixa'] : '',
-            "stProposta" => isset($post['stproposta']) ? $post['stproposta'] : '',
+            "stEstado" => isset($post['stestado']) ? $post['stestado'] : true,
+            "stDataFixa" => isset($post['stdatafixa']) ? $post['stdatafixa'] : false,
+            "stProposta" => isset($post['stproposta']) ? $post['stproposta'] : 0,
             "idUsuario" => isset($post['idusuario']) ? $post['idusuario'] : $this->idResponsavel,
             "stTipoDemanda" => "NA", //seguindo sistema legado
+            "stPlanoAnual" => true, //seguindo sistema legado
             "tpProrrogacao" => isset($post['tpprorrogacao']) ? $post['tpprorrogacao'] : ''
         );
 
@@ -392,7 +393,13 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
             }
             return;
         } catch (Zend_Exception $ex) {
-            parent::message("N&atilde;o foi poss&iacute;vel realizar a opera&ccedil;&atilde;o!" . $ex->getMessage(), "/proposta/manterpropostaincentivofiscal/index?idPreProjeto=" . $idPreProjeto, "ERROR");
+            //$ex->getMessage()
+xd($ex->getMessage());
+            if($idPreProjeto) {
+                parent::message("N&atilde;o foi poss&iacute;vel realizar a opera&ccedil;&atilde;o!" . $ex->getMessage(), "/proposta/manterpropostaincentivofiscal/index?idPreProjeto=" . $idPreProjeto, "ERROR");
+            } else {
+                parent::message("N&atilde;o foi poss&iacute;vel realizar a opera&ccedil;&atilde;o!", "/proposta/manterpropostaincentivofiscal/listarproposta", "ERROR");
+            }
         }
     }
 
