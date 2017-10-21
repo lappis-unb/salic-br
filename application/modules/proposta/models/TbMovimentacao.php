@@ -1,61 +1,47 @@
 <?php
 
-/**
- * Class Proposta_Model_TbMovimentacao
- *
- * @name Proposta_Model_TbMovimentacao
- * @package Modules/Agente
- * @subpackage Models
- * @version $Id$
- *
- * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
- * @since 20/09/2016
- *
- * @copyright © 2012 - Ministerio da Cultura - Todos os direitos reservados.
- * @link http://salic.cultura.gov.br
- */
 class Proposta_Model_TbMovimentacao extends MinC_Db_Model
 {
-    protected $_idmovimentacao;
-    protected $_idprojeto;
-    protected $_movimentacao;
-    protected $_dtmovimentacao;
-    protected $_stestado;
-    protected $_usuario;
+    protected $_idMovimentacao;
+    protected $_idProjeto;
+    protected $_Movimentacao;
+    protected $_DtMovimentacao;
+    protected $_stEstado;
+    protected $_Usuario;
 
     /**
      * @return mixed
      */
-    public function getIdmovimentacao()
+    public function getIdMovimentacao()
     {
-        return $this->_idmovimentacao;
+        return $this->_idMovimentacao;
     }
 
     /**
      * @param mixed $idmovimentacao
      * @return Proposta_Model_TbMovimentacao
      */
-    public function setIdmovimentacao($idmovimentacao)
+    public function setIdMovimentacao($idmovimentacao)
     {
-        $this->_idmovimentacao = $idmovimentacao;
+        $this->_idMovimentacao = $idmovimentacao;
         return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getIdprojeto()
+    public function getIdProjeto()
     {
-        return $this->_idprojeto;
+        return $this->_idProjeto;
     }
 
     /**
      * @param mixed $idprojeto
      * @return Proposta_Model_TbMovimentacao
      */
-    public function setIdprojeto($idprojeto)
+    public function setIdProjeto($idprojeto)
     {
-        $this->_idprojeto = $idprojeto;
+        $this->_idProjeto = $idprojeto;
         return $this;
     }
 
@@ -64,7 +50,7 @@ class Proposta_Model_TbMovimentacao extends MinC_Db_Model
      */
     public function getMovimentacao()
     {
-        return $this->_movimentacao;
+        return $this->_Movimentacao;
     }
 
     /**
@@ -73,43 +59,43 @@ class Proposta_Model_TbMovimentacao extends MinC_Db_Model
      */
     public function setMovimentacao($movimentacao)
     {
-        $this->_movimentacao = $movimentacao;
+        $this->_Movimentacao = $movimentacao;
         return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getDtmovimentacao()
+    public function getDtMovimentacao()
     {
-        return $this->_dtmovimentacao;
+        return $this->_DtMovimentacao;
     }
 
     /**
      * @param mixed $dtmovimentacao
      * @return Proposta_Model_TbMovimentacao
      */
-    public function setDtmovimentacao($dtmovimentacao)
+    public function setDtMovimentacao($dtmovimentacao)
     {
-        $this->_dtmovimentacao = $dtmovimentacao;
+        $this->_DtMovimentacao = $dtmovimentacao;
         return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getStestado()
+    public function getStEstado()
     {
-        return $this->_stestado;
+        return $this->_stEstado;
     }
 
     /**
      * @param mixed $stestado
      * @return Proposta_Model_TbMovimentacao
      */
-    public function setStestado($stestado)
+    public function setStEstado($stestado)
     {
-        $this->_stestado = $stestado;
+        $this->_stEstado = $stestado;
         return $this;
     }
 
@@ -118,7 +104,7 @@ class Proposta_Model_TbMovimentacao extends MinC_Db_Model
      */
     public function getUsuario()
     {
-        return $this->_usuario;
+        return $this->_Usuario;
     }
 
     /**
@@ -127,7 +113,7 @@ class Proposta_Model_TbMovimentacao extends MinC_Db_Model
      */
     public function setUsuario($usuario)
     {
-        $this->_usuario = $usuario;
+        $this->_Usuario = $usuario;
         return $this;
     }
 

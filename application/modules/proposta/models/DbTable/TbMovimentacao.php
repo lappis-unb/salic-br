@@ -1,28 +1,9 @@
 <?php
 
-/**
- * Class Proposta_Model_DbTable_TbMovimentacao
- *
- * @name Proposta_Model_DbTable_TbMovimentacao
- * @package Modules/Proposta
- * @subpackage Models/DbTable
- *
- * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
- * @since 21/09/2016
- *
- * @link http://salic.cultura.gov.br
- *
-  idMovimentacao
-  idProjeto
-  Movimentacao
-  DtMovimentacao
-  stEstado,Usuario
- */
 class Proposta_Model_DbTable_TbMovimentacao extends MinC_Db_Table_Abstract
 {
-    protected $_banco = "sac";
     protected $_schema = 'sac';
-    protected $_name = "tbmovimentacao";
+    protected $_name = "tbMovimentacao";
     protected $_primary = "idMovimentacao";
 
     /**

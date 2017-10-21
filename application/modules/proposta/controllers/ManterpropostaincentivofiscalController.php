@@ -236,7 +236,7 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
 
         $post = array_change_key_case($this->getRequest()->getPost());
 
-        if (empty($post['idAgente'])) {
+        if (empty($post['idagente'])) {
             throw new Zend_Exception("Informe o idagente");
         }
 
@@ -287,42 +287,42 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
         }
 
         $dados = array(
-            "idAgente" => isset($post['idAgente']) ? $post['idAgente'] : '',
-            "nomeprojeto" => isset($post['nomeprojeto']) ? $post['nomeprojeto'] : '',
-            "mecanismo" => 1, //seguindo sistema legado
-            "agenciabancaria" => isset($post['agenciabancaria']) ? $post['agenciabancaria'] : '',
-            "areaabrangencia" => isset($post['areaabrangencia']) ? $post['areaabrangencia'] : '',
-            "dtiniciodeexecucao" => isset($post['dtiniciodeexecucao']) ? $post['dtiniciodeexecucao'] : '',
-            "dtfinaldeexecucao" => isset($post['dtfinaldeexecucao']) ? $post['dtfinaldeexecucao'] : '',
-            "dtatotombamento" => isset($post['dtatotombamento']) ? $post['dtatotombamento'] : '',
-            "nratotombamento" => isset($post['nratotombamento']) ? $post['nratotombamento'] : '',
-            "esferatombamento" => isset($post['esferatombamento']) ? $post['esferatombamento'] : '0',
-            "resumodoprojeto" => isset($post['resumodoprojeto']) ? $post['resumodoprojeto'] : '',
-            "objetivos" => isset($post['objetivos']) ? $post['objetivos'] : '',
-            "justificativa" => isset($post['justificativa']) ? $post['justificativa'] : '',
-            "acessibilidade" => isset($post['acessibilidade']) ? $post['acessibilidade'] : '',
-            "democratizacaodeacesso" => isset($post['democratizacaodeacesso']) ? $post['democratizacaodeacesso'] : '',
-            "etapadetrabalho" => isset($post['etapadetrabalho']) ? $post['etapadetrabalho'] : '',
-            "fichatecnica" => isset($post['fichatecnica']) ? $post['fichatecnica'] : '',
-            "sinopse" => isset($post['sinopse']) ? $post['sinopse'] : '',
-            "impactoambiental" => isset($post['impactoambiental']) ? $post['impactoambiental'] : '',
-            "especificacaotecnica" => isset($post['especificacaotecnica']) ? $post['especificacaotecnica'] : '', //No legado o que esta sendo gravado aqui e OUTRAS INFORMACOES
-            "estrategiadeexecucao" => isset($post['estrategiadeexecucao']) ? $post['estrategiadeexecucao'] : '', //No legado o que esta sendo gravado aqui e ESPECIFICAO TECNICA
-            "dtaceite" => isset($post['dtaceite']) ? $post['dtaceite'] : date("Y/m/d H:i:s"), // verificar se realmente eh sempre que salva
-            "stestado" => isset($post['stestado']) ? $post['stestado'] : 1,
-            "stdatafixa" => isset($post['stdatafixa']) ? $post['stdatafixa'] : '',
-            "stproposta" => isset($post['stproposta']) ? $post['stproposta'] : '',
-            "idusuario" => isset($post['idusuario']) ? $post['idusuario'] : $this->idResponsavel,
-            "sttipodemanda" => "NA", //seguindo sistema legado
-            "tpprorrogacao" => isset($post['tpprorrogacao']) ? $post['tpprorrogacao'] : ''
+            "idAgente" => isset($post['idagente']) ? $post['idagente'] : null,
+            "NomeProjeto" => isset($post['nomeprojeto']) ? $post['nomeprojeto'] : null,
+            "Mecanismo" => 1, //seguindo sistema legado
+            "AgenciaBancaria" => isset($post['agenciabancaria']) ? $post['agenciabancaria'] : null,
+            "AreaAbrangencia" => isset($post['areaabrangencia']) ? $post['areaabrangencia'] : false,
+            "DtInicioDeExecucao" => isset($post['dtiniciodeexecucao']) ? $post['dtiniciodeexecucao'] : null,
+            "DtFinalDeExecucao" => isset($post['dtfinaldeexecucao']) ? $post['dtfinaldeexecucao'] : null,
+            "DtAtoTombamento" => isset($post['dtatotombamento']) ? $post['dtatotombamento'] : null,
+            "NrAtoTombamento" => isset($post['nratotombamento']) ? $post['nratotombamento'] : null,
+            "EsferaTombamento" => isset($post['esferatombamento']) ? $post['esferatombamento'] : '0',
+            "ResumoDoProjeto" => isset($post['resumodoprojeto']) ? $post['resumodoprojeto'] : null,
+            "Objetivos" => isset($post['objetivos']) ? $post['objetivos'] : null,
+            "Justificativa" => isset($post['justificativa']) ? $post['justificativa'] : null,
+            "Acessibilidade" => isset($post['acessibilidade']) ? $post['acessibilidade'] : null,
+            "DemocratizacaoDeAcesso" => isset($post['democratizacaodeacesso']) ? $post['democratizacaodeacesso'] : null,
+            "EtapaDeTrabalho" => isset($post['etapadetrabalho']) ? $post['etapadetrabalho'] : null,
+            "FichaTecnica" => isset($post['fichatecnica']) ? $post['fichatecnica'] : null,
+            "Sinopse" => isset($post['sinopse']) ? $post['sinopse'] : null,
+            "ImpactoAmbiental" => isset($post['impactoambiental']) ? $post['impactoambiental'] : null,
+            "EspecificacaoTecnica" => isset($post['especificacaotecnica']) ? $post['especificacaotecnica'] : null, //No legado o que esta sendo gravado aqui e OUTRAS INFORMACOES
+            "EstrategiadeExecucao" => isset($post['estrategiadeexecucao']) ? $post['estrategiadeexecucao'] : null, //No legado o que esta sendo gravado aqui e ESPECIFICAO TECNICA
+            "dtAceite" => isset($post['dtaceite']) ? $post['dtaceite'] : date("Y/m/d H:i:s"), // verificar se realmente eh sempre que salva
+            "stEstado" => isset($post['stestado']) ? $post['stestado'] : true,
+            "stDataFixa" => isset($post['stdatafixa']) ? $post['stdatafixa'] : false,
+            "stProposta" => isset($post['stproposta']) ? $post['stproposta'] : 0,
+            "idUsuario" => isset($post['idusuario']) ? $post['idusuario'] : $this->idResponsavel,
+            "stTipoDemanda" => "NA", //seguindo sistema legado
+            "stPlanoAnual" => true, //seguindo sistema legado
+            "tpProrrogacao" => isset($post['tpprorrogacao']) ? $post['tpprorrogacao'] : ''
         );
 
-        $dados['idpreprojeto'] = $idPreProjeto;
+        $dados['idPreProjeto'] = $idPreProjeto;
 
+        $mesagem = "Cadastro realizado com sucesso!";
         if (!empty($idPreProjeto)) {
             $mesagem = "Altera&ccedil;&atilde;o realizada com sucesso!";
-        } else {
-            $mesagem = "Cadastro realizado com sucesso!";
         }
 
         //instancia classe modelo
@@ -338,12 +338,12 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
                 $tbVinculoPropostaDAO = new Agente_Model_DbTable_TbVinculoProposta();
 
                 $whereVinculo['idUsuarioResponsavel = ?'] = $this->idResponsavel;
-                $whereVinculo['idAgenteProponente   = ?'] = $post['idAgente'];
+                $whereVinculo['idAgenteProponente   = ?'] = $post['idagente'];
                 $vinculo = $tbVinculoDAO->buscar($whereVinculo);
 
                 if (count($vinculo) == 0) {
                     $dadosV = array(
-                        'idAgenteProponente' => $post['idAgente'],
+                        'idAgenteProponente' => $post['idagente'],
                         'dtVinculo' => MinC_Db_Expr::date(),
                         'siVinculo' => 2,
                         'idUsuarioResponsavel' => $this->idResponsavel
@@ -393,7 +393,13 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
             }
             return;
         } catch (Zend_Exception $ex) {
-            parent::message("N&atilde;o foi poss&iacute;vel realizar a opera&ccedil;&atilde;o!" . $ex->getMessage(), "/proposta/manterpropostaincentivofiscal/index?idPreProjeto=" . $idPreProjeto, "ERROR");
+            //$ex->getMessage()
+xd($ex->getMessage());
+            if($idPreProjeto) {
+                parent::message("N&atilde;o foi poss&iacute;vel realizar a opera&ccedil;&atilde;o!" . $ex->getMessage(), "/proposta/manterpropostaincentivofiscal/index?idPreProjeto=" . $idPreProjeto, "ERROR");
+            } else {
+                parent::message("N&atilde;o foi poss&iacute;vel realizar a opera&ccedil;&atilde;o!", "/proposta/manterpropostaincentivofiscal/listarproposta", "ERROR");
+            }
         }
     }
 
