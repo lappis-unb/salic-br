@@ -2644,40 +2644,40 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
         $subSql = $this->select()
-            ->from(array('pr' => 'projetos'), array('idprojeto'), $this->_schema)
-            ->where('a.idPreProjeto = pr.idprojeto');
+            ->from(array('pr' => 'Projetos'), array('idProjeto'), $this->_schema)
+            ->where('a.idPreProjeto = pr.idProjeto');
 
         $sql = $this->select()
-            ->from(array('a' => 'PreProjeto'), array('a.idPreProjeto', 'a.nomeprojeto'), $this->_schema)
-            ->join(array('b' => 'agentes'), 'a.idAgente = b.idAgente', array('b.CNPJCPF', 'b.idAgente'), $this->getSchema('agentes'))
+            ->from(array('a' => 'PreProjeto'), array('a.idPreProjeto', 'a.NomeProjeto'), $this->_schema)
+            ->join(array('b' => 'Agentes'), 'a.idAgente = b.idAgente', array('b.CNPJCPF', 'b.idAgente'), $this->getSchema('agentes'))
             ->joinleft(array('n' => 'Nomes'), 'n.idAgente = b.idAgente', array('n.Descricao as nomeproponente'), $this->getSchema('agentes'))
             ->where('a.idAgente = ? ', $idAgente)
-            ->where('a.stestado = 1')
+            ->where('a.stEstado = 1')
             ->where("NOT EXISTS($subSql)")
-            ->where("a.mecanismo = '1'");
+            ->where("a.Mecanismo = '1'");
 
         $sql2 = $this->select()
-            ->from(array('a' => 'PreProjeto'), array('a.idPreProjeto', 'a.nomeprojeto'), $this->_schema)
-            ->join(array('b' => 'agentes'), 'a.idAgente = b.idAgente', array('b.CNPJCPF', 'b.idAgente'), $this->getSchema('agentes'))
+            ->from(array('a' => 'PreProjeto'), array('a.idPreProjeto', 'a.NomeProjeto'), $this->_schema)
+            ->join(array('b' => 'Agentes'), 'a.idAgente = b.idAgente', array('b.CNPJCPF', 'b.idAgente'), $this->getSchema('agentes'))
             ->join(array('c' => 'Vinculacao'), 'b.idAgente = c.idVinculoPrincipal', array(), $this->getSchema('agentes'))
-            ->join(array('d' => 'agentes'), 'c.idAgente = d.idAgente', array(), $this->getSchema('agentes'))
-            ->join(array('e' => 'SGCacesso'), 'd.CNPJCPF = e.cpf', array(), $this->getSchema('controledeacesso'))
+            ->join(array('d' => 'Agentes'), 'c.idAgente = d.idAgente', array(), $this->getSchema('agentes'))
+            ->join(array('e' => 'SGCacesso'), 'd.CNPJCPF = e.Cpf', array(), $this->getSchema('controledeacesso'))
             ->joinleft(array('n' => 'Nomes'), 'n.idAgente = b.idAgente', array('n.Descricao as nomeproponente'), $this->getSchema('agentes'))
             ->where('e.IdUsuario = ?', $idResponsavel)
-            ->where('a.stestado = 1')
+            ->where('a.stEstado = 1')
             ->where("NOT EXISTS($subSql)")
-            ->where("a.mecanismo = '1'");
+            ->where("a.Mecanismo = '1'");
 
         $sql3 = $this->select()
-            ->from(array('a' => 'PreProjeto'), array('a.idPreProjeto', 'a.nomeprojeto'), $this->getSchema('sac'))
-            ->join(array('b' => 'agentes'), 'a.idAgente = b.idAgente', array('b.CNPJCPF', 'b.idAgente'), $this->getSchema('agentes'))
+            ->from(array('a' => 'PreProjeto'), array('a.idPreProjeto', 'a.NomeProjeto'), $this->getSchema('sac'))
+            ->join(array('b' => 'Agentes'), 'a.idAgente = b.idAgente', array('b.CNPJCPF', 'b.idAgente'), $this->getSchema('agentes'))
             ->join(array('c' => 'Nomes'), 'b.idAgente = c.idAgente', array('c.Descricao as nomeproponente'), $this->getSchema('agentes'))
-            ->join(array('d' => 'SGCacesso'), 'a.idusuario = d.IdUsuario', array(), $this->getSchema('controledeacesso'))
+            ->join(array('d' => 'SGCacesso'), 'a.idUsuario = d.IdUsuario', array(), $this->getSchema('controledeacesso'))
             ->join(array('e' => 'tbVinculoProposta'), 'a.idPreProjeto = e.idPreProjeto', array(), $this->getSchema('agentes'))
             ->join(array('f' => 'tbVinculo'), 'e.idVinculo = f.idVinculo', array(), $this->getSchema('agentes'))
-            ->where('a.stestado = 1')
+            ->where('a.stEstado = 1')
             ->where("NOT EXISTS($subSql)")
-            ->where("a.mecanismo = '1'")
+            ->where("a.Mecanismo = '1'")
             ->where("e.siVinculoProposta = '2'")
             ->where('f.idUsuarioResponsavel = ?', $idResponsavel);
 
@@ -2696,7 +2696,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         }
 
         if (!empty($search['value'])) {
-            $sqlFinal->where('p.idPreProjeto like ? OR p.nomeprojeto like ? OR  p.nomeproponente like ?', '%' . $search['value'] . '%');
+            $sqlFinal->where('p.idPreProjeto like ? OR p.NomeProjeto like ? OR  p.nomeproponente like ?', '%' . $search['value'] . '%');
         }
 
         $sqlFinal->order($order);
