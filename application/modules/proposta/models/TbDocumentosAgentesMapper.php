@@ -45,6 +45,7 @@ class Proposta_Model_TbDocumentosAgentesMapper extends MinC_Db_Mapper
                 $strPath = '/data/proposta/model/tbdocumentoagentes/';
                 $strPathFull = APPLICATION_PATH . '/..' . $strPath;
 
+                //xd($dadosArquivo
                 $dadosArquivo = array(
                     'codigodocumento' => $arrPost['documento'],
                     'idprojeto' => $arrPost['idPreProjeto'],
