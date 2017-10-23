@@ -46,34 +46,40 @@ class Proposta_Model_DbTable_TbMovimentacao extends MinC_Db_Table_Abstract
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
         $slct->from($this->_name, $this->_getCols(), $this->_schema);
-        $slct->where('idprojeto = ? ', $idPreProjeto);
-        $slct->where('stestado = ? ', 0);
-        $slct->order(array("dtmovimentacao DESC"));
+        $slct->where('idProjeto = ? ', $idPreProjeto);
+        $slct->where('stEstado = ? ', false);
+        $slct->order(array("DtMovimentacao DESC"));
         $arrResult = $this->fetchRow($slct);
         return ($arrResult) ? $arrResult->toArray() : array();
     }
 
     public function buscarStatusPropostaNome($idPreProjeto)
     {
-        $slct = $this->select();
-        $slct->setIntegrityCheck(false);
-        $slct->from(
-            array('mov' => $this->_name),
-            $this->_getCols(),
-            $this->_schema);
+        if($idPreProjeto) {
 
-        $slct->joinInner(
-            array('ver' => 'Verificacao'),
-            'mov.Movimentacao = ver.idVerificacao',
-            array('Descricao as MovimentacaoNome'),
-            $this->_schema
-        );
-        $slct->where('mov.idprojeto = ? ', $idPreProjeto);
-        $slct->where('mov.stestado = ? ', 0);
-        $slct->order(array("mov.dtmovimentacao DESC"));
+            $slct = $this->select();
+            $slct->setIntegrityCheck(false);
+            $slct->from(
+                array('mov' => $this->_name),
+                $this->_getCols(),
+                $this->_schema);
 
-        $arrResult = $this->fetchRow($slct);
-        return ($arrResult) ? $arrResult->toArray() : array();
+            $slct->joinInner(
+                array('ver' => 'Verificacao'),
+                'mov.Movimentacao = ver.idVerificacao',
+                array('Descricao as MovimentacaoNome'),
+                $this->_schema
+            );
+            $slct->where('mov.idProjeto = ?', $idPreProjeto);
+            $slct->where('mov.stEstado::integer = ?', 0);
+            $slct->order(array("mov.DtMovimentacao DESC"));
+
+            $arrResult = $this->fetchRow($slct);
+            if($arrResult) {
+                return $arrResult->toArray();
+            }
+        }
+        return array();
     }
 
     public function buscarTecCoordAdmissibilidade($idPronac, $idusuario=null) {
