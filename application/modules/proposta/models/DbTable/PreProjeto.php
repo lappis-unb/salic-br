@@ -54,11 +54,11 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $slct->setIntegrityCheck(false);
 
         $slct->from($this, array("*",
-            "dtiniciodeexecucaoform" => $this->getExpressionToChar("dtiniciodeexecucao"),
-            "dtfinaldeexecucaoform" => $this->getExpressionToChar("dtfinaldeexecucao"),
-            "dtatotombamentoform" => $this->getExpressionToChar("dtatotombamento"),
-            "dtaceiteform" => $this->getExpressionToChar("dtaceite"),
-            "dtarquivamentoform" => $this->getExpressionToChar("dtarquivamento"),
+            "dtiniciodeexecucaoform" => $this->getExpressionToChar("DtInicioDeExecucao"),
+            "dtfinaldeexecucaoform" => $this->getExpressionToChar("DtFinalDeExecucao"),
+            "dtatotombamentoform" => $this->getExpressionToChar("DtAtoTombamento"),
+            "dtaceiteform" => $this->getExpressionToChar("dtAceite"),
+            "dtarquivamentoform" => $this->getExpressionToChar("DtArquivamento"),
         ));
 
         //adiciona quantos filtros foram enviados
