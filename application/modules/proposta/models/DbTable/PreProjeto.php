@@ -2627,7 +2627,9 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             $sqlFinal->where('p.idPreProjeto like ? OR p.nomeprojeto like ? OR  p.nomeproponente like ?', '%' . $search['value'] . '%');
         }
 
-        $sqlFinal->order($order);
+        if(is_array($order) && count(array_filter($order)) > 0) {
+            $sqlFinal->order($order);
+        }
 
         if (!is_null($start) && $limit) {
             $start = (int)$start;
@@ -2652,7 +2654,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             ->join(array('b' => 'Agentes'), 'a.idAgente = b.idAgente', array('b.CNPJCPF', 'b.idAgente'), $this->getSchema('agentes'))
             ->joinleft(array('n' => 'Nomes'), 'n.idAgente = b.idAgente', array('n.Descricao as nomeproponente'), $this->getSchema('agentes'))
             ->where('a.idAgente = ? ', $idAgente)
-            ->where('a.stEstado = 1')
+            ->where('a.stEstado = true')
             ->where("NOT EXISTS($subSql)")
             ->where("a.Mecanismo = '1'");
 
@@ -2664,7 +2666,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             ->join(array('e' => 'SGCacesso'), 'd.CNPJCPF = e.Cpf', array(), $this->getSchema('controledeacesso'))
             ->joinleft(array('n' => 'Nomes'), 'n.idAgente = b.idAgente', array('n.Descricao as nomeproponente'), $this->getSchema('agentes'))
             ->where('e.IdUsuario = ?', $idResponsavel)
-            ->where('a.stEstado = 1')
+            ->where('a.stEstado = true')
             ->where("NOT EXISTS($subSql)")
             ->where("a.Mecanismo = '1'");
 
@@ -2675,7 +2677,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             ->join(array('d' => 'SGCacesso'), 'a.idUsuario = d.IdUsuario', array(), $this->getSchema('controledeacesso'))
             ->join(array('e' => 'tbVinculoProposta'), 'a.idPreProjeto = e.idPreProjeto', array(), $this->getSchema('agentes'))
             ->join(array('f' => 'tbVinculo'), 'e.idVinculo = f.idVinculo', array(), $this->getSchema('agentes'))
-            ->where('a.stEstado = 1')
+            ->where('a.stEstado = true')
             ->where("NOT EXISTS($subSql)")
             ->where("a.Mecanismo = '1'")
             ->where("e.siVinculoProposta = '2'")
@@ -2689,7 +2691,12 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         $sql = $this->select()->union(array($sql, $sql2, $sql3), Zend_Db_Select::SQL_UNION);
 
-        $sqlFinal = $this->select()->from(array("p" => $sql), array('count(distinct p.idPreProjeto)'));
+        $sqlFinal = $this->select();
+        $sqlFinal->isUseSchema(false);
+        $sqlFinal->from(
+            array("p" => new Zend_Db_Expr("({$sql})")),
+            array('count(distinct "p"."idPreProjeto")')
+        );
 
         foreach ($where as $coluna => $valor) {
             $sqlFinal->where($coluna, $valor);
