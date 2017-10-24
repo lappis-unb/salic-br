@@ -1,7 +1,7 @@
 <?php
 class Agente_Model_TbVinculoProposta extends MinC_Db_Model
 {
-    protected $_idVinculoproposta;
+    protected $_idVinculoProposta;
     protected $_idVinculo;
     protected $_idPreProjeto;
     protected $_siVinculoProposta;
@@ -9,25 +9,25 @@ class Agente_Model_TbVinculoProposta extends MinC_Db_Model
     /**
      * @return mixed
      */
-    public function getIdvinculoproposta()
+    public function getIdVinculoProposta()
     {
-        return $this->_idVinculoproposta;
+        return $this->_idVinculoProposta;
     }
 
     /**
-     * @param mixed $idVinculoproposta
+     * @param mixed $idVinculoProposta
      * @return Agente_Model_TbVinculoProposta
      */
-    public function setIdvinculoproposta($idVinculoproposta)
+    public function setIdVinculoProposta($idVinculoProposta)
     {
-        $this->_idVinculoproposta = $idVinculoproposta;
+        $this->_idVinculoProposta = $idVinculoProposta;
         return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getIdvinculo()
+    public function getIdVinculo()
     {
         return $this->_idVinculo;
     }
@@ -36,7 +36,7 @@ class Agente_Model_TbVinculoProposta extends MinC_Db_Model
      * @param mixed $idVinculo
      * @return Agente_Model_TbVinculoProposta
      */
-    public function setIdvinculo($idVinculo)
+    public function setIdVinculo($idVinculo)
     {
         $this->_idVinculo = $idVinculo;
         return $this;
@@ -51,12 +51,12 @@ class Agente_Model_TbVinculoProposta extends MinC_Db_Model
     }
 
     /**
-     * @param mixed $idpreprojeto
+     * @param mixed $idPreProjeto
      * @return Agente_Model_TbVinculoProposta
      */
-    public function setIdPreProjeto($idpreprojeto)
+    public function setIdPreProjeto($idPreProjeto)
     {
-        $this->_idPreProjeto = $idpreprojeto;
+        $this->_idPreProjeto = $idPreProjeto;
         return $this;
     }
 
@@ -69,12 +69,12 @@ class Agente_Model_TbVinculoProposta extends MinC_Db_Model
     }
 
     /**
-     * @param mixed $sivinculoproposta
+     * @param mixed $siVinculoProposta
      * @return Agente_Model_TbVinculoProposta
      */
-    public function setSiVinculoProposta($sivinculoproposta)
+    public function setSiVinculoProposta($siVinculoProposta)
     {
-        $this->_siVinculoProposta = $sivinculoproposta;
+        $this->_siVinculoProposta = $siVinculoProposta;
         return $this;
     }
 }
