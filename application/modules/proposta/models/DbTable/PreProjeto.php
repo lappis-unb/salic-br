@@ -686,14 +686,14 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         $where['idPreProjeto = ?'] = $idPreProjeto;
 
-        return $db->update('sac.dbo.PreProjeto', array('idAgente' => $idAgente), $where);
+        return $db->update('sac.PreProjeto', array('idAgente' => $idAgente), $where);
     }
 
     public function alteraresponsavel($idPreProjeto, $idResponsavel)
     {
-        $where['idpreprojeto = ?'] = $idPreProjeto;
+        $where['idPreProjeto = ?'] = $idPreProjeto;
 
-        return $this->alterar(array('idusuario' => $idResponsavel), $where);
+        return $this->alterar(array('idUsuario' => $idResponsavel), $where);
     }
 
     public function buscarPropostaProjetos($where = array())
