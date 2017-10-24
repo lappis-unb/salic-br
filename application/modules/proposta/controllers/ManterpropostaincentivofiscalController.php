@@ -1083,7 +1083,7 @@ xd($ex->getMessage());
 
         $wherePropostaD['pp.idAgente = ?'] = $this->idAgenteProponente;
         $wherePropostaD['"pr"."idProjeto" IS NULL'] = '';
-        $wherePropostaD['pp.idUsuario <> ?'] = $this->idResponsavel;
+//        $wherePropostaD['pp.idUsuario <> ?'] = $this->idResponsavel;
         $listaPropostasD = $propostas->buscarPropostaProjetos($wherePropostaD);
 
         $this->view->responsaveis = $dadosCombo;
