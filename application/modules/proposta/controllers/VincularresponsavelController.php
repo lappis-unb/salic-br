@@ -364,9 +364,9 @@ class Proposta_VincularresponsavelController extends Proposta_GenericController
         $parte = explode(":", $dadosResponsavel);
         $arrData = array();
         $arrData['opcaovinculacao'] = $this->_request->getParam("opcaovinculacao");
-        $arrData['idpreprojeto'] = $this->_request->getParam("propostas");
+        $arrData['idPreProjeto'] = $this->_request->getParam("propostas");
         $arrData['idVinculo'] = $parte[0];
-        $arrData['idresponsavel'] = $parte[1];
+        $arrData['idResponsavel'] = $parte[1];
         if ($tblTbVinculoProposta->saveCustom($arrData)) {
             parent::message($tblTbVinculoProposta->getMessage(), "proposta/manterpropostaincentivofiscal/vincularpropostas", "CONFIRM");
         } else {

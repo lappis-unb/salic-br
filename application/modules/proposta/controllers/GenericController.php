@@ -23,7 +23,7 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
         if (!empty($idPreProjeto)) {
 
             $this->_proposta = $this->buscarProposta($idPreProjeto);
-            $this->_proponente = $this->buscarProponente($this->_proposta['idAgente']);
+            $this->_proponente = $this->buscarProponente($this->_proposta['idagente']);
 
             $this->view->idPreProjeto = $idPreProjeto;
             $this->view->proposta = $this->_proposta;
@@ -102,7 +102,7 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
 
         // Verifica se a proposta estah com o minc
         $tbMovimentacao = new Proposta_Model_DbTable_TbMovimentacao();
-        $rsStatusAtual = $tbMovimentacao->findBy(array('idprojeto = ?' => $idPreProjeto, 'stestado = ?' => 0));
+        $rsStatusAtual = $tbMovimentacao->findBy(array('idProjeto = ?' => $idPreProjeto, 'stEstado = false' => false));
 
         if ($rsStatusAtual['Movimentacao'] == $this->_movimentacaoAlterarProposta)
             return true;
@@ -118,7 +118,7 @@ abstract class Proposta_GenericController extends MinC_Controller_Action_Abstrac
 
         // Verifica se o projeto esta na situacao para editar
         $tblProjetos = new Projetos();
-        $projeto = $tblProjetos->findBy(array('idprojeto = ?' => $idPreProjeto));
+        $projeto = $tblProjetos->findBy(array('idProjeto = ?' => $idPreProjeto));
 
 //        $tblProjetos->verificarLiberacaoParaAdequacao($projeto['IdPRONAC']);
         if (!$tblProjetos->verificarLiberacaoParaAdequacao($projeto['IdPRONAC']))

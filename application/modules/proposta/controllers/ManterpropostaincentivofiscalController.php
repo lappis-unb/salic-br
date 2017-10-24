@@ -983,7 +983,9 @@ xd($ex->getMessage());
         $search = $this->getRequest()->getParam('search');
         $order = $this->getRequest()->getParam('order');
         $columns = $this->getRequest()->getParam('columns');
-        $order = ($order[0]['dir'] != 1) ? array($columns[$order[0]['column']]['name'] . ' ' . $order[0]['dir']) : array("idPreProjeto DESC");
+        if($order) {
+            $order = ($order[0]['dir'] != 1) ? array($columns[$order[0]['column']]['name'] . ' ' . $order[0]['dir']) : array("idPreProjeto DESC");
+        }
 
         $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
 
@@ -997,8 +999,7 @@ xd($ex->getMessage());
             foreach ($rsPreProjeto as $key => $proposta) {
                 $proposta->nomeproponente = utf8_encode($proposta->nomeproponente);
                 $proposta->nomeprojeto = utf8_encode($proposta->nomeprojeto);
-                $proposta->situacao = utf8_encode($proposta->situacao);
-                $rsStatusAtual = $Movimentacao->buscarStatusPropostaNome($proposta->idpreprojeto);
+                $rsStatusAtual = $Movimentacao->buscarStatusPropostaNome($proposta->idPreProjeto);
                 $proposta->situacao = isset($rsStatusAtual['MovimentacaoNome']) ? utf8_encode($rsStatusAtual['MovimentacaoNome']) : '';
 
                 $aux[$key] = $proposta;
@@ -1081,8 +1082,8 @@ xd($ex->getMessage());
         $listaPropostas = $propostas->buscarVinculadosProponenteDirigentes($dadosIdAgentes);
 
         $wherePropostaD['pp.idAgente = ?'] = $this->idAgenteProponente;
-        $wherePropostaD['pr.idprojeto IS NULL'] = '';
-        $wherePropostaD['pp.idusuario <> ?'] = $this->idResponsavel;
+        $wherePropostaD['"pr"."idProjeto" IS NULL'] = '';
+//        $wherePropostaD['pp.idUsuario <> ?'] = $this->idResponsavel;
         $listaPropostasD = $propostas->buscarPropostaProjetos($wherePropostaD);
 
         $this->view->responsaveis = $dadosCombo;

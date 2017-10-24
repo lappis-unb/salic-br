@@ -24,11 +24,11 @@ class Agente_Model_TbVinculoPropostaMapper extends MinC_Db_Mapper
                 $msg = "O respons&aacute;vel foi desvinculado!";
             }
 
-            $tblPreProjeto->alteraresponsavel($arrData['idpreprojeto'], $arrData['idresponsavel']);
-            $arrTbVinculoProposta['sivinculoproposta'] = 3;
-            $whereTbVinculoProposta['idpreprojeto = ?'] = $arrData['idpreprojeto'];
+            $tblPreProjeto->alteraresponsavel($arrData['idPreProjeto'], $arrData['idResponsavel']);
+            $arrTbVinculoProposta['siVinculoProposta'] = 3;
+            $whereTbVinculoProposta['idPreProjeto = ?'] = $arrData['idPreProjeto'];
             $this->getDbTable()->alterar($arrTbVinculoProposta, $whereTbVinculoProposta, false);
-            $arrData['sivinculoproposta'] = 2;
+            $arrData['siVinculoProposta'] = 2;
             $this->save(new Agente_Model_TbVinculoProposta($arrData));
             $this->setMessage($msg);
             $this->commit();

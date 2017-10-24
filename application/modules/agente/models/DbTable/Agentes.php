@@ -133,7 +133,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
         $slct->from(array('a' => $this->_name), '*', $this->_schema);
-        $slct->joinInner(array('m' => 'Nomes'), 'a.idAgente=m.idAgente', array('*'), $this->_schema);
+        $slct->joinInner(array('m' => 'Nomes'), 'a.idAgente = m.idAgente', array('*'), $this->_schema);
 
         foreach ($where as $coluna => $valor) {
             $slct->where($coluna, $valor);
@@ -825,7 +825,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         );
 
         $slct->where('c.IdUsuario = ?', $idResponsavel);
-        $slct->where('b.siVinculo = ?', 2);
+        $slct->where('b.siVinculo = ?', '2');
         $slct->where(new Zend_Db_Expr('a.CNPJCPF = c.Cpf'));
 //        echo $slct;
         return $this->fetchAll($slct);
