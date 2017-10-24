@@ -1082,8 +1082,8 @@ xd($ex->getMessage());
         $listaPropostas = $propostas->buscarVinculadosProponenteDirigentes($dadosIdAgentes);
 
         $wherePropostaD['pp.idAgente = ?'] = $this->idAgenteProponente;
-        $wherePropostaD['pr.idprojeto IS NULL'] = '';
-        $wherePropostaD['pp.idusuario <> ?'] = $this->idResponsavel;
+        $wherePropostaD['"pr"."idProjeto" IS NULL'] = '';
+        $wherePropostaD['pp.idUsuario <> ?'] = $this->idResponsavel;
         $listaPropostasD = $propostas->buscarPropostaProjetos($wherePropostaD);
 
         $this->view->responsaveis = $dadosCombo;

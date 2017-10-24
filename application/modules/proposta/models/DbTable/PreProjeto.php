@@ -702,17 +702,19 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $slct->setIntegrityCheck(false);
         $slct->from(
             array('pp' => $this->_name),
-            array('pp.idPreProjeto,
-                       pp.idAgente,
-                       pp.NomeProjeto,
-                       pp.Mecanismo,
-                       pp.AgenciaBancaria,
-                       pp.DtInicioDeExecucao,
-                       pp.DtFinalDeExecucao,
-                       pp.stTipoDemanda,
-                       pp.idUsuario,
-                       pp.idEdital,
-                       CAST(pp.ResumoDoProjeto as TEXT) as ResumoDoProjeto'),
+            array(
+                'pp.idPreProjeto',
+                'pp.idAgente',
+                'pp.NomeProjeto',
+                'pp.Mecanismo',
+                'pp.AgenciaBancaria',
+                'pp.DtInicioDeExecucao',
+                'pp.DtFinalDeExecucao',
+                'pp.stTipoDemanda',
+                'pp.idUsuario',
+                'pp.idEdital',
+                'CAST("pp"."ResumoDoProjeto" as TEXT) as ResumoDoProjeto'
+            ),
             $this->_schema
         );
 
@@ -723,9 +725,11 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         );
 
         $slct->joinLeft(
-            array('pr' => 'Projetos'), 'pp.idPreProjeto = pr.idProjeto',
-            array('pr.idProjeto',
-                'PRONAC' => new Zend_Db_Expr('pr.AnoProjeto' + 'pr.Sequencial')
+            array('pr' => 'Projetos'),
+            '"pp"."idPreProjeto" = "pr"."idProjeto"',
+            array(
+                'pr.idProjeto',
+                'PRONAC' => new Zend_Db_Expr('"pr"."AnoProjeto" ' . $this->getExpressionConcat() . '"pr"."Sequencial"')
             ),
             $this->_schema
         );
@@ -735,7 +739,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         }
 
         $slct->order('pp.idPreProjeto');
-        $slct->order('pp.nomeprojeto');
+        $slct->order('pp.NomeProjeto');
 
         return $this->fetchAll($slct);
     }
@@ -787,8 +791,8 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
         $subSql = $this->select()
-            ->from(array('p' => 'projetos'), array('*'), $this->getSchema('sac'))
-            ->where('p.idprojeto = pp.idPreProjeto');
+            ->from(array('p' => 'Projetos'), array('*'), $this->getSchema('sac'))
+            ->where('p.idProjeto = pp.idPreProjeto');
 
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
@@ -814,10 +818,10 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         );
 
         $slct->where('pp.idAgente in (?)', $arrayIdAgentes);
-        $slct->where('stEstado = ?', 1);
+        $slct->where('stEstado = ?', true);
         $slct->where(new Zend_Db_Expr("NOT EXISTS ($subSql)"));
         $slct->order('pp.idPreProjeto');
-        $slct->order('pp.nomeprojeto');
+        $slct->order('pp.NomeProjeto');
 
         return $this->fetchAll($slct);
     }
@@ -920,7 +924,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             ->where('a.stestado = 1')
             ->where("NOT EXISTS($subSql)")
             ->where("a.mecanismo = ?", "'1'")
-            ->where("e.siVinculoProposta = ?",'2')
+            ->where("e.siVinculoProposta = ?", '2')
             ->where('f.idUsuarioResponsavel = ?', $idResponsavel);
 
         if (!empty($idAgenteCombo)) {
@@ -2627,7 +2631,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             $sqlFinal->where('p.idPreProjeto like ? OR p.nomeprojeto like ? OR  p.nomeproponente like ?', '%' . $search['value'] . '%');
         }
 
-        if(is_array($order) && count(array_filter($order)) > 0) {
+        if (is_array($order) && count(array_filter($order)) > 0) {
             $sqlFinal->order($order);
         }
 
@@ -2719,7 +2723,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     public function valorTotalSolicitadoNaProposta($idPreProjeto)
     {
 
-        $select = new Zend_Db_Expr("SELECT sac.dbo.fnSolicitadoNaProposta({$idPreProjeto}) as valorTotalSolicitado");
+        $select = new Zend_Db_Expr("SELECT sac.fnSolicitadoNaProposta({$idPreProjeto}) as valorTotalSolicitado");
 
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
