@@ -1,6 +1,6 @@
 engines:
   phpcodesniffer:
-    enabled: true
+    enabled: false
 
 ratings:
   paths:
