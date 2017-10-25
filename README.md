@@ -1,4 +1,6 @@
 # SALIC
+[![Maintainability](https://api.codeclimate.com/v1/badges/ced465e01fa6da818967/maintainability)](https://codeclimate.com/github/lappis-unb/salic-br/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/ced465e01fa6da818967/test_coverage)](https://codeclimate.com/github/lappis-unb/salic-br/test_coverage)
 
 Bem vindo/a &agrave; documenta&ccedil;&atilde;o do SALIC! Aqui voc&ecirc; vai encontrar diversas documenta&ccedil;&otilde;es sobre o processo de desenvolvimento do SALIC, versionameno e publica&ccedil;&atilde;o.
 
