@@ -1,7 +1,7 @@
 engines:
   phpcodesniffer:
     enabled: true
-  duplicated:
+  duplication:
     enabled: false
 
 ratings:
