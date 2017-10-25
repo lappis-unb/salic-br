@@ -1,8 +1,27 @@
 engines:
+
   phpcodesniffer:
     enabled: true
 
-ratings:
-  paths:
-  - application/**
+  duplication:
+    enabled: true
+    config:
+      languages:
+        - "php"
 
+  phan:
+    enabled: true
+    config:
+      file_extensions: "php"
+
+  phpmd:
+    enabled: true
+
+exclude_paths:
+    - "codeclimate-master/"
+    - "doc/"
+    - "docker/"
+    - "library/"
+    - "public/"
+    - "sql/"
+    - "tests/"
