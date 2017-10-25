@@ -6,5 +6,5 @@ engines:
 
 ratings:
   paths:
-  - application/**
+  - application/**.php
 
