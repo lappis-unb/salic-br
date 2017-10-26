@@ -80,7 +80,12 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         return $this->fetchAll($slct);
     }
 
-    public function buscaCompleta($where = array(), $order = array(), $tamanho = -1, $inicio = -1)
+    public function buscaCompleta(
+        $where = array(),
+        $order = array(),
+        $tamanho = -1,
+        $inicio = -1
+    )
     {
 
         $slct = $this->select();
