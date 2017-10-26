@@ -7422,16 +7422,18 @@ class Projetos extends MinC_Db_Table_Abstract
     }
 
     public function verificarLiberacaoParaAdequacao($idPronac){
-        $db = Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
         if($idPronac) {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $db->setFetchMode(Zend_DB::FETCH_OBJ);
             return $db->fetchOne('select sac.fnChecarLiberacaoDaAdequacaoDoProjeto (?)', $idPronac);
         }
     }
 
     public function verificarIN2017($idPronac) {
-        $db = Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        return $db->fetchOne('SELECT sac.fnVerificarProjeto_IN2017(?) as IN2017', $idPronac);
+        if($idPronac) {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $db->setFetchMode(Zend_DB::FETCH_OBJ);
+            return $db->fetchOne('SELECT sac.fnVerificarProjeto_IN2017(?) as IN2017', $idPronac);
+        }
     }
 }
