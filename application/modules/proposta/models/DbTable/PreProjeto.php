@@ -375,7 +375,6 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
     public function listarDiligenciasPreProjeto($consulta = array(), $retornaSelect = false)
     {
-
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
