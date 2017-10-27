@@ -3,7 +3,7 @@ FROM php:5.6.30-apache
 VOLUME ["/var/www"]
 
 RUN echo "[ ***** ***** ***** ] - Copying files to Image ***** ***** ***** "
-COPY ./src /tmp/src
+COPY ./docker /tmp/docker
 
 RUN apt-get update
 
@@ -27,7 +27,7 @@ RUN docker-php-ext-configure pgsql --with-pgsql=/usr/local/pgsql
 RUN docker-php-ext-configure pdo_pgsql --with-pgsql
 RUN docker-php-ext-install pgsql pdo_pgsql
 
-RUN chmod +x -R /tmp/src/
+RUN chmod +x -R /tmp/docker/
 
 WORKDIR /var/www/
 
@@ -40,4 +40,4 @@ COPY ./docker-entrypoint.sh /usr/local/bin/
 ENTRYPOINT ["docker-entrypoint.sh"]
 
 RUN echo "[ ***** ***** ***** ] - Begin of Actions inside Image ***** ***** ***** "
-CMD /tmp/src/actions/start.sh
+CMD /tmp/docker/actions/start.sh
