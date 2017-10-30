@@ -47,7 +47,7 @@ class Proposta_Model_DbTable_TbMovimentacao extends MinC_Db_Table_Abstract
         $slct->setIntegrityCheck(false);
         $slct->from($this->_name, $this->_getCols(), $this->_schema);
         $slct->where('idProjeto = ? ', $idPreProjeto);
-        $slct->where('stEstado = ? ', false);
+        $slct->where('stEstado = false');
         $slct->order(array("DtMovimentacao DESC"));
         $arrResult = $this->fetchRow($slct);
         return ($arrResult) ? $arrResult->toArray() : array();

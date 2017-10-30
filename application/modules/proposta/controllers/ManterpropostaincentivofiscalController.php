@@ -87,8 +87,8 @@ class Proposta_ManterpropostaincentivofiscalController extends Proposta_GenericC
 
             //VERIFICA SE A PROPOSTA FOI ENVIADA AO MINC ALGUMA VEZ
             $arrbusca = array();
-            $arrbusca['idprojeto = ?'] = $this->idPreProjeto;
-            $arrbusca['movimentacao = ?'] = '96';
+            $arrbusca['idProjeto = ?'] = $this->idPreProjeto;
+            $arrbusca['Movimentacao = ?'] = '96';
             $rsHistMov = $Movimentacao->buscar($arrbusca);
             $this->view->blnJaEnviadaAoMinc = $rsHistMov->count();
 
