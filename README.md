@@ -14,7 +14,7 @@ Utilizamos o Docker como plataforma de desenvolvimento com o intuito de garantir
 independentemente do Sistema Operacional(SO) utilizado. Informaçoes mais detalhadas sobre a utilização do docker clique
 [aqui](doc/Guia_utilizacao_docker.md).
 
-Para criar um ambiente para trabalhar com o SALIC basta executar o comando abaixo:
+Para criar um ambiente para trabalhar com o SALIC basta executar o comando abaixo. OBS: Para trocar entre os ambientes alterne os valores ```development``` e ```production``` para "APPLICATION_ENV":
 
 ```
   docker-compose up -d
