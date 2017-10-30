@@ -1,34 +1,7 @@
 #!/bin/bash
 set -e
-echo "[ ****************** ] Starting Endpoint of Application"
-if ! [ -d "/var/www/salic-br" ] || ! [ -d "/var/www/salic-br/application" ]; then
-    echo "Application not found in /var/www/salic-br - cloning now..."
-    if [ "$(ls -A /var/www/salic-br)" ]; then
-        echo "WARNING: /var/www/salic-br is not empty - press Ctrl+C now if this is an error!"
-        ( set -x; ls -A; sleep 5 )
-    fi
-    echo "[ ****************** ] Cloning Project repository to tmp folder"
-    #rm -Rf /tmp/salic-br
-    git clone -b "$GIT_BRANCH" $GIT_REPOSITORY /tmp/salic-br
-    ls -la /tmp/salic-br
-
-    echo "[ ****************** ] Copying Project from temporary folder to workdir"
- #    cp /tmp/salic-br -rT /var/www/salic-br
-    cp /tmp/salic-br -R /var/www/
-
-    echo "[ ****************** ] Copying sample application configuration to real one"
-    cp /var/www/salic-br/application/configs/exemplo-application.ini /var/www/salic-br/application/configs/application.ini
-
-    echo "[ ****************** ] Changing owner and group from the Project to 'www-data' "
-    chown www-data:www-data -R /var/www/salic-br
-
-    ls -la /var/www/salic-br
-
-    echo "Complete! The application has been successfully copied to /var/www/salic-br"
-fi
 
 # X-Debug
-
 if ! [ -v $XDEBUG_INSTALL ] ; then
     echo "[ ****************** ] Starting install of XDebug and dependencies."
 	pecl shell-test xdebug && echo "Package xdebug Installed" || (
