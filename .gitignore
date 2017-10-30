@@ -4,9 +4,7 @@ application.ini
 *.swp
 *.save
 data/proposta/model/tbdocumentoagentes/*
-
 nbproject
-
 index.php
 *~
 #*
@@ -27,3 +25,5 @@ composer.lock
 .idea
 composer.phar
 .vscode/
+/log
+npm-debug.log

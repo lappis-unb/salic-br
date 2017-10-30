@@ -1,0 +1,27 @@
+version: '2'
+services:
+  web:
+    build: ./docker
+    image: culturagovbr/salic-br:1.5
+    container_name: salic-br
+    ports:
+     - "80:80"
+     - "9000"
+    volumes:
+     - .:/var/www/salic-br
+     - ./log/apache2:/var/log/apache2
+     - ./public/txt:/var/www/salic-br/public/txt/
+     - ./public/plenaria:/var/www/salic-br/public/plenaria/
+    env_file:
+      - docker_web-variables.env
+     # restart: always
+  dependency_manager:
+      image: composer:1.5.1
+      restart: 'no'
+      container_name: 'composer'
+      command: install
+      volumes:
+        - .:/app
+        # Share user and group
+        - /etc/passwd:/etc/passwd:ro
+        - /etc/group:/etc/group:ro
