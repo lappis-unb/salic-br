@@ -26,6 +26,4 @@ composer.lock
 composer.phar
 .vscode/
 /log
-/app
-docker-compose.yml
 npm-debug.log
