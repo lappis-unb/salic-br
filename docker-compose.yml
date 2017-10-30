@@ -12,22 +12,8 @@ services:
      - ./log/apache2:/var/log/apache2
      - ./public/txt:/var/www/salic-br/public/txt/
      - ./public/plenaria:/var/www/salic-br/public/plenaria/
-    environment:
-     #- APPLICATION_ENV=development
-     - APPLICATION_ENV=$(APPLICATION_ENV)
-     #xDebug configs for 'development' enviroment
-     #- XDEBUG_INSTALL="true"
-     #- XDEBUG_REMOTE_ENABLE=on
-     #- XDEBUG_REMOTE_AUTOSTART=on
-     #- XDEBUG_REMOTE_HANDLER=dbgp
-     #- XDEBUG_REMOTE_CONNECT_BACK=1
-     #- XDEBUG_PROFILER_ENABLE=1
-     #- XDEBUG_PROFILER_OUTPUT_DIR=/tmp/www/html
-     #- XDEBUG_REMOTE_PORT=9000
-     #- XDEBUGINI_PATH=/usr/local/etc/php/conf.d/xdebug.ini
-     #- PHP_IDE_CONFIG="serverName=Test"
-     #- XDEBUG_DEFAULT_ENABLE=1
-     #- XDEBUG_IDEKEY=PHPSTORM
+    env_file:
+      - docker_web-variables.env
      # restart: always
   dependency_manager:
       image: composer:1.5.1
