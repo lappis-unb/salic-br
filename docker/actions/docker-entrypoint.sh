@@ -1,6 +1,12 @@
 #!/bin/bash
 set -e
 
+if [ ! -f /var/www/salic-br/application/configs/application.ini ]; then
+    echo "File not found!"
+    echo "[ ****************** ] Copying sample application configuration to real one"
+    cp /var/www/salic-br/application/configs/exemplo-application.ini /var/www/salic-br/application/configs/application.ini
+fi
+
 # X-Debug
 if ! [ -v $XDEBUG_INSTALL ] ; then
     echo "[ ****************** ] Starting install of XDebug and dependencies."
