@@ -2,19 +2,19 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/ced465e01fa6da818967/maintainability)](https://codeclimate.com/github/lappis-unb/salic-br/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/ced465e01fa6da818967/test_coverage)](https://codeclimate.com/github/lappis-unb/salic-br/test_coverage)
 
-Bem vindo/a &agrave; documenta&ccedil;&atilde;o do SALIC! Aqui voc&ecirc; vai encontrar diversas documenta&ccedil;&otilde;es sobre o processo de desenvolvimento do SALIC, versionameno e publica&ccedil;&atilde;o.
+Bem vindo(a) ao Sistema de Apoio às Leis de Incentivo à Cultura (SALIC). Este projeto tem como objetivo facilitar o cadastro de propostas culturais para o governo,
+de forma que sejam mais acessíveis e simples de analisar.
 
-* [Esquema de desenvolvimento e banco](doc/Esquema_de_desenvolvimento_e_banco.md)
-* [Guia de operação e desenvolvimento](doc/Guia_de_operacao-desenvolvimento.md)
-* [Regras de versionamento](doc/Regras_versionamento.md)
-* [Roteiro de publicação de releases](doc/Roteiro_de_publicacao_de_releases.md)
+A documentação do _software_ está dividida nos seguintes artefatos:
+- Code of Conduct: linhas gerais do funcionamento da comunidade por trás do desenvolvimento do projeto.
+- Contributing: quer ajudar e fazer parte da comunidade? Esse arquivo te dirá como =)
+- Doc: nessa pasta, encontram-se outros guias úteis
 
+Caso tenha percebido algum problema com o _software_, crie uma issue no repositório para nos ajudar!
 
-## Docker
+# Docker
 
-Utilizamos o Docker como plataforma de desenvolvimento com o intuito de garantir o mesmo ambiente de desenvolvimento 
-independentemente do Sistema Operacional(SO) utilizado. Informaçoes mais detalhadas sobre a utilização do docker clique
-[aqui](doc/Guia_utilizacao_docker.md).
+A aplicação utiliza um _docker_ para configurar um ambiente de desenvolvimento sem que seja necessário mais configurações por parte do usuário. Informações mais detalhadas sobre a utilização do docker podem ser encontradas na [documentação oficial](doc/Guia_utilizacao_docker.md).
 
 Para criar um ambiente para trabalhar com o SALIC basta executar o comando abaixo. OBS: Para trocar entre os ambientes alterne os valores ```development``` e ```production``` para "APPLICATION_ENV":
 
